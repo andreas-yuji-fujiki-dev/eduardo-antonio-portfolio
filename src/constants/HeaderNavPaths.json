@@ -1,0 +1,18 @@
+[
+    {
+        "span": "Home", 
+        "path": "#home" 
+    },
+    {
+        "span": "Tech", 
+        "path": "#tech" 
+    },
+    {
+        "span": "Projects", 
+        "path": "#projects" 
+    },
+    {
+        "span": "Hire me", 
+        "path": "#hire-me" 
+    }
+]

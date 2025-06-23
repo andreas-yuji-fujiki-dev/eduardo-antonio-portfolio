@@ -1,3 +1,8 @@
+/* tailwind setup */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* theme base config */
 :root {
   --foreground: 0, 0, 0;

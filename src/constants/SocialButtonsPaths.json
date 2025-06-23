@@ -1,0 +1,22 @@
+[
+  {
+    "icon": "FaGithub",
+    "path": "https://github.com/seuusuario"
+  },
+  {
+    "icon": "FaWhatsapp",
+    "path": "https://wa.me/seunumero"
+  },
+  {
+    "icon": "CiLinkedin",
+    "path": "https://linkedin.com/in/seuperfil"
+  },
+  {
+    "icon": "FaInstagram",
+    "path": "https://instagram.com/seuperfil"
+  },
+  {
+    "icon": "CiMail",
+    "path": "mailto:seuemail@exemplo.com"
+  }
+]

@@ -1,6 +1,7 @@
 // components
 import AppHeader from "@/components/AppHeader";
 import HeroSection from "@/components/HeroSection";
+import ProjectsSection from "@/components/ProjectsSection";
 
 // home page ( / route ) component
 export default function Home() {
@@ -8,6 +9,7 @@ export default function Home() {
     <>
       <AppHeader />
       <HeroSection />
+      <ProjectsSection />
     </>
   );
 };

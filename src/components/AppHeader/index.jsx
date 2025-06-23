@@ -1,19 +1,19 @@
 'use client';
 
-import { GoSun } from "react-icons/go";
-import { FaRegMoon } from "react-icons/fa";
+// stores
 import { useThemeStore } from "@/stores/themeStore";
 
+// header nav paths
+import HeaderNavPathsJson from "@/constants/HeaderNavPaths.json";
+
+// icons
+import { GoSun } from "react-icons/go";
+import { FaRegMoon } from "react-icons/fa";
+
+// app header component
 export default function AppHeader() {
   const { theme, toggleTheme } = useThemeStore();
   const isDarkMode = theme === 'dark';
-
-  const HeaderNavPaths = [
-    { span: 'Home', path: '#home' },
-    { span: 'Tech', path: '#tech' },
-    { span: 'Projects', path: '#projects' },
-    { span: 'Hire me', path: '#hire-me' },
-  ];
 
   return (
     <header className="flex justify-between items-center p-4 bg-white dark:bg-gray-900 shadow-sm">
@@ -24,7 +24,7 @@ export default function AppHeader() {
       <div className="flex items-center gap-6">
         <nav>
           <ul className="flex gap-4">
-            {HeaderNavPaths.map((item, index) => (
+            {HeaderNavPathsJson.map((item, index) => (
               <li key={index}>
                 <a 
                   href={item.path}

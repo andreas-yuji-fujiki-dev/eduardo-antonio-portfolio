@@ -4,21 +4,24 @@ import { CustomButtonTypes } from "@/types/components/CustomButtonTypes";
 // custom button component
 export default function CustomButton({ 
     icon,
+    link,
     variant, 
     children, 
-    backgroundColor
+    backgroundColor,
 }: CustomButtonTypes){
     return(
-        <button>
-            {/* icon */}
-            {icon && (
-                <div>
-                    {icon}
-                </div>
-            )}
+        <a href={link && link} target="_blank">
+            <button style={ backgroundColor ? { backgroundColor: backgroundColor } : {} }>
+                {/* icon */}
+                {icon && (
+                    <div>
+                        {icon}
+                    </div>
+                )}
 
-            {/* button content */}
-            {children}
-        </button>
+                {/* button content */}
+                {children}
+            </button>
+        </a>
     );
 };
