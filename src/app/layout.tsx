@@ -1,7 +1,22 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+// global styles importation are here
 import "@/styles/globals.css";
+
+// next
+import type { Metadata } from "next";
+
+// fonts import
+import { Geist, Geist_Mono } from "next/font/google";
+import localFont from 'next/font/local';
+
+// providers
 import { ThemeProvider } from "@/providers/ThemeProvider";
+
+// fonts
+const sugarpunch = localFont({
+  src: '../../public/fonts/SugarpunchDEMO.otf',
+  display: 'swap',
+  variable: '--font-sugarpunch'
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,7 +40,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-br" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`
+        ${geistSans.variable} 
+        ${geistMono.variable}
+        ${sugarpunch.variable} 
+        antialiased
+      `}>
         <ThemeProvider>
           {children}
         </ThemeProvider>
