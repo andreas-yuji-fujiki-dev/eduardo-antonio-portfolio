@@ -1,7 +1,5 @@
 /* tailwind setup */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 /* theme base config */
 :root {
