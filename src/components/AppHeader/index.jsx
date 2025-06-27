@@ -16,7 +16,7 @@ export default function AppHeader() {
   const isDarkMode = theme === 'dark';
 
   return (
-    <header className="">
+    <header className="flex">
       <h1 className="">
         &lt;&gt;.edu&lt;/&gt;
       </h1>
