@@ -16,14 +16,35 @@ export default function AppHeader() {
   const isDarkMode = theme === 'dark';
 
   return (
-    <header className="flex">
-      <h1 className="">
-        &lt;&gt;.edu&lt;/&gt;
-      </h1>
+    <header className={`
+      flex
+      justify-between
+      items-center
+      tracking-widest
+      
+      h-[60px]
+      px-12
 
-      <div className="">
+      **:transition-all
+      **:duration-500
+    `}>
+      <a href="/">
+        <h1 className={`
+          text-xl
+        `}>
+            &lt;/&gt; .edward
+        </h1>
+      </a>
+
+      <div className={`
+        flex
+        gap-12
+      `}>
         <nav>
-          <ul className="">
+          <ul className={`
+            flex
+            gap-12
+          `}>
             {HeaderNavPathsJson.map((item, index) => (
               <li key={index}>
                 <a 
@@ -37,15 +58,18 @@ export default function AppHeader() {
           </ul>
         </nav>
         
-        <button 
+        <button
+          className="
+            cursor-pointer
+            hover:text-orange-400
+          "
           onClick={toggleTheme}
           aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
-          className=""
         >
           {isDarkMode ? (
-            <GoSun className="" />
+            <GoSun />
           ) : (
-            <FaRegMoon className="" />
+            <FaRegMoon />
           )}
         </button>
       </div>

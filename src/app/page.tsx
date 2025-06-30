@@ -6,7 +6,10 @@ import ProjectsSection from "@/components/ProjectsSection";
 // home page ( / route ) component
 export default function Home() {
   return (
-    <main >
+    <main className={`
+      max-w-11/12
+      m-auto
+    `}>
       <AppHeader />
       <HeroSection />
       <ProjectsSection />
