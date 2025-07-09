@@ -4,12 +4,12 @@
         "path": "#home" 
     },
     {
-        "span": "Tech", 
-        "path": "#tech" 
-    },
-    {
         "span": "Projects", 
         "path": "#projects" 
+    },
+    {
+        "span": "Tech", 
+        "path": "#tech" 
     },
     {
         "span": "Hire me", 
