@@ -8,9 +8,21 @@ const config: Config = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+  extend: {
+      fontFamily: {
+        sugarpunch: ['var(--font-sugarpunch)', 'sans-serif'],
+      },
+    },
   },
-  plugins: [],
+  plugins: [
+    function(pluginApi: any) {
+      pluginApi.addUtilities({
+        '.font-sugarpunch': {
+          fontFamily: 'var(--font-sugarpunch), sans-serif !important',
+        },
+      });
+    }
+  ],
 };
 
 export default config;
