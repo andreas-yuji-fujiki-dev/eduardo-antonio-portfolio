@@ -1,3 +1,5 @@
+'use client';
+
 // components
 import CustomButton from '../CustomButton';
 import SocialButtonsPathsJson from '@/constants/SocialButtonsPaths.json';
@@ -32,9 +34,8 @@ export default function SocialButtons({ hideGh = false }: SocialButtonsProps) {
               key={index}
               link={item.path}
               variant='just-icon'
-            >
-              <IconComponent />
-            </CustomButton>
+              icon={<IconComponent className='w-7 h-7'/>}
+            />
           );
         })
       }
