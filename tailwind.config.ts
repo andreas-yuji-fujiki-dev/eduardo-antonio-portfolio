@@ -1,28 +1,21 @@
+// tailwind.config.ts
 import type { Config } from 'tailwindcss';
 
 const config: Config = {
   content: [
-    "./src/**/*.{js,ts,jsx,tsx}", 
-    "./app/**/*.{js,ts,jsx,tsx}",  
-    "./pages/**/*.{js,ts,jsx,tsx}", 
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./app/**/*.{js,ts,jsx,tsx}",
+    "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-  extend: {
+    extend: {
       fontFamily: {
-        sugarpunch: ['var(--font-sugarpunch)', 'sans-serif'],
+        'roboto-slab': ['var(--font-roboto-slab)', 'serif'], // ✅ Nome corrigido
       },
     },
   },
-  plugins: [
-    function(pluginApi: any) {
-      pluginApi.addUtilities({
-        '.font-sugarpunch': {
-          fontFamily: 'var(--font-sugarpunch), sans-serif !important',
-        },
-      });
-    }
-  ],
+  plugins: [],
 };
 
 export default config;

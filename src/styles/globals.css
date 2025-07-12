@@ -1,3 +1,6 @@
+@import 'swiper/css';
+@import 'swiper/css/pagination';
+@import 'swiper/css/navigation';
 /* tailwind setup */
 @import "tailwindcss";
 
@@ -15,4 +18,27 @@
 body {
   color: rgb(var(--foreground));
   background: rgb(var(--background));
+}
+
+/* swiper controls size*/
+.swiper-button-next,
+.swiper-button-prev {
+  color: #000;
+  width: 35px;
+  height: 35px;
+  min-width: 35px;
+  min-height: 35px;
+  font-size: 18px;
+}
+/* swiper arrows */
+.swiper-button-next:after,
+.swiper-button-prev:after {
+  font-size: 25px !important;
+}
+.swiper-pagination-bullet {
+  background: #000;
+  opacity: 0.5;
+}
+.swiper-pagination-bullet-active {
+  opacity: 1;
 }

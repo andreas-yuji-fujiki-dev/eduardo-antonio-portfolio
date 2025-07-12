@@ -5,7 +5,8 @@ import "@/styles/globals.css";
 import type { Metadata } from "next";
 
 // fonts import
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Roboto_Slab } from "next/font/google";
+
 import localFont from 'next/font/local';
 
 // providers
@@ -28,6 +29,13 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const robotoSlab = Roboto_Slab({
+  subsets: ['latin'],
+  variable: '--font-roboto-slab',
+  weight: ['100','200','300','400','500','600','700','800','900'],
+  display: 'swap',
+});
+
 export const metadata: Metadata = {
   title: "DEV Edward",
   description: "Backend Software Engi",
@@ -44,6 +52,7 @@ export default function RootLayout({
         ${geistSans.variable} 
         ${geistMono.variable}
         ${sugarpunch.variable} 
+        ${robotoSlab.variable} 
         antialiased
       `}>
         <ThemeProvider>

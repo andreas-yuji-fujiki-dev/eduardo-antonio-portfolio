@@ -25,11 +25,13 @@ export default function CustomButton({
 }: CustomButtonTypes) {
   const isDarkTheme = useThemeStore((state) => state.theme === 'dark');
 
-  const themeStyle = isDarkTheme 
+  const themeStyle = (isDarkTheme 
     && variant !== 'just-icon' 
-    && variant !== 'transparent'
-        ? 'bg-white text-black' 
-        : 'bg-black text-white';
+    && variant !== 'transparent') ? (
+        isDarkTheme 
+            ? 'bg-white text-black' 
+            : 'bg-black text-white'
+    ) : undefined;
 
   const combinedClassName = `
     flex items-center justify-center
