@@ -21,12 +21,19 @@ export default function AppHeader() {
       justify-between
       items-center
       tracking-widest
+
+      fixed
+      top-0
+      left-0
+      right-0
+      z-300
+      ${ isDarkMode ? 'bg-black' : 'bg-white' }
       
       h-[60px]
       px-12
 
       **:transition-all
-      **:duration-500
+      **:duration-150
     `}>
       <a href="/">
         <h1 className={`
@@ -49,7 +56,6 @@ export default function AppHeader() {
               <li key={index}>
                 <a 
                   href={item.path}
-                  className=""
                 >
                   {item.span}
                 </a>
