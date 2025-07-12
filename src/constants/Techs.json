@@ -1,0 +1,67 @@
+[
+    {
+        "name": "Python",
+        "logo": "/logos/python.svg",
+        "experienceLevel": 1
+    },
+    {
+        "name": "JavaScript",
+        "logo": "/logos/javascript.svg",
+        "experienceLevel": 2
+    },
+    {
+        "name": "TypeScript",
+        "logo": "/logos/typescript.svg",
+        "experienceLevel": 2
+    },
+    {
+        "name": "NodeJS",
+        "logo": "/logos/node.svg",
+        "experienceLevel": 2
+    },
+    {
+        "name": "MySQL",
+        "logo": "/logos/mysql.svg",
+        "experienceLevel": 2
+    },
+    {
+        "name": "PostgreSQL",
+        "logo": "/logos/postgresql.svg",
+        "experienceLevel": 2
+    },
+    {
+        "name": "MongoDB",
+        "logo": "/logos/mongodb.svg",
+        "experienceLevel": 2
+    },
+    {
+        "name": "Prisma",
+        "logo": "/logos/prisma.svg",
+        "experienceLevel": 2
+    },
+    {
+        "name": "Lua",
+        "logo": "/logos/lua.svg",
+        "experienceLevel": 2
+    },
+    {
+        "name": "Express",
+        "logo": "/logos/express.png",
+        "experienceLevel": 2
+    },
+    {
+        "name": "Flask",
+        "logo": "/logos/flask.png",
+        "experienceLevel": 2
+    },
+    {
+        "name": "RESTful APIs",
+        "logo": "/logos/cloud.png",
+        "experienceLevel": 2
+    },
+    {
+        "name": "GraphQL APIs",
+        "logo": "/logos/cloud.png",
+        "experienceLevel": 2
+    }
+]
