@@ -11,7 +11,7 @@ import { MdKeyboardDoubleArrowDown } from "react-icons/md";
 // hero section component
 export default function HeroSection(){
     return(
-        <div>
+        <div className="mt-22">
             <img src="/shapes/heroShape1.svg" className={`
                 absolute
                 left-0
