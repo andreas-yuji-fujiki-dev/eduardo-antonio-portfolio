@@ -1,5 +1,5 @@
 import Image from "next/image";
-import StairLevelIndicator from "../LevelStairIndicator";
+import StairLevelIndicator from "../StairLevelIndicator";
 
 import { TechCardTypes } from "@/types/components/TechCardTypes";
 
