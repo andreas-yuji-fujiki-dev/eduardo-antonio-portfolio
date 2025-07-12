@@ -8,14 +8,16 @@ import SocialButtonsPathsJson from '@/constants/SocialButtonsPaths.json';
 import { SocialButtonsProps } from '@/types/components/SocialButtonTypes';
 
 // icons
-import { FaWhatsapp, FaInstagram, FaGithub } from "react-icons/fa";
+import { FaWhatsapp, FaInstagram, FaGithub, FaDiscord } from "react-icons/fa";
 import { CiLinkedin, CiMail } from "react-icons/ci";
+
 
 // assignment of string to component
 const iconComponents = {
   FaWhatsapp: FaWhatsapp,
   CiLinkedin: CiLinkedin,
   FaInstagram: FaInstagram,
+  FaDiscord: FaDiscord,
   CiMail: CiMail,
   FaGithub: FaGithub
 };
