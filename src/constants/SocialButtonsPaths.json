@@ -16,6 +16,10 @@
     "path": "https://www.instagram.com/fantauva250ml/"
   },
   {
+    "icon": "FaDiscord",
+    "path": "https://discord.com/users/230008264178401280"
+  },
+  {
     "icon": "CiMail",
     "path": "mailto:seuemail@exemplo.com"
   }

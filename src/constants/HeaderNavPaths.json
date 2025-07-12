@@ -1,9 +1,5 @@
 [
     {
-        "span": "Home", 
-        "path": "#home" 
-    },
-    {
         "span": "Projects", 
         "path": "#projects" 
     },
