@@ -22,11 +22,22 @@ export default function TechSection() {
                     <h2 
                         style={{ fontFamily: "var(--font-roboto-slab)" }}
                         className={`
+                            flex
+                            flex-col
                             lowercase
                             text-9xl
                             font-extrabold
                         `}
                     >
+                        <span
+                            className={`
+                                text-2xl
+                                mb-[-20px]
+                                opacity-65
+                            `}
+                        >
+                            Let's talk about
+                        </span>
                         Tech.
                     </h2>
                     <p 
