@@ -1,8 +1,14 @@
+"use client";
+
 import TechCard from "@/components/TechCard";
 import TechsJson from "@/constants/Techs.json";
 const AstronautAnimation = "/shapes/astronaut-animation.gif";
 
+import { useThemeStore } from "@/stores/themeStore";
+
 export default function TechSection() {
+    const isDarkTheme = useThemeStore((state) => state.theme === 'dark');
+
     return (
         <section 
             id="tech"
@@ -59,7 +65,7 @@ export default function TechSection() {
                         gap-y-10
                     `}
                 >
-                    { TechsJson.map( (tech, index) => (
+                    { TechsJson.map( ( tech, index ) => (
                         <TechCard 
                             key={ index }
                             name={ tech.name }
@@ -79,7 +85,11 @@ export default function TechSection() {
             `}>
                 <img 
                     src={AstronautAnimation} 
-                    alt="Astronaut being controlled by hands animation." />
+                    alt="Astronaut being controlled by hands animation." 
+                    className={`
+                        ${!isDarkTheme ? "invert" : ""}    
+                    `}
+                />
             </div>
         </section>
     );

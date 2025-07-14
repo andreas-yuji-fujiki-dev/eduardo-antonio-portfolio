@@ -1,3 +1,5 @@
+"use client";
+
 import CustomButton from "../CustomButton";
 
 import { RiSendPlaneLine } from "react-icons/ri";
@@ -5,8 +7,11 @@ import { FaWhatsapp, FaDiscord } from "react-icons/fa";
 
 import SocialButtonsPathsJson from "@/constants/SocialButtonsPaths.json";
 
+import { useThemeStore } from "@/stores/themeStore";
+
 export default function ContactSection() {
   const shapeImage = "/shapes/contactShape.svg";
+  const isDarkTheme = useThemeStore((state) => state.theme === 'dark');
 
   return (
     <section 
@@ -29,6 +34,8 @@ export default function ContactSection() {
           z-10
           pointer-events-none
           select-none
+
+          ${!isDarkTheme ? "invert" : ""}
         `}
         src={shapeImage}
         alt="Decorative shape"

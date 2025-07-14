@@ -3,11 +3,14 @@ import StairLevelIndicator from "../StairLevelIndicator";
 
 import { TechCardTypes } from "@/types/components/TechCardTypes";
 
+import { useThemeStore } from "@/stores/themeStore";
+
 export default function TechCard({ 
     name, 
     logo, 
-    experienceLevel,
-}: TechCardTypes ){
+    experienceLevel, 
+}: TechCardTypes ) {
+    const isDarkTheme = useThemeStore((state) => state.theme === 'dark');
 
     let experienceText = '';
     switch(experienceLevel){
@@ -48,7 +51,8 @@ export default function TechCard({
                         max-w-15
                         max-h-15
                         w-full
-                        h-full    
+                        h-full
+                        ${!isDarkTheme ? "invert" : ""}
                     `}
                 />
             </div>
@@ -75,7 +79,7 @@ export default function TechCard({
                     `}
                 >
                     <StairLevelIndicator 
-                        level={experienceLevel}
+                        level={ experienceLevel }
                     /> 
                     
                     <p 

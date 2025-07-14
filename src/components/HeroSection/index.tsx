@@ -1,3 +1,5 @@
+"use client";
+
 // components
 import CustomButton from "../CustomButton";
 import SocialButtons from "../SocialButtons";
@@ -8,11 +10,14 @@ import { FaGithub } from "react-icons/fa";
 import { CiDesktopMouse1 } from "react-icons/ci";
 import { MdKeyboardDoubleArrowDown } from "react-icons/md";
 
+import { useThemeStore } from "@/stores/themeStore";
 import SocialButtonsPathsJson from "@/constants/SocialButtonsPaths.json";
 
 // hero section component
 export default function HeroSection(){
     const githubLink = SocialButtonsPathsJson[0].path;
+    const isDarkTheme = useThemeStore((state) => state.theme === 'dark');
+
 
     return(
         <div className="mt-22">
@@ -20,11 +25,13 @@ export default function HeroSection(){
                 absolute
                 left-0
                 w-[27%]
+                ${!isDarkTheme ? "invert" : ""}
             `} />
             <img src="/shapes/heroShape2.svg" className={`
                 absolute
                 right-0
                 w-[27%]
+                ${!isDarkTheme ? "invert" : ""}
             `}/>
 
             <main className={`
