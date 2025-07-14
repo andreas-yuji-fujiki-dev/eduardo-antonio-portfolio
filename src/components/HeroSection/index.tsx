@@ -8,8 +8,12 @@ import { FaGithub } from "react-icons/fa";
 import { CiDesktopMouse1 } from "react-icons/ci";
 import { MdKeyboardDoubleArrowDown } from "react-icons/md";
 
+import SocialButtonsPathsJson from "@/constants/SocialButtonsPaths.json";
+
 // hero section component
 export default function HeroSection(){
+    const githubLink = SocialButtonsPathsJson[0].path;
+
     return(
         <div className="mt-22">
             <img src="/shapes/heroShape1.svg" className={`
@@ -87,7 +91,7 @@ export default function HeroSection(){
                 <CustomButton 
                     variant="default"
                     icon={<FaGithub size={20} />} 
-                    link="https://github.com/EduardoAntonio77"
+                    link={githubLink}
                 >
                     Take a look at Github
                 </CustomButton>
