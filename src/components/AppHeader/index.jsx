@@ -52,12 +52,12 @@ export default function AppHeader() {
             flex
             gap-12
           `}>
-            {HeaderNavPathsJson.map((item, index) => (
-              <li key={index}>
+            {HeaderNavPathsJson.map( ( item, index ) => (
+              <li key={ index }>
                 <a 
-                  href={item.path}
+                  href={ item.path }
                 >
-                  {item.span}
+                  { item.span }
                 </a>
               </li>
             ))}
@@ -69,10 +69,10 @@ export default function AppHeader() {
             cursor-pointer
             hover:text-orange-400
           "
-          onClick={toggleTheme}
-          aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+          onClick={ toggleTheme }
+          aria-label={ isDarkMode ? "Switch to light mode" : "Switch to dark mode" }
         >
-          {isDarkMode ? (
+          { isDarkMode ? (
             <GoSun />
           ) : (
             <FaRegMoon />
