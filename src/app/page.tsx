@@ -4,6 +4,7 @@ import HeroSection from "@/components/HeroSection";
 import ProjectsSection from "@/components/ProjectsSection";
 import TechSection from "@/components/TechSection";
 import ContactSection from "@/components/ContactSection";
+import AppFooter from "@/components/AppFooter";
 
 // home page ( / route ) component
 export default function Home() {
@@ -22,6 +23,7 @@ export default function Home() {
 
       {/* out of centered container */}
       <ContactSection />
+      <AppFooter />
     </>
   );
 }
