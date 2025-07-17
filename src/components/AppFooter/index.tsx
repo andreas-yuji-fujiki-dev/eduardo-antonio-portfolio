@@ -9,13 +9,20 @@ export default function AppFooter(){
         <footer
             className={`
                 flex
-                justify-around
-                py-10
+                flex-col
+                items-center
+                justify-center
+                gap-5
+                
+                py-8
                 *:opacity-65
-                *:hover:opacity-100
                 border-t-1
                 text-2xl
                 mt-2
+
+                sm:flex-row
+                sm:justify-between
+                sm:px-5
             `}
         >
             <span
