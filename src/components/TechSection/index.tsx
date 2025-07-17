@@ -13,8 +13,8 @@ export default function TechSection() {
         <section 
             id="tech"
             className={`
+                mb-25
                 flex
-                mt-7
             `}   
         >
             <div className={`

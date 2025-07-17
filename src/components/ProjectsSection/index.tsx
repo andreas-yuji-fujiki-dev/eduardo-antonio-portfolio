@@ -19,13 +19,12 @@ import { Pagination, Navigation } from 'swiper/modules';
 
 // projects section
 export default function ProjectsSection(){
-    return(
+    return (
         <section
             id="projects" 
             className={`
-                mt-12
-
-                h-[100vh]
+                mb-45
+                mt-1
             `}
         >
             <h2 
@@ -103,7 +102,7 @@ export default function ProjectsSection(){
                                 MCN API
                             </h3>
                         </div>
-                        <p className={``}>
+                        <p>
                             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Autem libero facilis culpa dolorum? Sit eligendi iusto excepturi, beatae voluptatem magni asperiores reprehenderit eos nostrum autem! Rem adipisci nihil laboriosam veritatis.
                         </p>
                     </div>
@@ -235,19 +234,19 @@ export default function ProjectsSection(){
                         </p>
                     </SwiperSlide>
                     <SwiperSlide className="flex items-center justify-center h-full">
-                        <Image src="https://menoscloro.com.br/wp-content/uploads/2025/06/placeholder-1.png" alt="Image 1" layout="fill" objectFit="cover" className="rounded" />
+                        <Image src="https://menoscloro.com.br/wp-content/uploads/2025/06/placeholder-1.png" alt="Image 4" layout="fill" objectFit="cover" className="rounded" />
                         <p className="absolute text-black text-2xl font-bold ml-2 mt-1">
                             Project4
                         </p>
                     </SwiperSlide>
                     <SwiperSlide className="flex items-center justify-center h-full">
-                        <Image src="https://menoscloro.com.br/wp-content/uploads/2025/06/placeholder-1.png" alt="Image 2" layout="fill" objectFit="cover" className="rounded" />
+                        <Image src="https://menoscloro.com.br/wp-content/uploads/2025/06/placeholder-1.png" alt="Image 5" layout="fill" objectFit="cover" className="rounded" />
                         <p className="absolute text-black text-2xl font-bold ml-2 mt-1">
                             Project5
                         </p>
                     </SwiperSlide>
                     <SwiperSlide className="flex items-center justify-center h-full">
-                        <Image src="https://menoscloro.com.br/wp-content/uploads/2025/06/placeholder-1.png" alt="Image 3" layout="fill" objectFit="cover" className="rounded" />
+                        <Image src="https://menoscloro.com.br/wp-content/uploads/2025/06/placeholder-1.png" alt="Image 6" layout="fill" objectFit="cover" className="rounded" />
                         <p className="absolute text-black text-2xl font-bold ml-2 mt-1">
                             Project6
                         </p>
