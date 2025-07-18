@@ -6,6 +6,9 @@ import Image from "next/image";
 // components
 import CustomButton from "../CustomButton";
 
+// window size
+import { useWindowSize } from 'react-use';
+
 // icons
 import { CiCircleCheck } from "react-icons/ci";
 import { FaFigma } from "react-icons/fa";
@@ -19,12 +22,17 @@ import { Pagination, Navigation } from 'swiper/modules';
 
 // projects section
 export default function ProjectsSection(){
+    const { width } = useWindowSize();
+
+    let slidesPerView = 3;
+    if (width < 640) slidesPerView = 1;
+    else if (width < 768) slidesPerView = 2;
+
     return (
         <section
             id="projects" 
             className={`
-                mb-45
-                mt-1
+                my-45
             `}
         >
             <h2 
@@ -33,11 +41,11 @@ export default function ProjectsSection(){
                     font-roboto-slab 
                     text-center 
                     font-bold 
-                    text-3xl 
+                    text-2xl sm:text-3xl 
                     underline 
                     underline-offset-8
 
-                    mb-12
+                    mb-11
                 `}
             >
                 Projects
@@ -45,11 +53,16 @@ export default function ProjectsSection(){
 
             <div className={`
                 flex
+                flex-col
+                gap-4
+                md:flex-row
                 items-center
                 justify-between
             `}>
                 <div className={`
-                    max-w-[50%]
+                    max-w-[100%]
+                    w-100%
+                    md:max-w-[50%]
                     flex
                     flex-col
                     gap-4
@@ -79,8 +92,6 @@ export default function ProjectsSection(){
                                     flex
                                     items-center
 
-                                    text-1xl
-
                                     -top-1
                                     left-5
                                     h-4
@@ -96,13 +107,20 @@ export default function ProjectsSection(){
                                 style={{ fontFamily: 'var(--font-roboto-slab)' }}
                                 className={`
                                     font-medium
-                                    text-8xl
+                                    text-5xl
+                                    sm:text-7xl
                                 `}
                             >
                                 MCN API
                             </h3>
                         </div>
-                        <p>
+                        <p
+                            className={`
+                                text-[14px]
+                                sm:text-xl
+                                text-wrap
+                            `}
+                        >
                             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Autem libero facilis culpa dolorum? Sit eligendi iusto excepturi, beatae voluptatem magni asperiores reprehenderit eos nostrum autem! Rem adipisci nihil laboriosam veritatis.
                         </p>
                     </div>
@@ -130,7 +148,7 @@ export default function ProjectsSection(){
                                 flex
                                 items-center
                                 gap-1
-                                text-1xl
+                                text-[15px]
                                 font-bold
                                 opacity-80
 
@@ -143,7 +161,8 @@ export default function ProjectsSection(){
                 </div>
 
                 <aside className={`
-                    w-[50%]
+                    w-[100%]
+                    md:w-[50%]
                     h-[313px]
 
                     flex
@@ -181,7 +200,7 @@ export default function ProjectsSection(){
                     h-[200px]
 
                     flex
-                    gap-3
+                    gap-4
                     flex-col
                     rounded-lg
                 `}
@@ -189,8 +208,12 @@ export default function ProjectsSection(){
                 <div
                     className={`
                         flex
-                        justify-between
-                        items-center
+                        flex-col
+                        gap-3
+                        sm:flex-row
+                        sm:gap-0
+                        sm:justify-between
+                        sm:items-center
                     `}
                 >
                     <h3
@@ -208,16 +231,21 @@ export default function ProjectsSection(){
                     </CustomButton>
                 </div>
                 <Swiper
-                    modules={[Pagination, Navigation]}
-                    spaceBetween={10}
-                    slidesPerView={3}
-                    pagination={{ clickable: true }}
                     navigation
-                    className="w-full h-full overflow-hidden"
+                    modules={ [ Pagination, Navigation ] }
+                    spaceBetween={ 10 }
+                    slidesPerView={ slidesPerView }
+                    pagination={ { clickable: true } }
+
+                    className={`
+                        w-full 
+                        h-full 
+                        overflow-hidden    
+                    `}
                 >
                     <SwiperSlide className="flex items-center justify-center h-full">
                         <Image src="https://menoscloro.com.br/wp-content/uploads/2025/06/placeholder-1.png" alt="Image 1" layout="fill" objectFit="cover" className="rounded" />
-                        <p className="absolute text-black text-2xl font-bold ml-2 mt-1">
+                        <p className="absolute text-black text-xl font-bold ml-2 mt-1">
                             Project1
                         </p>
                     </SwiperSlide>
