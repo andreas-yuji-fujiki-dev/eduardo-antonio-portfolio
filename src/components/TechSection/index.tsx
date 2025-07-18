@@ -18,7 +18,8 @@ export default function TechSection() {
             `}   
         >
             <div className={`
-                w-[85%]
+                w-[100%]
+                sm:w-[85%]
             `}>
                 <div 
                     className={`
@@ -31,14 +32,17 @@ export default function TechSection() {
                             flex
                             flex-col
                             lowercase
-                            text-9xl
+                            text-8xl
+                            sm:text-9xl
                             font-extrabold
                         `}
                     >
                         <span
                             className={`
-                                text-2xl
-                                mb-[-20px]
+                                text-[18px]
+                                mb-[-10px]
+                                sm:text-2xl
+                                sm:mb-[-20px]
                                 opacity-65
                             `}
                         >
@@ -53,7 +57,7 @@ export default function TechSection() {
                             font-semibold
                         `}
                     >
-                        In my personal journey, I already worked with some <br />
+                        In my personal journey, I already worked with some
                         techonologies, and here they are:
                     </p>
                 </div>
@@ -61,7 +65,11 @@ export default function TechSection() {
                 <div
                     className={`
                         grid
-                        grid-cols-2
+                        grid-cols-1
+                        sm:grid-cols-2
+                        md:grid-cols-1
+                        lg:grid-cols-2
+                        lg:gap-x-7
                         gap-y-10
                     `}
                 >
@@ -76,16 +84,19 @@ export default function TechSection() {
                 </div>
             </div>
             <div className={`
-                flex 
-                justify-center 
-                items-center 
-                flex-wrap 
-                gap-4 
-                mt-4
+                hidden
+
+                md:flex 
+                md:sticky
+                md:justify-center 
+                md:items-center 
+                md:flex-wrap 
+                md:gap-4 
+                md:mt-4
             `}>
                 <img 
                     src={AstronautAnimation} 
-                    alt="Astronaut being controlled by hands animation." 
+                    alt="Astronaut being controlled by two hands animation." 
                     className={`
                         ${!isDarkTheme ? "invert" : ""}    
                     `}
