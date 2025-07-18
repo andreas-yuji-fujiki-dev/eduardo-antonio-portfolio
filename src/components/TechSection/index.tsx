@@ -67,9 +67,6 @@ export default function TechSection() {
                         grid
                         grid-cols-1
                         sm:grid-cols-2
-                        md:grid-cols-1
-                        lg:grid-cols-2
-                        lg:gap-x-7
                         gap-y-10
                     `}
                 >
@@ -86,13 +83,13 @@ export default function TechSection() {
             <div className={`
                 hidden
 
-                md:flex 
-                md:sticky
-                md:justify-center 
-                md:items-center 
-                md:flex-wrap 
-                md:gap-4 
-                md:mt-4
+                lg:flex 
+                lg:sticky
+                lg:justify-center 
+                lg:items-center 
+                lg:flex-wrap 
+                lg:gap-4 
+                lg:mt-4
             `}>
                 <img 
                     src={AstronautAnimation} 

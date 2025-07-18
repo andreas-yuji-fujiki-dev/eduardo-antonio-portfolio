@@ -14,31 +14,36 @@ export default function ContactSection() {
   const isDarkTheme = useThemeStore((state) => state.theme === 'dark');
 
   return (
-    <section 
-      className={`
-        relative
-        mt-15
-        w-full
-        px-6
-        py-20
-      `}
-      id="hire-me"
+    <section
+        id="hire-me"
+        className={`
+            relative
+            mt-15
+            w-full
+            px-6
+            py-20
+        `}
     >
       {/* shape */}
       <img
         className={`
-          absolute
-          right-0
-          top-[-25vh]
-          max-w-[25vw]
-          z-10
-          pointer-events-none
-          select-none
+            hidden
+            
+            md:flex
+            absolute
+            top-[50%]
+            translate-y-[-60%]
+            right-0
 
-          ${!isDarkTheme ? "invert" : ""}
+            max-w-[25vw]
+            z-10
+            pointer-events-none
+            select-none
+
+            ${!isDarkTheme ? "invert" : ""}
         `}
         src={shapeImage}
-        alt="Decorative shape"
+        alt="Decorative shape that contains a space and a planet."
       />
 
       {/* content */}
@@ -58,18 +63,23 @@ export default function ContactSection() {
         {/* title and paragraph */}
         <div
             className={`
-                max-w-[65%]
+                flex
+                flex-col
+                gap-5
+                w-[100%]
+                md:w-[65%]
             `}
         >
             <h2
                 style={{ fontFamily: "var(--font-sugarpunch)" }}
                 className={`
                     font-sugarpunch
-                    text-7xl
+                    text-4xl
+                    sm:text-7xl
                     leading-tight
                 `}
             >
-                Want to have an <br />
+                Want to have an <br className="hidden lg:block" />
                 awesome project done?
             </h2>
             <p>
@@ -80,9 +90,12 @@ export default function ContactSection() {
         {/* contact options */}
         <div
             className={`
+                mt-5
                 flex
+                flex-col
+                sm:flex-row
+                items-center
                 gap-3
-                items-center    
             `}
         >
 
@@ -90,11 +103,17 @@ export default function ContactSection() {
             <div
                 className={`
                     flex
+                    flex-col
+                    sm:flex-row
+                    justify-between
                     items-center
 
-                    rounded-full
+                    rounded-2xl
+                    sm:rounded-full
 
-                    w-[35%]
+                    md:max-w-[55%]
+                    lg:max-w-[45%]
+                    w-[100%]
                     border
 
                     bg-white
@@ -104,19 +123,27 @@ export default function ContactSection() {
                 <input
                     className={`
                         flex-1
-                        py-2
-                        pl-4
+                        w-full
+                        py-6
+                        px-6
+                        sm:w-auto
+                        sm:py-2
+                        sm:pl-4
                         text-black
                         outline-none
                     `} 
-                    type="text"
-                    placeholder="Enter your e-mail address here"
+                    type="email"
+                    placeholder="Enter your e-mail address"
                 />
                 <button
                     className={`
                         cursor-pointer
 
                         flex
+                        flex-1
+                        sm:flex-0
+                        w-[95%]
+                        justify-center
                         items-center
                         gap-1
 
@@ -126,7 +153,8 @@ export default function ContactSection() {
 
                         py-2
                         px-5
-                        rounded-full
+                        rounded-2xl
+                        sm:rounded-full
                         border-1
                     `}
                 >
@@ -134,30 +162,40 @@ export default function ContactSection() {
                 </button>
             </div>
 
-            <span
-                className={`
-                    uppercase    
-                `}
-            >
-                Or
-            </span>
-
             <div
                 className={`
+                    mt-5
+                    sm:mt-0
                     flex
-                    gap-3    
+                    items-center
+                    gap-3
                 `}
             >
-                <CustomButton  
-                    variant="just-icon"
-                    icon={ <FaWhatsapp size={17} /> }
-                    link={SocialButtonsPathsJson[1].path}
-                />
-                <CustomButton  
-                    variant="just-icon"
-                    icon={ <FaDiscord size={17} /> }
-                    link={SocialButtonsPathsJson[4].path}
-                />
+                <span
+                    className={`
+                        uppercase    
+                    `}
+                >
+                    Or
+                </span>
+
+                <div
+                    className={`
+                        flex
+                        gap-3    
+                    `}
+                >
+                    <CustomButton  
+                        variant="just-icon"
+                        icon={ <FaWhatsapp size={17} /> }
+                        link={SocialButtonsPathsJson[1].path}
+                    />
+                    <CustomButton  
+                        variant="just-icon"
+                        icon={ <FaDiscord size={17} /> }
+                        link={SocialButtonsPathsJson[4].path}
+                    />
+                </div>
             </div>
         </div>
       </div>

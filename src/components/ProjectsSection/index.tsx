@@ -33,6 +33,8 @@ export default function ProjectsSection(){
             id="projects" 
             className={`
                 my-45
+                sm:mt-0
+                sm:mb-45
             `}
         >
             <h2 
