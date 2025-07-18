@@ -1,0 +1,42 @@
+{
+  "name": "eduardo-antonio-portfolio-api",
+  "version": "1.0.0",
+  "description": "An API built with focus on Eduardo Antonio's portfolio management.",
+  "keywords": [
+    "backend",
+    "api",
+    "portfolio",
+    "typescript",
+    "restful",
+    "rest",
+    "prisma",
+    "database",
+    "express"
+  ],
+  "homepage": "https://github.com/andreas-yuji-fujiki/eduardo-antonio-portfolio#readme",
+  "bugs": {
+    "url": "https://github.com/andreas-yuji-fujiki/eduardo-antonio-portfolio/issues"
+  },
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/andreas-yuji-fujiki/eduardo-antonio-portfolio.git"
+  },
+  "license": "ISC",
+  "author": "Andreas Yuji Fujiki",
+  "type": "commonjs",
+  "main": "src/server.ts",
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.0.14",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.8.3"
+  }
+}
