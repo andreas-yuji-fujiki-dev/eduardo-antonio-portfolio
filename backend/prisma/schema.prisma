@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id   Int @id @default(autoincrement())
+  name String @unique
+  password String
+}
+
+model Project {
+  id              Int     @id @default(autoincrement())
+  name            String  @unique
+  description     String
+  more_info       String
+  deploy_link     String
+  repository_link String
+  images          Image[] @relation("ProjectImages")
+}
+
+enum ExperienceLevel {
+  ONE   @map("1")
+  TWO   @map("2")
+  THREE @map("3")
+}
+
+model Stack {
+  id     Int    @id @default(autoincrement())
+  name   String
+  experience ExperienceLevel
+  logo   Image  @relation("StackLogo", fields: [logoId], references: [id])
+  logoId Int    @unique
+}
+
+model Image {
+  id          Int     @id @default(autoincrement())
+  name        String  @unique
+
+  project     Project? @relation("ProjectImages", fields: [projectId], references: [id])
+  projectId   Int?
+
+  stackLogo   Stack?   @relation("StackLogo")
+}
