@@ -1,0 +1,60 @@
+// imports
+    // express
+    import { Router } from "express";
+    
+    // middlewares
+    import registerProjectMiddleware from "../../middlewares/projects/registerProjectMiddleware";
+    import authRequiredMiddleware from "../../middlewares/auth/authRequiredMiddleware";
+    import getProjectByIdMiddleware from "../../middlewares/projects/getProjectByIdMiddleware";
+    import editProjectMiddleware from "../../middlewares/projects/editProjectMiddleware";
+    import deleteProjectMiddleware from "../../middlewares/projects/deleteProjectMiddleware";
+
+    // controllers
+    import registerProjectController from "../../controllers/projects/registerProjectController";
+    import getAllProjectsController from "../../controllers/projects/getAllProjectsController";
+    import getProjectByIdController from "../../controllers/projects/getProjectByIdController";
+    import editProjectController from "../../middlewares/projects/editProjectController";
+    import deleteProjectController from "../../controllers/projects/deleteProjectController";
+    
+
+// router config
+    // router definition
+    const projectsRouter = Router();
+
+    // registering routes
+        // register project
+        projectsRouter.post('/', 
+            authRequiredMiddleware,
+            registerProjectMiddleware,
+            registerProjectController
+        )
+
+        // get all projects
+        projectsRouter.get('/', 
+            authRequiredMiddleware, 
+            getAllProjectsController
+        );
+
+        // get project by id
+        projectsRouter.get('/:id', 
+            authRequiredMiddleware, 
+            getProjectByIdMiddleware, 
+            getProjectByIdController
+        );
+
+        // edit project
+        projectsRouter.put('/:id', 
+            authRequiredMiddleware, 
+            editProjectMiddleware, 
+            editProjectController
+        )
+
+        // delete project
+        projectsRouter.delete('/:id', 
+            authRequiredMiddleware, 
+            deleteProjectMiddleware, 
+            deleteProjectController
+        )
+
+// exporting
+export default projectsRouter;
