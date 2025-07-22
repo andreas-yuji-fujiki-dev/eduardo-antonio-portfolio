@@ -1,18 +1,26 @@
+// express
 import express, { Application } from 'express';
+
+// app types
+import { AppTypes } from './types/AppTypes';
+
+// security
 import helmet from 'helmet';
 import cors from 'cors';
 import rateLimit from 'express-rate-limit';
-import xss from 'xss-clean';
-
-import { AppTypes } from './types/AppTypes';
-
-import projectsRouter from './routes/private/projects';
-import imagesRouter from './routes/private/images';
-import stacksRouter from './routes/private/stacks';
-import authRouter from './routes/public/auth';
-
 import { sanitizeMiddleware } from './middlewares/security/sanitizeMiddleware';
 
+// routers
+import projectsRouter from './routers/private/projects';
+import imagesRouter from './routers/private/images';
+import stacksRouter from './routers/private/stacks';
+import authRouter from './routers/public/auth';
+
+// docs
+import swaggerUi from 'swagger-ui-express';
+import { swaggerSpec } from './docs/swaggerConfig';
+
+// app class
 export class App {
   public app: Application;
   private port: number;
@@ -40,14 +48,11 @@ export class App {
     // brute force protection
     this.app.use(rateLimit({
       windowMs: 15 * 60 * 1000, // 15 minutes
-      max: 100, // limit by ip
+      max: 10000, // limit by ip
       standardHeaders: true,
       legacyHeaders: false,
       message: 'Too many requests from this IP, please try again later.',
     }));
-
-    // sanitize inputs against xss atacks
-    this.app.use(xss());
 
     // express json allowed on body
     this.app.use(express.json());
@@ -55,6 +60,10 @@ export class App {
 
   // registering routes
   private routers(): void {
+    // swagger
+    this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+    // app routers
     this.app.use('/projects', projectsRouter);
     this.app.use('/images', imagesRouter);
     this.app.use('/stacks', stacksRouter);
