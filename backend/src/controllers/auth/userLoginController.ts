@@ -51,8 +51,6 @@ export default async function userLoginController(req: Request, res: Response) {
 
     } catch (error) {
         // in case of internal server error
-        console.error("Login error:", error);
-
         return res.status(500).json({
             status: "500 - Internal server error.",
             message: "Something went wrong."

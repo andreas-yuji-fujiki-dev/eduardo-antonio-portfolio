@@ -5,6 +5,7 @@ export default async function getImageByIdController(req:Request, res:Response){
     const { id } = req.params;
 
     try {
+        // get image by id
         const specificImage = await prisma.image.findUnique({
             where: { id: Number(id) },
             select: {
@@ -14,6 +15,7 @@ export default async function getImageByIdController(req:Request, res:Response){
             }
         });
 
+        // if image does not exists
         if( !specificImage ){
             return res.status(404).json({
                 status: "404 - Not found",
@@ -21,13 +23,14 @@ export default async function getImageByIdController(req:Request, res:Response){
             });
         };
 
+        // success case
         return res.status(200).json({
             status: "200 - Success",
             data: specificImage
         });
 
     } catch ( error ) {
-
+        // internal server error case
         return res.status(500).json({
             status: "500 - Internal server error",
             message: "An error ocurred while searching for image by id",

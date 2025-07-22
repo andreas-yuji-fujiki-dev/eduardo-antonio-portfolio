@@ -6,7 +6,7 @@ export default async function updateImageController(req:Request, res:Response){
     const { name } = req.body;
 
     try {
-        // image exists?
+        // verify if image exists
         const mentionedImage = await prisma.image.findUnique({ where: { id: Number(id) }});
 
         if( !mentionedImage ) {
@@ -29,7 +29,7 @@ export default async function updateImageController(req:Request, res:Response){
         });
 
     } catch ( error ) {
-        
+        // server internal error case
         res.status(500).json({
             status: "500 - Server internal error",
             message: "An unexpected error ocurred while updating the image",

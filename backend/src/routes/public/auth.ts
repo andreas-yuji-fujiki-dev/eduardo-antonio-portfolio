@@ -15,8 +15,16 @@
 
     // registering routes
         // register
-        authRouter.post('/register', authFieldsMiddleware, userRegisterController)
-        // login
-        authRouter.post('/login', authFieldsMiddleware, userLoginController)
+        authRouter.post('/register', 
+            authFieldsMiddleware, 
+            userRegisterController
+        );
 
+        // login
+        authRouter.post('/login', 
+            authFieldsMiddleware, 
+            userLoginController
+        );
+
+// exporting
 export default authRouter;

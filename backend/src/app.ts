@@ -1,9 +1,10 @@
-import projectsRouter from './routes/private/projects';
-import stacksRouter from './routes/private/stacks';
-import authRouter from './routes/public/auth';
-
 import express, { Application } from 'express';
 import { AppTypes } from './types/AppTypes';
+
+import projectsRouter from './routes/private/projects';
+import imagesRouter from './routes/private/images';
+import stacksRouter from './routes/private/stacks';
+import authRouter from './routes/public/auth';
 
 export class App {
   public app: Application;
@@ -19,9 +20,10 @@ export class App {
   };
 
   private routers(): void {
-    this.app.use('/projects', projectsRouter)
-    this.app.use('/stacks', stacksRouter)
-    this.app.use('/auth', authRouter)
+    this.app.use('/projects', projectsRouter);
+    this.app.use('/images', imagesRouter);
+    this.app.use('/stacks', stacksRouter);
+    this.app.use('/auth', authRouter);
   };
 
   public listen(): void {

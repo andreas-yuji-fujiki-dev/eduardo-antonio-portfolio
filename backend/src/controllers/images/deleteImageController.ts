@@ -5,7 +5,7 @@ export default async function deleteImageController(req:Request, res:Response){
     const { id } = req.params;
 
     try {
-        // image exists?
+        // verify if image exists
         const mentionedImage = await prisma.image.findUnique({ where: { id: Number(id) }});
         
         if( !mentionedImage ){
@@ -27,7 +27,7 @@ export default async function deleteImageController(req:Request, res:Response){
         });
 
     } catch ( error ) {
-
+        // server internal error case
         return res.status(500).json({
             status: "500 - Internal server error",
             message: "An unexpected error has ocurred while deleting the image",

@@ -4,19 +4,22 @@ export default function updateImageMiddleware(req:Request, res:Response, next:Ne
     const { id } = req.params;
     const { name } = req.body;
 
-    if( !id ) {
+    // id must exist
+    if( !id || isNaN(Number(id))) {
         return res.status(400).json({
             status: "400 - Bad request",
-            message: "You must send image's id on request params."
+            message: "You must send a valid image's id on request params."
         });
     };
 
-    if( !name ){
+    // image's name must exist
+    if( !name || typeof name !== "string" ){
         return res.status(400).json({
             status: "400 - Bad request",
-            message: "You must send image's name to be updated."
+            message: "You must send image's name in string format to be updated."
         });
     };
 
+    // proceed
     next();
 };

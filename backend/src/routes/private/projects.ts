@@ -13,7 +13,7 @@
     import registerProjectController from "../../controllers/projects/registerProjectController";
     import getAllProjectsController from "../../controllers/projects/getAllProjectsController";
     import getProjectByIdController from "../../controllers/projects/getProjectByIdController";
-    import editProjectController from "../../middlewares/projects/editProjectController";
+    import editProjectController from "../../controllers/projects/editProjectController";
     import deleteProjectController from "../../controllers/projects/deleteProjectController";
     
 
@@ -22,13 +22,6 @@
     const projectsRouter = Router();
 
     // registering routes
-        // register project
-        projectsRouter.post('/', 
-            authRequiredMiddleware,
-            registerProjectMiddleware,
-            registerProjectController
-        )
-
         // get all projects
         projectsRouter.get('/', 
             authRequiredMiddleware, 
@@ -41,6 +34,13 @@
             getProjectByIdMiddleware, 
             getProjectByIdController
         );
+
+        // register project
+        projectsRouter.post('/', 
+            authRequiredMiddleware,
+            registerProjectMiddleware,
+            registerProjectController
+        )
 
         // edit project
         projectsRouter.put('/:id', 

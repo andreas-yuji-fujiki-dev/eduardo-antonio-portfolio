@@ -1,13 +1,21 @@
 import { Request, Response } from "express";
 import { prisma } from "../../config/prismaClient";
 
-export default async function deleteProjectController(
-  req: Request,
-  res: Response,
-) {
-  try {
-    const { id } = req.params;
+export default async function deleteProjectController(req: Request, res: Response){
+  const { id } = req.params;
 
+  try {
+    // verify if project exists
+    const projectDoesNotExists = await prisma.project.findUnique({ where: { id: Number(id) }});
+    
+    if( projectDoesNotExists ){
+      return res.status(404).json({
+        status: "404 - Not found",
+        message: `Project with id ${id} does not exists`
+      });
+    };
+
+    // deleting
     await prisma.project.delete({
       where: {
         id: Number(id),
@@ -18,7 +26,9 @@ export default async function deleteProjectController(
       status: "200 - Success",
       message: `Successfully deleted the project with id ${id}.`,
     });
+
   } catch (error) {
+    // internal server error case
     return res.status(500).json({
       status: "500 - Internal Server Error",
       message: error instanceof Error ? error.message : error,

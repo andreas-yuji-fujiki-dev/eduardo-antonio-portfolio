@@ -3,6 +3,7 @@ import { prisma } from "../../config/prismaClient";
 
 export default async function getAllImagesController(req: Request, res: Response) {
     try {
+        // get all images
         const allImages = await prisma.image.findMany({
             select: {
                 id: true,
@@ -12,13 +13,15 @@ export default async function getAllImagesController(req: Request, res: Response
             }
         });
 
+        // success message
         return res.status(200).json({
             status: "200 - Success",
             message: "Successfully got all images",
-            data: allImages ? allImages : "No images found..."
+            data: !!allImages.length ? allImages : "No images found..."
         });
 
     } catch (error) {
+        // server internal error case
         return res.status(500).json({
             status: "500 - Server internal error",
             message: "An error occurred while trying to list all images",

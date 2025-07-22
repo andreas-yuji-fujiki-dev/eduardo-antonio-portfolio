@@ -1,16 +1,16 @@
 import { Request, Response, NextFunction } from "express";
 
-export default function getProjectByIdMiddleware(req:Request, res:Response, next:NextFunction){
+export default function deleteStackMiddleware(req: Request, res: Response, next: NextFunction) {
     const { id } = req.params;
 
-    // id must exist
+    // id type validation
     if( !id || isNaN(Number(id)) ){
         return res.status(400).json({
             status: "400 - Bad Request",
-            message: "Missing a valid project's ID"
-        })
+            message: "The 'id' parameter must be a valid number.",
+        });
     };
 
     // proceed
-    next()
-};
+    next();
+}
