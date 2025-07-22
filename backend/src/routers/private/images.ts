@@ -26,7 +26,7 @@
         imagesRouter.get('/', 
             authRequiredMiddleware,
             getAllImagesController
-        );
+        ); 
 
         // get by id
         imagesRouter.get('/:id',

@@ -35,12 +35,12 @@
             getProjectByIdController
         );
 
-        // register project
+        // register/create project
         projectsRouter.post('/', 
             authRequiredMiddleware,
             registerProjectMiddleware,
             registerProjectController
-        )
+        );
 
         // edit project
         projectsRouter.put('/:id', 
@@ -57,4 +57,4 @@
         )
 
 // exporting
-export default projectsRouter;
+export default projectsRouter; 
