@@ -9,7 +9,7 @@ export default async function deleteImageController(req:Request, res:Response){
         const mentionedImage = await prisma.image.findUnique({ where: { id: Number(id) }});
         
         if( !mentionedImage ){
-            res.status(404).json({
+            return res.status(404).json({
                 status: "404 - Not found",
                 message: `Project with id ${id} was not found...`
             });
