@@ -8,41 +8,45 @@ datasource db {
 }
 
 model User {
-  id   Int @id @default(autoincrement())
-  name String @unique
+  id       Int    @id @default(autoincrement())
+  name     String @unique
   password String
 }
 
+model Image {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  projectId Int?
+  project   Project? @relation("ProjectImages", fields: [projectId], references: [id])
+  stackLogo Stack?   @relation("StackLogo")
+}
+
 model Project {
-  id              Int     @id @default(autoincrement())
-  name            String  @unique
+  id              Int            @id @default(autoincrement())
+  name            String         @unique
   description     String
   more_info       String
   deploy_link     String
   repository_link String
-  images          Image[] @relation("ProjectImages")
-}
-
-enum ExperienceLevel {
-  ONE   @map("1")
-  TWO   @map("2")
-  THREE @map("3")
+  images          Image[]        @relation("ProjectImages")
+  stacks          ProjectStack[]
 }
 
 model Stack {
-  id     Int    @id @default(autoincrement())
-  name   String
-  experience ExperienceLevel
-  logo   Image  @relation("StackLogo", fields: [logoId], references: [id])
-  logoId Int    @unique
+  id         Int              @id @default(autoincrement())
+  name       String
+  experience String
+  logoId     Int              @unique
+  logo       Image            @relation("StackLogo", fields: [logoId], references: [id])
+  projects   ProjectStack[]
 }
 
-model Image {
-  id          Int     @id @default(autoincrement())
-  name        String  @unique
+model ProjectStack {
+  project   Project @relation(fields: [projectId], references: [id])
+  projectId Int
 
-  project     Project? @relation("ProjectImages", fields: [projectId], references: [id])
-  projectId   Int?
+  stack     Stack   @relation(fields: [stackId], references: [id])
+  stackId   Int
 
-  stackLogo   Stack?   @relation("StackLogo")
+  @@id([projectId, stackId]) // 🔑 chave composta
 }
