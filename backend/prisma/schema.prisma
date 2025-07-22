@@ -32,15 +32,6 @@ model Project {
   stacks          ProjectStack[]
 }
 
-model Stack {
-  id         Int              @id @default(autoincrement())
-  name       String
-  experience String
-  logoId     Int              @unique
-  logo       Image            @relation("StackLogo", fields: [logoId], references: [id])
-  projects   ProjectStack[]
-}
-
 model ProjectStack {
   project   Project @relation(fields: [projectId], references: [id])
   projectId Int
@@ -48,5 +39,14 @@ model ProjectStack {
   stack     Stack   @relation(fields: [stackId], references: [id])
   stackId   Int
 
-  @@id([projectId, stackId]) // 🔑 chave composta
+  @@id([projectId, stackId])
+}
+
+model Stack {
+  id         Int              @id @default(autoincrement())
+  name       String
+  experience Int
+  logoId     Int              @unique
+  logo       Image            @relation("StackLogo", fields: [logoId], references: [id])
+  projects   ProjectStack[]
 }
