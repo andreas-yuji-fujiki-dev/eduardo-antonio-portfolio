@@ -6,9 +6,9 @@ export default async function deleteProjectController(req: Request, res: Respons
 
   try {
     // verify if project exists
-    const projectDoesNotExists = await prisma.project.findUnique({ where: { id: Number(id) }});
+    const projectExists = await prisma.project.findUnique({ where: { id: Number(id) }});
     
-    if( projectDoesNotExists ){
+    if( !projectExists ){
       return res.status(404).json({
         status: "404 - Not found",
         message: `Project with id ${id} does not exists`
