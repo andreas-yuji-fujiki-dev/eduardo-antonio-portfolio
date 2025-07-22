@@ -1,4 +1,3 @@
-# dependencies
 /node_modules
 /.pnp
 .pnp.*
@@ -8,13 +7,10 @@
 !.yarn/releases
 !.yarn/versions
 
-# testing
 /coverage
 
-# production
 /build
 
-# misc
 .DS_Store
 *.pem
 
@@ -24,13 +20,10 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
 .env
 
-# vercel
 .vercel
 
-# typescript
 *.tsbuildinfo
 
 /src/generated/prisma
