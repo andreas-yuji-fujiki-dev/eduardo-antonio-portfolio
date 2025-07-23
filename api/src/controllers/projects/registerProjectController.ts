@@ -14,7 +14,7 @@ export default async function registerProjectController(
       repository_link,
       imageIds,
       stackIds
-    } = req.body;
+  } = req.body;
 
   try {
     // verify if there is possibility of project names conflict
