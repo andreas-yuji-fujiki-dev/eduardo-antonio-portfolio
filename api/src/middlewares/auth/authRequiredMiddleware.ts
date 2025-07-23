@@ -27,7 +27,7 @@ export default function authRequiredMiddleware(req:Request, res:Response, next:N
         const decodedToken = jwt.verify(formattedToken, JWT_SECRET);
 
         // appending token into user
-        req.user = decodedToken
+        req.user = decodedToken;
 
         // then proceed
         next()
