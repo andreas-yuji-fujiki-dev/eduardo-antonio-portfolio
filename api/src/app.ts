@@ -41,7 +41,11 @@ export class App {
 
     // cors config for specific origins
     this.app.use(cors({
-      origin: ['http://localhost:3001'],
+      origin: [
+        'http://localhost:3001', // backend 
+        'http://localhost:3000', // portfolio
+        'http://localhost:3002'  // panel
+      ],
       credentials: true,
     }));
 
