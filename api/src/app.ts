@@ -32,8 +32,8 @@ export class App {
     this.middlewares();
     this.routers();
 
-    this.app.use(sanitizeMiddleware)
-  }
+    this.app.use(sanitizeMiddleware);
+  };
 
   private middlewares(): void {
     // headers security
@@ -60,7 +60,7 @@ export class App {
 
     // express json allowed on body
     this.app.use(express.json());
-  }
+  };
 
   // registering routes
   private routers(): void {
@@ -72,7 +72,7 @@ export class App {
     this.app.use('/images', imagesRouter);
     this.app.use('/stacks', stacksRouter);
     this.app.use('/auth', authRouter);
-  }
+  };
 
   // init function
   public listen(): void {
@@ -82,5 +82,5 @@ export class App {
         Happy hacking! =)
       `);
     });
-  }
-}
+  };
+};
