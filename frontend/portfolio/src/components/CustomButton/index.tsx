@@ -8,9 +8,9 @@ import { CustomButtonTypes } from "@/types/components/CustomButtonTypes";
 
 // estilos por variant 
 const variantStyles: Record<CustomButtonTypes["variant"], string> = {
-  default: "px-4 py-2 rounded shadow-md",
+  'default': "px-4 py-2 rounded shadow-md",
   'no-icon': "px-9 py-2.5 rounded-[12px] uppercase text-white",
-  transparent: "bg-transparent text-inherit hover:bg-gray-100",
+  'transparent': "bg-transparent text-inherit hover:bg-gray-100",
   'just-icon': "",
 };
 
@@ -28,7 +28,6 @@ export default function CustomButton({
   const themeStyle = (variant !== 'just-icon' && variant !== 'transparent') 
     ? (isDarkTheme ? 'bg-white text-black' : 'bg-black text-white')
     : '';
-
 
   const combinedClassName = `
     flex 

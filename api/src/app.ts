@@ -39,7 +39,7 @@ export class App {
     // headers security
     this.app.use(helmet());
 
-    // cors config for specific origins
+    // cors config for specific origins 
     this.app.use(cors({
       origin: [
         'http://localhost:3001', // backend 
