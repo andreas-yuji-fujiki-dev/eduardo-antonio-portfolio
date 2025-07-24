@@ -13,9 +13,9 @@ export default function ImagesManagementPage() {
 
     useEffect(()=>{
         function fetchImages(){
-            return
+            return ''
         };
-        const setApiImagesData = fetchImages()
+        setApiImagesData(fetchImages());
     },[])
 
     return (
