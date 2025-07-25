@@ -1,31 +1,37 @@
 import { CustomButtonTypes } from "@/types/CustomButtonTypes";
 import { HiMagnifyingGlass } from "react-icons/hi2";
 
-export default function CustomButton( { variant, children, className, onClick }: CustomButtonTypes ){
+export default function CustomButton({ variant, children, className, onClick }: CustomButtonTypes) {
     const baseButtonStyles = `
         px-4
         border-1
         rounded
+        cursor-pointer
+        transition
+        hover:opacity-90
     `;
 
-    if(variant === "search"){
+    if (variant === "search") {
         return (
             <button
-                className={ `${baseButtonStyles} ${className}` }
+                onClick={ onClick }
+                className={`${baseButtonStyles} ${className}`}
+                aria-label="Search button"
             >
                 <HiMagnifyingGlass />
             </button>
         );
-    };
+    }
 
-    return(
+    return (
         <button 
+            onClick={ onClick }
             className={`
                 ${baseButtonStyles}
                 ${className}
             `}
         >
-            { children }
+            {children}
         </button>
     );
-};
+}
