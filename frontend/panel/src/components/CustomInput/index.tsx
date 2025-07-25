@@ -2,7 +2,14 @@
 
 import { CustomInputTypes } from "@/types/CustomInputTypes";
 
-export default function CustomInput({ placeholder, value, onChange, className }: CustomInputTypes) {
+export default function CustomInput({ 
+    type,
+    placeholder, 
+    value, 
+    onChange, 
+    className
+}: CustomInputTypes) {
+
     return (
         <input
             className={`
@@ -14,7 +21,7 @@ export default function CustomInput({ placeholder, value, onChange, className }:
                 w-full
                 ${className}
             `}
-            type="text"
+            type={type || 'text'}
             placeholder={placeholder}
             value={value}
             onChange={onChange}
