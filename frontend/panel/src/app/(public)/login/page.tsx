@@ -1,16 +1,65 @@
 'use client';
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+
+import { useState } from "react";
+
 import PageContainer from "@/components/PageContainer";
 import CustomTitle from "@/components/CustomTitle";
 import CustomInput from "@/components/CustomInput";
 import CustomButton from "@/components/CustomButton";
-import { useState } from "react";
+
+import Cookies from "js-cookie";
+
+import { loginRequest } from "@/utils/api/routes/auth";
 
 export default function LoginPage(){
+    // given credentials data 
     const [ userName, setUserName ] = useState<string>('');
     const [ userPassword, setUserPassword ] = useState<string>('');
 
+    const router = useRouter();
+
+    // login action handler
+    async function loginButtonHandler() {
+        if (!userName) return alert('You must enter a user!');
+        if (!userPassword) return alert('You must enter the password!');
+
+        try {
+            const loginCredentialsObject = { user: userName, password: userPassword };
+            const response = await loginRequest(loginCredentialsObject);
+
+            if (response.status === 200) {
+                const token = response.data.token;
+
+                // saving on cookies
+                Cookies.set('token', token, {
+                    expires: 2 / 24, // days
+                    path: '/', // scope
+                    secure: false, // https only
+                    sameSite: 'Strict' 
+                });
+
+                // redirect to login
+                router.push('/');
+            };
+        } catch (err: any) {
+            console.error('Login error:', err);
+
+            if (err.response) {
+                if (err.response.status === 404) {
+                    alert('User not found!');
+                } else {
+                    alert(`Error ${err.response.status}: ${err.response.data.message}`);
+                }
+                } else {
+                    alert('Unknown error occurred');
+            };
+        };
+    };
+
+    // jsx
     return(
         <PageContainer
             className={`
@@ -54,6 +103,7 @@ export default function LoginPage(){
 
                     {/* user password input */}
                     <CustomInput
+                        type="password"
                         onChange={(e)=> setUserPassword(e.target.value)}
                         value={userPassword}
                         placeholder="Enter your password"
@@ -66,6 +116,7 @@ export default function LoginPage(){
                     <CustomButton 
                         variant="secondary" 
                         className="py-4 w-full"
+                        onClick={ () => loginButtonHandler() }
                     >
                         Login!
                     </CustomButton>
