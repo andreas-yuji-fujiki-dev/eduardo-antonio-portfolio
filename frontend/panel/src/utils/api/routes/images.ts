@@ -1,20 +1,34 @@
 import { api } from '../api';
-import Cookies from 'js-cookie';
+import { authHeader } from '../authHeader';
 
-interface Image {
-  id: string;
-  name: string;
-  description: string;
+// types
+import { ImageObjectTypes } from '@/types/api/images/ImageObjectTypes';
+import { ApiImagesResponseTypes } from '@/types/api/images/ApiImagesResponseTypes';
+
+import { ImageByIdTypes } from '@/types/api/images/ImageByIdTypes';
+import { ApiImageByIdResponseTypes } from '@/types/api/images/ApiImageByIdResponseTypes';
+import { EditImageNameByIdTypes } from '@/types/api/images/EditImageNameByIdTypes';
+
+// get all
+export async function getAllImages(): Promise<ImageObjectTypes[]> {
+  const request = await api.get<ApiImagesResponseTypes>('/images', authHeader);
+  return request.data.data; 
 };
 
-const token = Cookies.get('token');
+// get by id
+export async function getImageById( { id }: ImageByIdTypes): Promise<ImageObjectTypes> {
+  const request = await api.get<ApiImageByIdResponseTypes>(`/images/${id}`, authHeader);
+  return request.data.data;
+};
 
-export async function getAllImages(): Promise<Image[]> {
-  const response = await api.get('/images', {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
+// upload
+export async function uploadImage(formData: FormData) {
+  const response = await api.post('/images/upload', formData, authHeader);
   return response.data;
+};
+
+// edit
+export async function editImageNameById( { id, name } : EditImageNameByIdTypes ) {
+  const response = await api.put<ApiImageByIdResponseTypes>(`/images/${id}`, { name }, authHeader);
+  return response.data.data;
 };

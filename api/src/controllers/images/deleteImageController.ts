@@ -30,7 +30,7 @@ export default async function deleteImageController(req:Request, res:Response){
         // server internal error case
         return res.status(500).json({
             status: "500 - Internal server error",
-            message: "An unexpected error has ocurred while deleting the image",
+            message: "An unexpected error has occurred while deleting the image",
             error: error
         });
     }

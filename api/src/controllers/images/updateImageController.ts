@@ -32,7 +32,7 @@ export default async function updateImageController(req:Request, res:Response){
         // server internal error case
         res.status(500).json({
             status: "500 - Server internal error",
-            message: "An unexpected error ocurred while updating the image",
+            message: "An unexpected error occurred while updating the image",
             error: error
         });
     };

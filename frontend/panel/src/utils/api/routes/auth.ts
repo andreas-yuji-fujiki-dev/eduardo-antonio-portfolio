@@ -1,14 +1,10 @@
 import { api } from "../api";
-
-interface AuthBodyContentTypes {
-    user: string;
-    password: string;
-};
-
 import { AxiosResponse } from "axios";
 
+import { AuthBodyContentTypes } from "@/types/api/AuthBodyContentTypes";
+
 // login
-export async function loginRequest( data:AuthBodyContentTypes ): Promise<AxiosResponse> {
+export async function loginRequest( data:AuthBodyContentTypes ):Promise<AxiosResponse<AuthBodyContentTypes>> {
     const { user, password } = data;
 
     const response = await api.post('/auth/login', {
@@ -20,7 +16,7 @@ export async function loginRequest( data:AuthBodyContentTypes ): Promise<AxiosRe
 };
 
 // register
-export async function registerRequest( data:AuthBodyContentTypes ): Promise<AxiosResponse> {
+export async function registerRequest( data:AuthBodyContentTypes ): Promise<AxiosResponse<AuthBodyContentTypes>> {
     const { user, password } = data;
 
     const response = await api.post('/auth/register', {

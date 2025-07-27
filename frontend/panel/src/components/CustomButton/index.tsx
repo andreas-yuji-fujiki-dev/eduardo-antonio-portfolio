@@ -1,4 +1,4 @@
-import { CustomButtonTypes } from "@/types/CustomButtonTypes";
+import { CustomButtonTypes } from "@/types/components/CustomButtonTypes";
 import { HiMagnifyingGlass } from "react-icons/hi2";
 
 export default function CustomButton({ variant, children, className, onClick }: CustomButtonTypes) {
@@ -9,6 +9,9 @@ export default function CustomButton({ variant, children, className, onClick }: 
         cursor-pointer
         transition
         hover:opacity-90
+
+        flex
+        gap-2
     `;
 
     if (variant === "search") {

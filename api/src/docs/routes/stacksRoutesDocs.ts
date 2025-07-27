@@ -46,7 +46,7 @@
  *                   example: "500 - Internal server error"
  *                 message:
  *                   type: string
- *                   example: "An unexpected error has ocurred while listing all the stacks"
+ *                   example: "An unexpected error has occurred while listing all the stacks"
  *                 error:
  *                   type: object
  */
@@ -117,7 +117,7 @@
  *                   example: "500 - Server internal error"
  *                 message:
  *                   type: string
- *                   example: "An unexpected error has ocurred while getting stack by id"
+ *                   example: "An unexpected error has occurred while getting stack by id"
  */
 
 /**

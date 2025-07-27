@@ -30,7 +30,7 @@ export default async function createImageController(req:Request, res:Response){
         // internal server error case
         return res.status(500).json({
             status: "500 - Server internal error",
-            message: "An unexpected error ocurred while creating a new image.",
+            message: "An unexpected error occurred while creating a new image.",
             error: error
         });
     };

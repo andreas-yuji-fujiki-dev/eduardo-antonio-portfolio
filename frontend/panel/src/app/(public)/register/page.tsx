@@ -51,7 +51,7 @@ export default function RegisterPage(){
                 if(err.response.status === 409){
                     return alert(`User '${userName}' already exists!`);
                 } else {
-                    return alert('Unknown error ocurred, please try again later!')
+                    return alert('Unknown error occurred, please try again later!')
                 }
             };
         };

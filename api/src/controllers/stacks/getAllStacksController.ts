@@ -16,7 +16,7 @@ export default async function getAllStacksController(req:Request, res:Response){
         // in case of server internal error
         return res.status(500).json({
             status: "500 - Internal server error",
-            message: "An unexpected error has ocurred while listing all the stacks",
+            message: "An unexpected error has occurred while listing all the stacks",
             error: error
         });
     };

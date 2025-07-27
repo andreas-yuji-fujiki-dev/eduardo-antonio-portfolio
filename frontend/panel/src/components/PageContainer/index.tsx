@@ -1,4 +1,4 @@
-import { PageContainerTypes } from "@/types/PageContainerTypes";
+import { PageContainerTypes } from "@/types/components/PageContainerTypes";
 
 export default function PageContainer( { children, className }: PageContainerTypes ){
     return (

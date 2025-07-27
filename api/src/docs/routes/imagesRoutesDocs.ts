@@ -99,7 +99,7 @@
  *                   example: "500 - Internal server error"
  *                 message:
  *                   type: string
- *                   example: "An error ocurred while searching for image by id"
+ *                   example: "An error occurred while searching for image by id"
  *                 error:
  *                   type: object
  */
@@ -164,7 +164,7 @@
  *                   example: "500 - Server internal error"
  *                 message:
  *                   type: string
- *                   example: "An unexpected error ocurred while creating a new image."
+ *                   example: "An unexpected error occurred while creating a new image."
  *                 error:
  *                   type: object
  */
@@ -245,7 +245,7 @@
  *                   example: "500 - Server internal error"
  *                 message:
  *                   type: string
- *                   example: "An unexpected error ocurred while updating the image"
+ *                   example: "An unexpected error occurred while updating the image"
  *                 error:
  *                   type: object
  */
@@ -313,7 +313,7 @@
  *                   example: "500 - Internal server error"
  *                 message:
  *                   type: string
- *                   example: "An unexpected error has ocurred while deleting the image"
+ *                   example: "An unexpected error has occurred while deleting the image"
  *                 error:
  *                   type: object
  */

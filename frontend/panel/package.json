@@ -9,10 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/formidable": "^3.4.5",
     "@types/js-cookie": "^3.0.6",
     "@types/jsonwebtoken": "^9.0.10",
     "axios": "^1.11.0",
     "dotenv": "^17.2.1",
+    "formidable": "^3.5.4",
     "jose": "^6.0.12",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",

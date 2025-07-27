@@ -1,4 +1,4 @@
-import { CustomTitleTypes } from "@/types/CustomTitleTypes"
+import { CustomTitleTypes } from "@/types/components/CustomTitleTypes"
 
 export default function CustomTitle( { variant, children, className } : CustomTitleTypes ){
     if(variant === 'primary'){

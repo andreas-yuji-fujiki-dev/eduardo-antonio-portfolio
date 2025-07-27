@@ -1,6 +1,6 @@
 "use client";
 
-import { CustomInputTypes } from "@/types/CustomInputTypes";
+import { CustomInputTypes } from "@/types/components/CustomInputTypes";
 
 export default function CustomInput({ 
     type,
