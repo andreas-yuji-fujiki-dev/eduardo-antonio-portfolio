@@ -11,6 +11,7 @@
     import getImageByIdMiddleware from "../../middlewares/images/getImageByIdMiddleware";
     import createImageMiddleware from "../../middlewares/images/createImageMiddleware";
     import updateImageMiddleware from "../../middlewares/images/updateImageMiddleware";
+    import replaceImageMiddleware from '../../middlewares/images/replaceImageMiddleware ';
     import deleteImageMiddleware from "../../middlewares/images/deleteImageMiddleware";
     
     // controllers
@@ -18,6 +19,7 @@
     import getImageByIdController from "../../controllers/images/getImageByIdController";
     import createImageController from "../../controllers/images/createImageController";
     import updateImageController from "../../controllers/images/updateImageController";
+    import replaceImageController from '../../controllers/images/replaceImageController';
     import deleteImageController from "../../controllers/images/deleteImageController";
     
 
@@ -26,17 +28,6 @@
     const imagesRouter = Router();
 
     // routes register
-        // serving images
-        imagesRouter.get('/serve/:imageName', (req, res) => {
-            const { imageName } = req.params;
-            const imagePath = path.join(__dirname, '../../../uploads', imageName);
-            
-            if (fs.existsSync(imagePath)) {
-                return res.sendFile(imagePath);
-            }
-            return res.status(404).json({ error: 'Image not found' });
-        });
-
         // get all 
         imagesRouter.get('/', 
             authRequiredMiddleware,
@@ -62,6 +53,13 @@
             authRequiredMiddleware,
             updateImageMiddleware,
             updateImageController
+        );
+
+        // replace
+        imagesRouter.put('/:id/replace', 
+        authRequiredMiddleware,
+            replaceImageMiddleware,
+            replaceImageController
         );
 
         // delete

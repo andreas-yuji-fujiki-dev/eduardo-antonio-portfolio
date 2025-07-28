@@ -10,11 +10,12 @@ import {
   getAllImages, 
   editImageNameById, 
   uploadImage,
-  deleteImageById
+  deleteImageById,
+  replaceImage
 } from "@/utils/api/routes/images";
 import { ImageObjectTypes } from "@/types/api/images/ImageObjectTypes";
 
-import { FaEdit, FaTimes, FaCheck, FaPen, FaTrash, FaUpload } from "react-icons/fa";
+import { FaEdit, FaTimes, FaCheck, FaPen, FaTrash, FaUpload, FaSync } from "react-icons/fa";
 import { toast } from "react-toastify";
 
 export default function ImagesManagementPage() {
@@ -24,6 +25,8 @@ export default function ImagesManagementPage() {
     const [editingImageId, setEditingImageId] = useState<number | null>(null);
     const [editedName, setEditedName] = useState<string>("");
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const replaceFileInputRef = useRef<HTMLInputElement>(null);
+    const [replacingImageId, setReplacingImageId] = useState<number | null>(null);
 
     // Fetch all images
     async function fetchAllImages() {
@@ -70,6 +73,38 @@ export default function ImagesManagementPage() {
         }
     };
 
+    // Handle image replacement
+    const handleReplaceImage = async (e: ChangeEvent<HTMLInputElement>) => {
+        console.log('Replace triggered', e.target.files); // Debug
+        
+        if (e.target.files && e.target.files[0] && replacingImageId) {
+            try {
+            console.log('Replacing image ID:', replacingImageId); // Debug
+            
+            const formData = new FormData();
+            formData.append('image', e.target.files[0]);
+            
+            const response = await replaceImage({
+                id: replacingImageId,
+                image: e.target.files[0]
+            });
+            
+            console.log('Replace response:', response); // Debug
+            
+            toast.success("Image replaced successfully");
+            await fetchAllImages();
+            } catch (error) {
+            console.error("Error details:", error); // Debug mais detalhado
+            toast.error("Failed to replace image");
+            } finally {
+            setReplacingImageId(null);
+            if (replaceFileInputRef.current) {
+                replaceFileInputRef.current.value = '';
+            }
+            }
+        }
+    };
+
     // Edit functions
     const handleStartEditing = (img: ImageObjectTypes) => {
         setEditingImageId(img.id);
@@ -82,12 +117,12 @@ export default function ImagesManagementPage() {
     };
 
     const handleConfirmEditing = async (img: ImageObjectTypes) => {
-    if (editedName.trim() === "" || editedName === img.name) {
-        handleCancelEditing();
-        return;
-    }
+        if (editedName.trim() === "" || editedName === img.name) {
+            handleCancelEditing();
+            return;
+        }
 
-    try {
+        try {
             const updatedImage = await editImageNameById({
                 id: img.id,
                 name: editedName
@@ -95,7 +130,6 @@ export default function ImagesManagementPage() {
             
             toast.success("Image name updated successfully");
             
-            // Atualiza a lista de imagens
             setApiImagesData(prev => 
                 prev?.map(image => 
                     image.id === img.id 
@@ -163,13 +197,23 @@ export default function ImagesManagementPage() {
                     <FaUpload /> Upload Image
                     <input
                         type="file"
-                        ref={fileInputRef}
-                        onChange={handleImageUpload}
+                        ref={replaceFileInputRef}
+                        onChange={handleReplaceImage}
                         accept="image/*"
                         className="hidden"
+                        key={replacingImageId || 'default'}
                     />
                 </CustomButton>
             </div>
+
+            {/* Hidden input for image replacement */}
+            <input
+                type="file"
+                ref={replaceFileInputRef}
+                onChange={handleReplaceImage}
+                accept="image/*"
+                className="hidden"
+            />
 
             {/* Images Grid */}
             {filteredImages && filteredImages.length > 0 ? (
@@ -182,15 +226,29 @@ export default function ImagesManagementPage() {
                                     className="w-full h-48 object-cover"
                                     src={`/api/uploads/${img.name}`}
                                     alt={img.name}
+                                    onError={(e) => {
+                                        (e.target as HTMLImageElement).src = '/placeholder-image.jpg';
+                                    }}
                                 />
                                 
                                 {/* Image Overlay */}
                                 <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
                                     <div className="flex gap-2">
                                         <button 
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                setReplacingImageId(img.id);
+                                                replaceFileInputRef.current?.click();
+                                            }}
+                                            className="p-2 bg-white rounded-full hover:bg-purple-100 transition-colors"
+                                            title="Replace Image"
+                                            >
+                                            <FaSync className="text-purple-600" />
+                                        </button>
+                                        <button 
                                             onClick={() => handleStartEditing(img)}
                                             className="p-2 bg-white rounded-full hover:bg-blue-100 transition-colors"
-                                            title="Edit"
+                                            title="Edit Name"
                                         >
                                             <FaPen className="text-blue-600" />
                                         </button>
