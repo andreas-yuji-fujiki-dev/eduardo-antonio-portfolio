@@ -1,8 +1,4 @@
 // imports 
-    // for files and paths
-    import path from 'path';
-    import fs from 'fs';
-    
     // express
     import { Router } from "express";
 
@@ -57,7 +53,7 @@
 
         // replace
         imagesRouter.put('/:id/replace', 
-        authRequiredMiddleware,
+            authRequiredMiddleware,
             replaceImageMiddleware,
             replaceImageController
         );

@@ -50,6 +50,7 @@ export class App {
       exposedHeaders: ['Content-Type', 'Authorization'],
     }));
 
+    // api config to serve image files
     this.app.use('/uploads', express.static('uploads'));
 
     // brute force protection

@@ -8,7 +8,6 @@ import { ImageByIdTypes } from '@/types/api/images/ImageByIdTypes';
 import { ApiImageByIdResponseTypes } from '@/types/api/images/ApiImageByIdResponseTypes';
 import { EditImageNameByIdTypes } from '@/types/api/images/EditImageNameByIdTypes';
 import { UploadImageTypes } from '@/types/api/images/UploadImageTypes';
-import { ReplaceImageTypes } from '@/types/api/images/ReplaceImageTypes';
 
 // get all images
 export async function getAllImages(): Promise<ImageObjectTypes[]> {
@@ -24,6 +23,7 @@ export async function getAllImages(): Promise<ImageObjectTypes[]> {
   }
 };
 
+
 // get image by id
 export async function getImageById({ id }: ImageByIdTypes): Promise<ImageObjectTypes> {
   try {
@@ -32,6 +32,7 @@ export async function getImageById({ id }: ImageByIdTypes): Promise<ImageObjectT
       ...response.data.data,
       url: `/api/uploads/${response.data.data.name}` // Atualizado para usar o proxy
     };
+
   } catch (error) {
     console.error(`Error fetching image with id ${id}:`, error);
     throw error;

@@ -30,6 +30,7 @@ export default async function createImageController(req: Request, res: Response)
         url: `/uploads/${filename}`
       }
     });
+    
   } catch (error) {
     // Se ocorrer um erro, remove o arquivo enviado
     if (req.file) {

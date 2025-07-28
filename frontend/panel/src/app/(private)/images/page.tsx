@@ -1,32 +1,49 @@
 "use client";
 
-import { useState, useEffect, useRef, ChangeEvent } from "react";
-import PageContainer from "@/components/PageContainer";
-import CustomButton from "@/components/CustomButton";
-import CustomTitle from "@/components/CustomTitle";
-import CustomInput from "@/components/CustomInput";
+import { 
+    useState, 
+    useEffect, 
+    useRef, 
+    ChangeEvent 
+} from "react";
 
 import { 
   getAllImages, 
   editImageNameById, 
   uploadImage,
-  deleteImageById,
-  replaceImage
+  replaceImage,
+  deleteImageById
 } from "@/utils/api/routes/images";
+
+import PageContainer from "@/components/PageContainer";
+import CustomButton from "@/components/CustomButton";
+import CustomTitle from "@/components/CustomTitle";
+import CustomInput from "@/components/CustomInput";
+
 import { ImageObjectTypes } from "@/types/api/images/ImageObjectTypes";
 
-import { FaEdit, FaTimes, FaCheck, FaPen, FaTrash, FaUpload, FaSync } from "react-icons/fa";
+import { 
+    FaEdit, 
+    FaTimes, 
+    FaCheck, 
+    FaPen, 
+    FaTrash, 
+    FaUpload, 
+    FaSync 
+} from "react-icons/fa";
+
 import { toast } from "react-toastify";
 
 export default function ImagesManagementPage() {
-    const [apiImagesData, setApiImagesData] = useState<ImageObjectTypes[] | null>(null);
-    const [searchInputValue, setSearchInputValue] = useState<string>('');
-    const [filteredImages, setFilteredImages] = useState<ImageObjectTypes[] | null>(null);
-    const [editingImageId, setEditingImageId] = useState<number | null>(null);
-    const [editedName, setEditedName] = useState<string>("");
+    const [ apiImagesData, setApiImagesData ] = useState<ImageObjectTypes[] | null>(null);
+    const [ searchInputValue, setSearchInputValue ] = useState<string>('');
+    const [ filteredImages, setFilteredImages ] = useState<ImageObjectTypes[] | null>(null);
+    const [ editingImageId, setEditingImageId ] = useState<number | null>(null);
+    const [ editedName, setEditedName ] = useState<string>("");
     const fileInputRef = useRef<HTMLInputElement>(null);
     const replaceFileInputRef = useRef<HTMLInputElement>(null);
-    const [replacingImageId, setReplacingImageId] = useState<number | null>(null);
+    const [ replacingImageId, setReplacingImageId ] = useState<number | null>(null);
+
 
     // Fetch all images
     async function fetchAllImages() {
@@ -34,6 +51,7 @@ export default function ImagesManagementPage() {
             const response = await getAllImages();
             setApiImagesData(response);
             setFilteredImages(response);
+
         } catch (error) {
             console.error("Error fetching images:", error);
             toast.error("Failed to load images");
@@ -46,9 +64,9 @@ export default function ImagesManagementPage() {
             const filtered = apiImagesData.filter(img => 
                 img.name.toLowerCase().includes(searchInputValue.toLowerCase())
             );
-            setFilteredImages(filtered);
+            setFilteredImages( filtered );
         }
-    }, [searchInputValue, apiImagesData]);
+    }, [ searchInputValue, apiImagesData ]);
 
     // Initial fetch
     useEffect(() => { 
@@ -195,15 +213,14 @@ export default function ImagesManagementPage() {
                     className="flex items-center gap-2"
                 >
                     <FaUpload /> Upload Image
-                    <input
-                        type="file"
-                        ref={replaceFileInputRef}
-                        onChange={handleReplaceImage}
-                        accept="image/*"
-                        className="hidden"
-                        key={replacingImageId || 'default'}
-                    />
                 </CustomButton>
+                <input
+                    type="file"
+                    ref={fileInputRef}
+                    onChange={handleImageUpload}
+                    accept="image/*"
+                    className="hidden"
+                />
             </div>
 
             {/* Hidden input for image replacement */}
@@ -242,7 +259,7 @@ export default function ImagesManagementPage() {
                                             }}
                                             className="p-2 bg-white rounded-full hover:bg-purple-100 transition-colors"
                                             title="Replace Image"
-                                            >
+                                        >
                                             <FaSync className="text-purple-600" />
                                         </button>
                                         <button 
