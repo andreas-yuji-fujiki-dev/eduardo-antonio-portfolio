@@ -180,7 +180,7 @@ export default function ImagesManagementPage() {
                             <div className="relative group">
                                 <img
                                     className="w-full h-48 object-cover"
-                                    src={`http://localhost:3001/${img.url}`}
+                                    src={`/api/uploads/${img.name}`}
                                     alt={img.name}
                                 />
                                 

@@ -1,4 +1,8 @@
 // imports 
+    // for files and paths
+    import path from 'path';
+    import fs from 'fs';
+    
     // express
     import { Router } from "express";
 
@@ -22,6 +26,17 @@
     const imagesRouter = Router();
 
     // routes register
+        // serving images
+        imagesRouter.get('/serve/:imageName', (req, res) => {
+            const { imageName } = req.params;
+            const imagePath = path.join(__dirname, '../../../uploads', imageName);
+            
+            if (fs.existsSync(imagePath)) {
+                return res.sendFile(imagePath);
+            }
+            return res.status(404).json({ error: 'Image not found' });
+        });
+
         // get all 
         imagesRouter.get('/', 
             authRequiredMiddleware,

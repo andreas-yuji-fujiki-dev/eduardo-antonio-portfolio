@@ -47,6 +47,7 @@ export class App {
         'http://localhost:3002'  // panel
       ],
       credentials: true,
+      exposedHeaders: ['Content-Type', 'Authorization'],
     }));
 
     this.app.use('/uploads', express.static('uploads'));
