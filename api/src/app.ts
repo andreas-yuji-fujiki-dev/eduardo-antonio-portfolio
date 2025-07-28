@@ -49,6 +49,8 @@ export class App {
       credentials: true,
     }));
 
+    this.app.use('/uploads', express.static('uploads'));
+
     // brute force protection
     this.app.use(rateLimit({
       windowMs: 15 * 60 * 1000, // 15 minutes

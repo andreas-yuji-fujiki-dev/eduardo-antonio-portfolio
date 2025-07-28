@@ -1,3 +1,3 @@
 export interface ImageByIdTypes {
-    id: number;
+  id: number;
 }

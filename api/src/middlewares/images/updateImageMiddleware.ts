@@ -1,25 +1,26 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction } from 'express';
+import { prisma } from '../../config/prismaClient';
 
-export default function updateImageMiddleware(req:Request, res:Response, next:NextFunction){
-    const { id } = req.params;
-    const { name } = req.body;
+export default async function updateImageMiddleware(req: Request, res: Response, next: NextFunction) {
+  const { id } = req.params;
+  
+  try {
+    // Verifica se a imagem existe
+    const imageExists = await prisma.image.findUnique({
+      where: { id: Number(id) }
+    });
 
-    // id must exist
-    if( !id || isNaN(Number(id)) ) {
-        return res.status(400).json({
-            status: "400 - Bad request",
-            message: "You must send a valid image's id on request params."
-        });
-    };
+    if (!imageExists) {
+      return res.status(404).json({
+        status: '404 - Not found',
+        message: `Image with id ${id} does not exists`
+      })
+    }
 
-    // image's name must exist
-    if( !name || typeof name !== "string" ) {
-        return res.status(400).json({
-            status: "400 - Bad request",
-            message: "You must send image's name in string format to be updated."
-        });
-    };
-
-    // proceed
+    // Adiciona a imagem existente ao request para uso no controller
+    req.existingImage = imageExists;
     next();
-};
+  } catch (error) {
+    next(error);
+  }
+}

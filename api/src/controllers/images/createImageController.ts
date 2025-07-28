@@ -1,37 +1,42 @@
-import { Request, Response } from "express";
-import { prisma } from "../../config/prismaClient";
+import { Request, Response } from 'express';
+import { prisma } from '../../config/prismaClient';
+import fs from 'fs';
+import path from 'path';
 
-export default async function createImageController(req:Request, res:Response){
-    const { name } = req.body;
+export default async function createImageController(req: Request, res: Response) {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: 'No image uploaded' });
+    }
 
-    try {
-        // a image already exists with this name?
-        const imageAlreadyExists = await prisma.image.findFirst({ where: { name }});
+    const { originalname, filename, path: filePath } = req.file;
 
-        if( imageAlreadyExists ){
-            return res.status(409).json({
-                status: "409 - Conflict",
-                message: "A image with this name already exists."
-            });
-        };
+    // Extrai a extensão do arquivo
+    const ext = path.extname(originalname).toLowerCase();
 
-        // creating
-        const newImage = await prisma.image.create({
-            data: { name }
-        });
+    // Cria a imagem no banco de dados
+    const image = await prisma.image.create({
+      data: {
+        name: filename,
+      }
+    });
 
-        return res.status(201).json({
-            status: "201 - Success",
-            message: "Successfully created the image",
-            data: newImage
-        });
-
-    } catch ( error ) {
-        // internal server error case
-        return res.status(500).json({
-            status: "500 - Server internal error",
-            message: "An unexpected error occurred while creating a new image.",
-            error: error
-        });
-    };
-};
+    // Retorna a imagem criada
+    return res.status(201).json({
+      message: 'Image uploaded successfully',
+      image: {
+        id: image.id,
+        name: image.name,
+        url: `/uploads/${filename}`
+      }
+    });
+  } catch (error) {
+    // Se ocorrer um erro, remove o arquivo enviado
+    if (req.file) {
+      fs.unlink(req.file.path, (err) => {
+        if (err) console.error('Error deleting file:', err);
+      });
+    }
+    return res.status(500).json({ error: 'Error uploading image' });
+  }
+}

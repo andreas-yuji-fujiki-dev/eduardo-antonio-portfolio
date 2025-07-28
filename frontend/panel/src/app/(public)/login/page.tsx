@@ -34,7 +34,7 @@ export default function LoginPage(){
                 const token = response.data.token;
 
                 // saving on cookies
-                Cookies.set('token', token, {
+                token && Cookies.set('token', token, {
                     expires: 2 / 24, // days
                     path: '/', // scope
                     secure: false, // https only

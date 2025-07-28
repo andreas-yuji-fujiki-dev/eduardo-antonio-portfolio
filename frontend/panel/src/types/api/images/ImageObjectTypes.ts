@@ -1,5 +1,6 @@
 export interface ImageObjectTypes {
   id: number;
   name: string;
-  description: string;
+  projectId?: number | null;
+  url: string;
 }
