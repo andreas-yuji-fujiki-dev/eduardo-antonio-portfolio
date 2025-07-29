@@ -15,7 +15,7 @@ export async function getAllImages(): Promise<ImageObjectTypes[]> {
     const response = await api.get<ApiImagesResponseTypes>('/images', authHeader);
     return response.data.data.map(img => ({
       ...img,
-      url: `/api/uploads/${img.name}` // Atualizado para usar o proxy
+      url: `/api/uploads/${img.name}`
     }));
   } catch (error) {
     console.error('Error fetching images:', error);
@@ -30,7 +30,7 @@ export async function getImageById({ id }: ImageByIdTypes): Promise<ImageObjectT
     const response = await api.get<ApiImageByIdResponseTypes>(`/images/${id}`, authHeader);
     return {
       ...response.data.data,
-      url: `/api/uploads/${response.data.data.name}` // Atualizado para usar o proxy
+      url: `/api/uploads/${response.data.data.name}`
     };
 
   } catch (error) {
@@ -54,7 +54,7 @@ export async function uploadImage({ image }: UploadImageTypes): Promise<ImageObj
 
     return {
       ...response.data.image,
-      url: `/api/uploads/${response.data.image.name}` // Atualizado para usar o proxy
+      url: `/api/uploads/${response.data.image.name}`
     };
   } catch (error) {
     console.error('Error uploading image:', error);
@@ -78,7 +78,7 @@ export async function editImageNameById({ id, name }: EditImageNameByIdTypes): P
     return {
       id: response.data.data.id,
       name: response.data.data.name,
-      url: `/api/uploads/${response.data.data.name}` // Atualizado para usar o proxy
+      url: `/api/uploads/${response.data.data.name}`
     };
   } catch (error) {
     console.error(`Error updating image with id ${id}:`, error);
@@ -91,8 +91,6 @@ export async function replaceImage({ id, image }: { id: number; image: File }): 
   try {
     const formData = new FormData();
     formData.append('image', image);
-
-    console.log('Sending replace request for image ID:', id);
     
     const response = await api.put(`/images/${id}/replace`, formData, {
       ...authHeader,
@@ -100,33 +98,31 @@ export async function replaceImage({ id, image }: { id: number; image: File }): 
         'Content-Type': 'multipart/form-data'
       }
     });
-
-    console.log('Replace API response:', response.data);
     
     return {
       ...response.data.data,
       url: `/api/uploads/${response.data.data.name}`
     };
   } catch (error: unknown) {
-    // Verifica se é um erro do Axios
+    // axios error
     if (isAxiosError(error)) {
       console.error('API Error details:', error.response?.data || error.message);
       throw new Error(error.response?.data?.message || error.message);
     }
     
-    // Verifica se é um Error padrão
+    // default error
     if (error instanceof Error) {
       console.error('Error:', error.message);
       throw error;
     }
     
-    // Caso seja outro tipo de erro
+    // unknown error
     console.error('Unknown error:', error);
     throw new Error('An unknown error occurred');
   }
 }
 
-// Tipo para verificar erros do Axios
+// axios error verify
 function isAxiosError(error: unknown): error is { 
   isAxiosError: boolean; 
   response?: { data?: { message?: string } }; 
@@ -139,6 +135,7 @@ function isAxiosError(error: unknown): error is {
 export async function deleteImageById(id: number): Promise<void> {
   try {
     await api.delete(`/images/${id}`, authHeader);
+    
   } catch (error) {
     console.error(`Error deleting image with id ${id}:`, error);
     throw error;
