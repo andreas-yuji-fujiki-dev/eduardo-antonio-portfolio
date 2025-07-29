@@ -2,10 +2,10 @@ import { Request, Response, NextFunction } from 'express';
 import multer from 'multer';
 import path from 'path';
 
-// Configuração do armazenamento
+// storage config
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/'); // Pasta onde as imagens serão salvas
+    cb(null, 'uploads/'); // folder where images will be stored
   },
   filename: (req, file, cb) => {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
@@ -14,7 +14,7 @@ const storage = multer.diskStorage({
   }
 });
 
-// Filtro para aceitar apenas imagens
+// filter to only accept image files
 const fileFilter = (req: Request, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
   const filetypes = /jpeg|jpg|png|gif/;
   const extname = filetypes.test(path.extname(file.originalname).toLowerCase());

@@ -4,7 +4,7 @@ import { prisma } from "../../config/prismaClient";
 export default async function deleteImageMiddleware(req: Request, res: Response, next: NextFunction) {
     const { id } = req.params;
 
-    // Validação do ID
+    // id validation
     if (!id || isNaN(Number(id))) {
         return res.status(400).json({
             status: 400,
@@ -13,7 +13,7 @@ export default async function deleteImageMiddleware(req: Request, res: Response,
     }
 
     try {
-        // Verifica se a imagem existe
+        // verifying if image exists
         const image = await prisma.image.findUnique({ 
             where: { id: Number(id) }
         });
@@ -25,7 +25,7 @@ export default async function deleteImageMiddleware(req: Request, res: Response,
             });
         }
 
-        // Adiciona a imagem ao request para uso no controller
+        // adding image into request to use it on controller
         req.imageToDelete = image;
         next();
     } catch (error) {

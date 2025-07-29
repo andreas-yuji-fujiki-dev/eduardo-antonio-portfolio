@@ -20,11 +20,11 @@ export default async function updateImageController(req: Request, res: Response)
     const updateData: { name?: string } = {};
     let newFilename = existingImage.name;
 
-    // Se há um novo arquivo de imagem
+    // if there is a new image file
     if (req.file) {
       newFilename = req.file.filename;
       
-      // Remove a imagem antiga
+      // removing old image
       const oldImagePath = path.join('uploads', existingImage.name);
       fs.unlink(oldImagePath, (err) => {
         if (err && err.code !== 'ENOENT') {
@@ -32,15 +32,18 @@ export default async function updateImageController(req: Request, res: Response)
         }
       });
     } 
-    // Se apenas o nome está sendo atualizado
+
+    // if only name is being updated
     else if (name && name !== existingImage.name) {
       const oldExt = path.extname(existingImage.name);
       const newExt = path.extname(name);
-      const finalExt = newExt || oldExt; // Mantém extensão original se não for especificada
+
+      // keeps the original file extension if a new was not provided
+      const finalExt = newExt || oldExt;
       
       newFilename = path.basename(name, newExt) + finalExt;
       
-      // Renomeia o arquivo físico
+      // renaming fisic file
       const oldPath = path.join('uploads', existingImage.name);
       const newPath = path.join('uploads', newFilename);
       
@@ -52,7 +55,7 @@ export default async function updateImageController(req: Request, res: Response)
       }
     }
 
-    // Atualiza o nome no banco de dados
+    // updating the file name on database
     if (req.file || name) {
       updateData.name = newFilename;
     }

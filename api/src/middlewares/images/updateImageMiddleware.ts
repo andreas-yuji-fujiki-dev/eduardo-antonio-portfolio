@@ -5,7 +5,7 @@ export default async function updateImageMiddleware(req: Request, res: Response,
   const { id } = req.params;
   
   try {
-    // Verifica se a imagem existe
+    // verify if image exists
     const imageExists = await prisma.image.findUnique({
       where: { id: Number(id) }
     });
@@ -17,7 +17,7 @@ export default async function updateImageMiddleware(req: Request, res: Response,
       })
     }
 
-    // Adiciona a imagem existente ao request para uso no controller
+    // adding image into request, it will be used on controller
     req.existingImage = imageExists;
     next();
   } catch (error) {

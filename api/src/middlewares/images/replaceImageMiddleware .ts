@@ -4,7 +4,7 @@ import path from 'path';
 import fs from 'fs';
 import { prisma } from '../../config/prismaClient';
 
-// Configuração do Multer para substituição
+// multer config for images upload
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, 'uploads/');
@@ -38,7 +38,7 @@ export default [
     const { id } = req.params;
     
     try {
-      // Verifica se a imagem existe
+      // verify if image exists
       const image = await prisma.image.findUnique({
         where: { id: Number(id) }
       });
@@ -50,11 +50,11 @@ export default [
         })
       }
 
-      // Adiciona a imagem existente ao request
+      // add the current image into request
       req.existingImage = image;
       next();
     } catch (error) {
-      // Se der erro, remove o arquivo enviado
+      // if error, remove the uploaded file
       if (req.file) {
         fs.unlink(req.file.path, (err) => {
           if (err) console.error('Error deleting file:', err);

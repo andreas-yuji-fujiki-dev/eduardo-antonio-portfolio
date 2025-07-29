@@ -8,21 +8,21 @@ export default async function deleteImageController(req: Request, res: Response)
     const imageToDelete = req.imageToDelete;
 
     try {
-        // Primeiro deleta o registro do banco de dados
+        // deleting register from database
         const deletedImage = await prisma.image.delete({
             where: { id: Number(id) }
         });
 
-        // Depois tenta deletar o arquivo físico
+        // trying to delete the fisic file
         const imagePath = path.join('uploads', imageToDelete.name);
         
         fs.unlink(imagePath, (err) => {
-            if (err && err.code !== 'ENOENT') { // Ignora se o arquivo não existir
+            if (err && err.code !== 'ENOENT') { // ignores if file don't exist
                 console.error('Error deleting image file:', err);
-                // Não falha a operação se não conseguir deletar o arquivo
             }
         });
 
+        // return data
         return res.status(200).json({
             status: 200,
             message: "Image deleted successfully",

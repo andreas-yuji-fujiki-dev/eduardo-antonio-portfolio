@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import { prisma } from '../../config/prismaClient';
 import fs from 'fs';
-import path from 'path';
 
 export default async function createImageController(req: Request, res: Response) {
   try {
@@ -9,19 +8,16 @@ export default async function createImageController(req: Request, res: Response)
       return res.status(400).json({ error: 'No image uploaded' });
     }
 
-    const { originalname, filename, path: filePath } = req.file;
+    const { filename } = req.file;
 
-    // Extrai a extensão do arquivo
-    const ext = path.extname(originalname).toLowerCase();
-
-    // Cria a imagem no banco de dados
+    // creating the image on database
     const image = await prisma.image.create({
       data: {
         name: filename,
       }
     });
 
-    // Retorna a imagem criada
+    // returning the created image
     return res.status(201).json({
       message: 'Image uploaded successfully',
       image: {
@@ -32,7 +28,7 @@ export default async function createImageController(req: Request, res: Response)
     });
     
   } catch (error) {
-    // Se ocorrer um erro, remove o arquivo enviado
+    // in case of error, remove the uploaded image
     if (req.file) {
       fs.unlink(req.file.path, (err) => {
         if (err) console.error('Error deleting file:', err);
