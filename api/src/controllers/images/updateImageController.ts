@@ -6,63 +6,84 @@ import path from 'path';
 export default async function updateImageController(req: Request, res: Response) {
   try {
     const { id } = req.params;
-    const { name } = req.body;
+    const { name, projectId, stackId } = req.body;
     const existingImage = req.existingImage;
 
-    if (!req.file && !name) {
+    // verify if there is at least one field to update
+    if (!req.file && !name && projectId === undefined && stackId === undefined) {
       return res.status(400).json({ 
         status: 400,
-        message: 'No image or name provided for update',
+        message: 'No fields provided for update',
         data: null
       });
     }
 
-    const updateData: { name?: string } = {};
+    const updateData: {
+      name?: string;
+      projectId?: number | null;
+      stackLogo?: { connect?: { id: number }, disconnect?: boolean };
+    } = {};
+
     let newFilename = existingImage.name;
 
-    // if there is a new image file
+    // update image file
     if (req.file) {
       newFilename = req.file.filename;
-      
-      // removing old image
+
+      // remove old image
       const oldImagePath = path.join('uploads', existingImage.name);
       fs.unlink(oldImagePath, (err) => {
         if (err && err.code !== 'ENOENT') {
           console.error('Error deleting old image:', err);
         }
       });
+      
+      updateData.name = newFilename;
     } 
-
-    // if only name is being updated
+    // update only name
     else if (name && name !== existingImage.name) {
       const oldExt = path.extname(existingImage.name);
       const newExt = path.extname(name);
-
-      // keeps the original file extension if a new was not provided
       const finalExt = newExt || oldExt;
-      
       newFilename = path.basename(name, newExt) + finalExt;
-      
-      // renaming fisic file
+
+      // rename physical file
       const oldPath = path.join('uploads', existingImage.name);
       const newPath = path.join('uploads', newFilename);
       
       try {
         fs.renameSync(oldPath, newPath);
+        updateData.name = newFilename;
       } catch (err) {
         console.error('Error renaming file:', err);
         throw new Error('Failed to rename image file');
       }
     }
 
-    // updating the file name on database
-    if (req.file || name) {
-      updateData.name = newFilename;
+    // update projectId
+    if (projectId !== undefined) {
+      updateData.projectId = projectId === null ? null : Number(projectId);
     }
 
+    // update stackLogo (stackId)
+    if (stackId !== undefined) {
+      if (stackId === null) {
+        // remove association if stackId is null
+        updateData.stackLogo = { disconnect: true };
+      } else {
+        // create new association
+        updateData.stackLogo = { connect: { id: Number(stackId) } };
+      }
+    }
+
+    // update image in database
     const updatedImage = await prisma.image.update({
       where: { id: Number(id) },
-      data: updateData
+      data: updateData,
+      include: {
+        project: true,
+        stackLogo: true
+      }
     });
 
     return res.status(200).json({
@@ -71,13 +92,16 @@ export default async function updateImageController(req: Request, res: Response)
       data: {
         id: updatedImage.id,
         name: updatedImage.name,
-        url: `/uploads/${updatedImage.name}`
+        url: `/uploads/${updatedImage.name}`,
+        projectId: updatedImage.projectId,
+        stackId: updatedImage.stackLogo?.id || null
       }
     });
 
   } catch (error) {
     console.error('Error in updateImageController:', error);
-    
+
+    // if there was a file upload but an error occurred, remove the file
     if (req.file) {
       fs.unlink(req.file.path, (err) => {
         if (err) console.error('Error deleting uploaded file:', err);

@@ -1,10 +1,8 @@
 "use client";
 
-import { useState, useEffect, useRef, ChangeEvent, RefObject } 
-    from "react";
+import { useState, useEffect, useRef, ChangeEvent, RefObject } from "react";
 
-import { getAllImages, editImageNameById, uploadImage, replaceImage, deleteImageById } 
-    from "@/utils/api/routes/images";
+import { getAllImages, editImageNameById, uploadImage, replaceImage, deleteImageById } from "@/utils/api/routes/images";
 
 import { toast } from "react-toastify";
 import { ImageObjectTypes } from "@/types/api/images/ImageObjectTypes";
