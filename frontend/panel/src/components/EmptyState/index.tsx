@@ -9,7 +9,7 @@ export default function EmptyState({ searchValue, onClearSearch }: EmptyStatePro
       {searchValue && (
         <button 
           onClick={onClearSearch} 
-          className="text-blue-600 mt-2"
+          className="text-blue-600 mt-2 cursor-pointer"
         >
           Clear search
         </button>
