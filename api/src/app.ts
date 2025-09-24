@@ -73,11 +73,11 @@ export class App {
     this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
     // app routers
-    this.app.use('/', slashRouter)
+    this.app.use('/', slashRouter);
+    this.app.use('/auth', authRouter);
     this.app.use('/projects', projectsRouter);
     this.app.use('/images', imagesRouter);
     this.app.use('/stacks', stacksRouter);
-    this.app.use('/auth', authRouter);
   };
 
   // init function
