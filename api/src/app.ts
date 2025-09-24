@@ -11,6 +11,7 @@ import rateLimit from 'express-rate-limit';
 import { sanitizeMiddleware } from './middlewares/security/sanitizeMiddleware';
 
 // routers
+import slashRouter from './routers/public/slash';
 import projectsRouter from './routers/private/projects';
 import imagesRouter from './routers/private/images';
 import stacksRouter from './routers/private/stacks';
@@ -72,6 +73,7 @@ export class App {
     this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
     // app routers
+    this.app.use('/', slashRouter)
     this.app.use('/projects', projectsRouter);
     this.app.use('/images', imagesRouter);
     this.app.use('/stacks', stacksRouter);
