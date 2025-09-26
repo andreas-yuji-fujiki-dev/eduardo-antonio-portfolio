@@ -7,11 +7,8 @@ export default async function getAllProjectsController(req: Request, res: Respon
     const allProjects = await prisma.project.findMany({
       include: {
         images: true,
-        stacks: {
-          include: {
-            stack: true
-          }
-        }
+        stacks: { include: { stack: true } },
+        category: true
       }
     });
 
