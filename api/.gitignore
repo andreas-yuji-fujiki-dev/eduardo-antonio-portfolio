@@ -1,4 +1,5 @@
-/uploads/
+/uploads/*.*
+
 /prisma/migrations
 
 /node_modules
