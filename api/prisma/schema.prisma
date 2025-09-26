@@ -13,40 +13,57 @@ model User {
   password String
 }
 
+model ImageCategory {
+  id     Int     @id @default(autoincrement())
+  name   String  @unique
+  images Image[]
+}
+
 model Image {
-  id        Int      @id @default(autoincrement())
-  name      String   @unique
-  projectId Int?
-  project   Project? @relation("ProjectImages", fields: [projectId], references: [id])
-  stackLogo Stack?   @relation("StackLogo")
+  id          Int            @id @default(autoincrement())
+  name        String         @unique
+  projectId   Int?
+  project     Project?       @relation("ProjectImages", fields: [projectId], references: [id])
+  stackLogo   Stack?         @relation("StackLogo")
+
+  categoryId  Int?
+  category    ImageCategory? @relation(fields: [categoryId], references: [id])
+}
+
+model ProjectCategory {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  projects Project[]
 }
 
 model Project {
-  id              Int            @id @default(autoincrement())
-  name            String         @unique
+  id              Int              @id @default(autoincrement())
+  name            String           @unique
   description     String
   more_info       String
   deploy_link     String
   repository_link String
-  images          Image[]        @relation("ProjectImages")
+  images          Image[]          @relation("ProjectImages")
   stacks          ProjectStack[]
+
+  categoryId      Int?
+  category        ProjectCategory? @relation(fields: [categoryId], references: [id])
 }
 
 model ProjectStack {
-  project   Project @relation(fields: [projectId], references: [id])
   projectId Int
-
-  stack     Stack   @relation(fields: [stackId], references: [id])
   stackId   Int
+  stack     Stack   @relation(fields: [stackId], references: [id])
+  project   Project @relation(fields: [projectId], references: [id])
 
   @@id([projectId, stackId])
 }
 
 model Stack {
-  id         Int              @id @default(autoincrement())
+  id         Int            @id @default(autoincrement())
   name       String
   experience Int
-  logoId     Int              @unique
-  logo       Image            @relation("StackLogo", fields: [logoId], references: [id])
+  logoId     Int            @unique
   projects   ProjectStack[]
+  logo       Image          @relation("StackLogo", fields: [logoId], references: [id])
 }
