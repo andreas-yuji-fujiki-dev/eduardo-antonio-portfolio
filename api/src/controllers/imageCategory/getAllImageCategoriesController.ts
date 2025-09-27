@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { prisma } from "../../config/prismaClient";
 
-export default async function getAllImageCategories(req: Request, res: Response) {
+export default async function getAllImageCategoriesController(req: Request, res: Response) {
     try {
         // get all
         const allImageCategories = await prisma.imageCategory.findMany()
