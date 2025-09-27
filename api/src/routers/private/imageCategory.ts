@@ -6,7 +6,7 @@
     import authRequiredMiddleware from "../../middlewares/auth/authRequiredMiddleware";
 
     // controllers
-    import getAllImageCategories from "../../controllers/imageCategory/getAllImageCategories";
+    import getAllImageCategories from "../../controllers/imageCategory/getAllImageCategoriesController";
 
 
 // router config
@@ -23,6 +23,15 @@
         // get by id
         imageCategoriesRouter.get('/:id',
             authRequiredMiddleware,
+            /*
+                const { id } = req.params;
+                const imageCategoryBySpecificId = await prisma.imageCategory.findUnique({
+                    where: {
+                        id
+                    }
+                })
+            
+            */
         )
 
         // register/create
