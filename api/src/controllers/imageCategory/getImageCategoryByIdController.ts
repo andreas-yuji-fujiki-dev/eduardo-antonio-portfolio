@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { prisma } from "../../config/prismaClient";
 
-export default async function getImageCategoryById( req: Request, res: Response ){
+export default async function getImageCategoryByIdController( req: Request, res: Response ){
     try {
         // given id
         const { id } = req.params;
