@@ -10,9 +10,11 @@ export default async function getImageCategoryByIdMiddleware(req: Request, res:R
             message: "ID must be an valid integer number"
         });
 
+        // in success case
+        next();
     } catch (error) {
         // in case of server internal error
-        res.status(500).json({
+        return res.status(500).json({
             status: "500 - Server internal error",
             message: "Something gone wrong",
             details: `The following error ocurred: ${error}`
