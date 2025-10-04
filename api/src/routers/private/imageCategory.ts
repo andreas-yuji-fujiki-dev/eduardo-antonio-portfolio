@@ -7,12 +7,15 @@
     import getImageCategoryByIdMiddleware from "../../middlewares/imagesCategory/getImageCategoryByIdMiddleware";
     import createImageCategoryMiddleware from "../../middlewares/imagesCategory/createImageCategoryMiddleware";
     import UpdateImageCategoryMiddleware from "../../middlewares/imagesCategory/UpdateImageCategoryMiddleware";
+    import deleteImageCategoryMiddleware from "../../middlewares/imagesCategory/deleteImageCategoryMiddleware";
+
 
     // controllers
     import getAllImageCategories from "../../controllers/imageCategory/getAllImageCategoriesController";
     import getImageCategoryByIdController from "../../controllers/imageCategory/getImageCategoryByIdController";
     import createImageCategoryController from "../../controllers/imageCategory/createImageCategoryController";
     import updateImageCategoryController from "../../controllers/imageCategory/updateImageCategoryController";
+    import deleteImageCategoryController from "../../controllers/imageCategory/deleteImageCategoryController";
 
 
 // router config
@@ -50,6 +53,8 @@
         // delete
         imageCategoriesRouter.delete('/',
             authRequiredMiddleware,
+            deleteImageCategoryMiddleware,
+            deleteImageCategoryController
         );
 
 // exporting router
