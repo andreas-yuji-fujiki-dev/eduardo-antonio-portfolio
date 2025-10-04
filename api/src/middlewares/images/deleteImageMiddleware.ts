@@ -27,8 +27,11 @@ export default async function deleteImageMiddleware(req: Request, res: Response,
 
         // adding image into request to use it on controller
         req.imageToDelete = image;
-        next();
+        next()
+
     } catch (error) {
+
+        // internal server error
         return res.status(500).json({
             status: 500,
             message: "Error while verifying image existence",
