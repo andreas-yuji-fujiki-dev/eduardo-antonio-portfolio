@@ -26,7 +26,7 @@ export default async function deleteImageCategoryMiddleware(req: Request, res: R
         // internal server error
         return res.status(500).json({
             status: "500 - Internal server error",
-            message: `An unexpected error ocurred while trying to delete the image with id ${id}.`,
+            error: "An unexpected error ocurred",
             details: error?.message || String(error)
         })
     }

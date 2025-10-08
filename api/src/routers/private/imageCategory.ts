@@ -4,10 +4,10 @@
 
     // middlewares
     import authRequiredMiddleware from "../../middlewares/auth/authRequiredMiddleware";
-    import getImageCategoryByIdMiddleware from "../../middlewares/imagesCategory/getImageCategoryByIdMiddleware";
-    import createImageCategoryMiddleware from "../../middlewares/imagesCategory/createImageCategoryMiddleware";
-    import UpdateImageCategoryMiddleware from "../../middlewares/imagesCategory/UpdateImageCategoryMiddleware";
-    import deleteImageCategoryMiddleware from "../../middlewares/imagesCategory/deleteImageCategoryMiddleware";
+    import getImageCategoryByIdMiddleware from "../../middlewares/imageCategories/getImageCategoryByIdMiddleware";
+    import createImageCategoryMiddleware from "../../middlewares/imageCategories/createImageCategoryMiddleware";
+    import UpdateImageCategoryMiddleware from "../../middlewares/imageCategories/UpdateImageCategoryMiddleware";
+    import deleteImageCategoryMiddleware from "../../middlewares/imageCategories/deleteImageCategoryMiddleware";
 
 
     // controllers

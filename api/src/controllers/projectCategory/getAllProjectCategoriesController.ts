@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { prisma } from "../../config/prismaClient";
 
-export default async function getAllProjectsCategoryController(req: Request, res: Response){
+export default async function getAllProjectCategoriesController(req: Request, res: Response){
     try {
         // success case
         const allProjectCategories = await prisma.projectCategory.findMany();
@@ -13,12 +13,12 @@ export default async function getAllProjectsCategoryController(req: Request, res
                 :  "Successfuly got all project categories",
             data: allProjectCategories
         })
-    } catch (error: unknown) {
+    } catch (error) {
         // internal server error
         return res.status(500).json({
-            status: "500 - Server internal error",
-            message: "An unexpected error ocurred while trying to get all project categories",
-            details: error instanceof Error ? error.message : String(error)
+            status: "500 - Internal server error",
+            error: "An unexpected error ocurred",
+            details: error?.message || String(error)
         })
     }
 }

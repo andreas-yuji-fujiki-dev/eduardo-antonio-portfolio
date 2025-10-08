@@ -8,21 +8,21 @@ export default function UpdateImageCategoryMiddleware(req: Request, res: Respons
   // name
   const { name } = req.body;
 
-  // valida id
+  // validating id
   if (!id || isNaN(parsedId) || !Number.isInteger(parsedId) || parsedId <= 0) {
     return res.status(400).json({
       message: "You must provide the category 'id' as a valid positive integer in request params."
     });
   }
 
-  // valida name
+  // validating name
   if (!name || typeof name !== "string" || name.trim().length === 0) {
     return res.status(400).json({
       message: "You must provide the image category name as a non-empty string to update."
     });
   }
 
-  // sucesso → injeta id convertido
+  // success
   (req as any).imageCategoryId = parsedId;
   next();
 }
