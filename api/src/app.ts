@@ -12,6 +12,7 @@ import { sanitizeMiddleware } from './middlewares/security/sanitizeMiddleware';
 
 // routers
 import slashRouter from './routers/public/slash';
+import projectCategoriesRouter from './routers/private/projectCategory';
 import projectsRouter from './routers/private/projects';
 import imageCategoriesRouter from './routers/private/imageCategory';
 import imagesRouter from './routers/private/images';
@@ -76,9 +77,13 @@ export class App {
     // app routers
     this.app.use('/', slashRouter);
     this.app.use('/auth', authRouter);
+    
+    this.app.use('/projectCategories', projectCategoriesRouter);
     this.app.use('/projects', projectsRouter);
+
+    this.app.use('/imageCategories', imageCategoriesRouter);
     this.app.use('/images', imagesRouter);
-    this.app.use('/imageCategories', imageCategoriesRouter)
+    
     this.app.use('/stacks', stacksRouter);
   };
 
