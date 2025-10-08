@@ -12,12 +12,13 @@ import { sanitizeMiddleware } from './middlewares/security/sanitizeMiddleware';
 
 // routers
 import slashRouter from './routers/public/slash';
+import authRouter from './routers/public/auth';
 import projectCategoriesRouter from './routers/private/projectCategory';
 import projectsRouter from './routers/private/projects';
 import imageCategoriesRouter from './routers/private/imageCategory';
 import imagesRouter from './routers/private/images';
+import stackCategoryRouter from './routers/private/stackCategory';
 import stacksRouter from './routers/private/stacks';
-import authRouter from './routers/public/auth';
 
 // docs
 import swaggerUi from 'swagger-ui-express';
@@ -84,6 +85,7 @@ export class App {
     this.app.use('/imageCategories', imageCategoriesRouter);
     this.app.use('/images', imagesRouter);
     
+    this.app.use('stackCategories', stackCategoryRouter);
     this.app.use('/stacks', stacksRouter);
   };
 
