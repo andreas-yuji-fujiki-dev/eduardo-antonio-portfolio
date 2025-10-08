@@ -3,7 +3,7 @@ import { prisma } from '../../config/prismaClient';
 
 export default async function updateImageMiddleware(req: Request, res: Response, next: NextFunction) {
   const { id } = req.params;
-  const { projectId, stackId } = req.body;
+  const { projectId, stackId } = req.body; 
   
   try {
     // verify if the image exists
