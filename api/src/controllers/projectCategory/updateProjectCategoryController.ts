@@ -7,10 +7,7 @@ export default async function updateProjectCategoryController(req: Request, res:
 
     try {
         // updating
-        const updatedProjectCategory = await prisma.projectCategory.update({
-            where: { id: Number(id) },
-            data: { name } 
-        });
+        const updatedProjectCategory = await prisma.projectCategory.update({ where: { id: Number(id) }, data: { name } });
 
         // success
         return res.status(200).json({
