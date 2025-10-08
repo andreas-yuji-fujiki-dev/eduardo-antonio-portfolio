@@ -59,6 +59,12 @@ model ProjectStack {
   @@id([projectId, stackId])
 }
 
+model StackCategory {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  stacks   Stack[]
+}
+
 model Stack {
   id         Int            @id @default(autoincrement())
   name       String
@@ -66,4 +72,7 @@ model Stack {
   logoId     Int            @unique
   projects   ProjectStack[]
   logo       Image          @relation("StackLogo", fields: [logoId], references: [id])
+
+  categoryId Int?
+  category   StackCategory? @relation(fields: [categoryId], references: [id])
 }
