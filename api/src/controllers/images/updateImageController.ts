@@ -117,10 +117,10 @@ export default async function updateImageController(req: Request, res: Response)
       });
     }
     
-    return res.status(500).json({ 
-      status: 500,
-      message: error instanceof Error ? error.message : 'Error updating image',
-      data: null
-    });
+    return res.status(500).json({
+        status: "500 - Internal server error",
+        error: "An unexpected error ocurred",
+        details: error?.message || String(error)
+    })
   }
 }

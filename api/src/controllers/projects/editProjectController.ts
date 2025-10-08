@@ -120,9 +120,9 @@ export default async function editProjectController(req: Request, res: Response)
   } catch (error) {
     // in case of server internal error
     return res.status(500).json({
-      status: "500 - Internal Server Error",
-      message: "Error while updating project.",
-      error: error instanceof Error ? error.message : error,
-    });
+        status: "500 - Internal server error",
+        error: "An unexpected error ocurred",
+        details: error?.message || String(error)
+    })
   }
 }

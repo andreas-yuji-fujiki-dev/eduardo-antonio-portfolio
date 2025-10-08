@@ -34,9 +34,10 @@ export default async function createImageController(req: Request, res: Response)
         if (err) console.error('Error deleting file:', err);
       });
     }
-    return res.status(500).json({ 
-      error: 'Error uploading image',
-      details: error.message 
-    });
+    return res.status(500).json({
+        status: "500 - Internal server error",
+        error: "An unexpected error ocurred",
+        details: error?.message || String(error)
+    })
   }
 }

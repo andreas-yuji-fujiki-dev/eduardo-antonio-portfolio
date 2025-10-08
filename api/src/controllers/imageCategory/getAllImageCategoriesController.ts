@@ -18,8 +18,8 @@ export default async function getAllImageCategoriesController(req: Request, res:
         // in case of server internal error
          return res.status(500).json({
             status: "500 - Internal server error",
-            message: "Something went wrong while fetching image categories.",
-            error: error instanceof Error ? error.message : error
+            error: "Something went wrong while fetching image categories.",
+            details: error instanceof Error ? error.message : error
         });
     }
 }

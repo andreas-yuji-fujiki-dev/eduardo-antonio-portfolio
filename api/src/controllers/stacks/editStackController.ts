@@ -50,9 +50,9 @@ export default async function editStackController(req: Request, res: Response) {
     } catch (error) {
         // in case of server internal error
         return res.status(500).json({
-            status: "500 - Internal Server Error",
-            message: "An error occurred while updating the stack.",
-            error,
-        });
+            status: "500 - Internal server error",
+            error: "An unexpected error ocurred",
+            details: error?.message || String(error)
+        })
     }
 }

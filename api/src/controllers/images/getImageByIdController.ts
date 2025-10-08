@@ -33,8 +33,8 @@ export default async function getImageByIdController(req:Request, res:Response){
         // internal server error case
         return res.status(500).json({
             status: "500 - Internal server error",
-            message: "An error occurred while searching for image by id",
-            error: error
-        });
+            error: "An unexpected error ocurred",
+            details: error?.message || String(error)
+        })
     };
 };

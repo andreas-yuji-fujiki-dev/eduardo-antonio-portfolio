@@ -53,9 +53,9 @@ export default async function replaceImageController(req: Request, res: Response
     }
     
     return res.status(500).json({
-      status: 500,
-      message: 'Error replacing image',
-      error: error instanceof Error ? error.message : 'Unknown error'
-    });
+        status: "500 - Internal server error",
+        error: "An unexpected error ocurred",
+        details: error?.message || String(error)
+    })
   }
 }

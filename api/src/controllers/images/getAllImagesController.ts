@@ -24,8 +24,8 @@ export default async function getAllImagesController(req: Request, res: Response
         // server internal error case
         return res.status(500).json({
             status: "500 - Server internal error",
-            message: "An error occurred while trying to list all images",
-            error
+            error: "An error occurred while trying to list all images",
+            details: error?.message || String(error)
         });
     }
 };

@@ -33,9 +33,10 @@ export default function authRequiredMiddleware(req:Request, res:Response, next:N
         next()
     } catch (error) {
         // in case of server internal error
-        return res.status(401).json({
-            status: "401 - Access denied.",
-            message: "You must to have bearer token in string type, make login first."
-        });
+        return res.status(500).json({
+            status: "500 - Internal server error",
+            error: "An unexpected error ocurred",
+            details: error?.message || String(error)
+        })
     };
 };

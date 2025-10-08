@@ -5,15 +5,6 @@ export default async function createImageCategoryController(req: Request, res: R
     try {
         const { name } = req.body;
 
-        // checking if a category with this name already exists
-        const alreadyExists = 
-            await prisma.imageCategory.findFirst({ where: { name } });
-        
-        if (alreadyExists) return res.status(409).json({
-            status: "409 - Conflict",
-            message: `An image category already exists with the name '${name}'.`
-        });
-
         // creating
         const createdImageCategory = 
             await prisma.imageCategory.create({ data: { name } });
@@ -29,7 +20,8 @@ export default async function createImageCategoryController(req: Request, res: R
         // internal server error
         return res.status(500).json({
             status: "500 - Internal server error",
-            error: error?.message || String(error)
+            message: "Something went wrong.",
+            details: error?.message || String(error)
         })
     }
 }

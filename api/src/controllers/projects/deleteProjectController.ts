@@ -30,8 +30,9 @@ export default async function deleteProjectController(req: Request, res: Respons
   } catch (error) {
     // internal server error case
     return res.status(500).json({
-      status: "500 - Internal Server Error",
-      message: error instanceof Error ? error.message : error,
-    });
+        status: "500 - Internal server error",
+        error: "An unexpected error ocurred",
+        details: error?.message || String(error)
+    })
   }
 }

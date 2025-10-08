@@ -53,8 +53,8 @@ export default async function userLoginController(req: Request, res: Response) {
         // in case of internal server error
         return res.status(500).json({
             status: "500 - Internal server error.",
-            message: "Something went wrong.",
-            error: error.message
+            error: "Something went wrong.",
+            details: error?.message || String(error)
         });
     }
 }

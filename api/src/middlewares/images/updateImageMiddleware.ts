@@ -53,6 +53,10 @@ export default async function updateImageMiddleware(req: Request, res: Response,
     req.existingImage = imageExists;
     next();
   } catch (error) {
-    next(error);
+    return res.status(500).json({
+        status: "500 - Internal server error",
+        error: "An unexpected error ocurred",
+        details: error?.message || String(error)
+    })
   }
 }

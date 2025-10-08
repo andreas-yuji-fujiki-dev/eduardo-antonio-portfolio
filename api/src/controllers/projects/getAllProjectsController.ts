@@ -21,9 +21,9 @@ export default async function getAllProjectsController(req: Request, res: Respon
   } catch (error) {
     // in case of server internal error
     return res.status(500).json({
-      status: "500 - Internal server error",
-      message: "Something went wrong while fetching projects.",
-      error: error instanceof Error ? error.message : error
-    });
+        status: "500 - Internal server error",
+        error: "An unexpected error ocurred",
+        details: error?.message || String(error)
+    })
   }
 }

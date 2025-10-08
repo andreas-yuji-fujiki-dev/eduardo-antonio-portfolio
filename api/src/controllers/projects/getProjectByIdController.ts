@@ -29,8 +29,9 @@ export default async function getProjectByIdController(req: Request, res:Respons
     } catch (error) {
         // in case of server intenal error
         return res.status(500).json({
-            status: "500 - Server internal error",
-            message: error
-        });
+            status: "500 - Internal server error",
+            error: "An unexpected error ocurred",
+            details: error?.message || String(error)
+        })
     }
 };

@@ -16,26 +16,19 @@ export default async function getImageCategoryByIdController( req: Request, res:
             }
         });
 
-        // if does not exist
-        if(!specificImageCategory){
-            res.status(404).json({
-                status: "404 - Not found!",
-                message: `Cannot find image category with id ${id}`
-            })
-        };
-
         // success case
         res.status(200).json({
             status: "200 - Success",
             message: `Successfuly got the image category with id ${id}`,
             data: specificImageCategory
         })
+
     } catch (error) {
-        // error case
+        // internal server error case
         res.status(500).json({
             status: "500 - Internal server error",
-            message: "An unexpected error ocurred",
-            details: error.message
+            error: "An unexpected error ocurred",
+            details: error?.message || String(error)
         })
     }
 };

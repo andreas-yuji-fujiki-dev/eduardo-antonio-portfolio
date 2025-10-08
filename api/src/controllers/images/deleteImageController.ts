@@ -36,9 +36,9 @@ export default async function deleteImageController(req: Request, res: Response)
         console.error('Error deleting image:', error);
         
         return res.status(500).json({
-            status: 500,
-            message: "An unexpected error occurred while deleting the image",
-            error: error instanceof Error ? error.message : "Unknown error"
-        });
+            status: "500 - Internal server error",
+            error: "An unexpected error ocurred",
+            details: error?.message || String(error)
+        })
     }
 }

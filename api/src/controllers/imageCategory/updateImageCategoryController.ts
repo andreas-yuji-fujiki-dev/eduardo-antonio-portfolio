@@ -33,8 +33,9 @@ export default async function updateImageCategoryController(req: Request, res: R
   } catch (error: any) {
     // internal server error
     return res.status(500).json({
-      message: "An unexpected error occurred while updating the image category.",
-      error: error?.message || String(error)
+      status: "500 - Internal server error",
+      error: "Something went wrong",
+      details: error?.message || String(error)
     });
   }
 }

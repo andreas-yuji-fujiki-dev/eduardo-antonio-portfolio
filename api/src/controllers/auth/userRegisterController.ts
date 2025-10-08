@@ -38,7 +38,8 @@ export default async function userRegisterController( req:Request, res:Response)
         // in case of server internal error message
         res.status(500).json({
             status: "500 - Server internal error.",
-            message: error
+            error: "Something went wrong.",
+            details: error?.message || String(error)
         });
     };
 };

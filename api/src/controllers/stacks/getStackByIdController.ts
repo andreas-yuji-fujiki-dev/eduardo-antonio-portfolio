@@ -22,8 +22,9 @@ export default async function getStackByIdController(req:Request, res:Response){
     } catch (error) {
         // in case of server internal error
         return res.status(500).json({
-            status: "500 - Server internal error",
-            message: "An unexpected error has occurred while getting stack by id"
+            status: "500 - Internal server error",
+            error: "An unexpected error ocurred",
+            details: error?.message || String(error)
         })
     }
 };
