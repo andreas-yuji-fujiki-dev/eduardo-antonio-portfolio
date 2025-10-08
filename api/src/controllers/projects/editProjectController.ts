@@ -12,6 +12,7 @@ export default async function editProjectController(req: Request, res: Response)
     repository_link,
     imageIds,
     stackIds,
+    categoryId
   } = req.body;
 
   try {
@@ -24,6 +25,7 @@ export default async function editProjectController(req: Request, res: Response)
         ...(more_info !== undefined && { more_info }),
         ...(deploy_link !== undefined && { deploy_link }),
         ...(repository_link !== undefined && { repository_link }),
+        ...(categoryId !== undefined && { categoryId })
       },
     });
 
@@ -125,4 +127,4 @@ export default async function editProjectController(req: Request, res: Response)
         details: error?.message || String(error)
     })
   }
-}
+} 
