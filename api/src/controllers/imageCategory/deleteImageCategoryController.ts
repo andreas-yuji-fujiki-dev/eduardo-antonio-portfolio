@@ -10,7 +10,7 @@ export default async function deleteImageCategoryController(req: Request, res: R
         
         return res.status(200).json({
             status: "200 - Success",
-            message: `Successfuly deleted the image category with id ${id}`,
+            message: `Successfully deleted the image category with id ${id}`,
             data: `Deleted: ${deletedImageCategory}`
         })
 

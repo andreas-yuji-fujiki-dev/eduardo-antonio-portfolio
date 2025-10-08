@@ -11,7 +11,7 @@ export default async function createImageCategoryController(req: Request, res: R
 
         return res.status(201).json({
             status: "200 - Created",
-            message: `Successfuly created the image category '${name}'.`,
+            message: `Successfully created the image category '${name}'.`,
             data: createdImageCategory
         })
 

@@ -11,7 +11,7 @@ export default async function createProjectCategoryController(req: Request, res:
         // success
         return res.status(201).json({
             status: "201 - Created",
-            message: `Successfuly created the '${name}' project category`,
+            message: `Successfully created the '${name}' project category`,
             data: createdProjectCategory
         })
         

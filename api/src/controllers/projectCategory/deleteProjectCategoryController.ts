@@ -11,7 +11,7 @@ export default async function deleteProjectCategoryController(req: Request, res:
         // success
         return res.status(200).json({
             status: "200 - Success",
-            message: `Successfuly deleted the project category with id ${id}`,
+            message: `Successfully deleted the project category with id ${id}`,
             data: `Deleted: ${deletedProjectCategory}`
         })
     } catch (error) {

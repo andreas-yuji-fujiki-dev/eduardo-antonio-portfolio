@@ -15,7 +15,7 @@ export default async function updateProjectCategoryController(req: Request, res:
         // success
         return res.status(200).json({
             status: "200 - Success",
-            message: `Successfuly updated the name of the project category with id ${id} to ${name}`,
+            message: `Successfully updated the name of the project category with id ${id} to ${name}`,
             data: updatedProjectCategory
         });
 
