@@ -7,7 +7,7 @@ export default function deleteStackMiddleware(req: Request, res: Response, next:
     if( !id || isNaN(Number(id)) ){
         return res.status(400).json({
             status: "400 - Bad Request",
-            message: "The 'id' parameter must be a valid number.",
+            message: "The 'id' parameter must be a valid number",
         });
     };
 

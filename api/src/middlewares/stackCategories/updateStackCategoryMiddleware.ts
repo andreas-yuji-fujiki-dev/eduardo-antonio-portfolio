@@ -22,7 +22,7 @@ export default async function updateStackCategoryMiddleware(req: Request, res: R
         
         if(!existingStackCategoryFound) return res.status(404).json({
             status: "404 - Not found",
-            message: `Cannot find stack category with id ${id}`
+            message: `Cannot find stack category with id '${id}'`
         });
 
         // success

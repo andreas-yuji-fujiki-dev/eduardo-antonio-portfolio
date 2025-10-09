@@ -11,7 +11,7 @@ export default async function deleteProjectController(req: Request, res: Respons
     if( !projectExists ){
       return res.status(404).json({
         status: "404 - Not found",
-        message: `Project with id ${id} does not exists`
+        message: `Project with id '${id}' does not exists`
       });
     };
 
@@ -24,7 +24,7 @@ export default async function deleteProjectController(req: Request, res: Respons
 
     return res.status(200).json({
       status: "200 - Success",
-      message: `Successfully deleted the project with id ${id}.`,
+      message: `Successfully deleted the project with id '${id}'`,
     });
 
   } catch (error) {

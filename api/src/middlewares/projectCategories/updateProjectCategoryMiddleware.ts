@@ -23,7 +23,7 @@ export default async function updateProjectCategoryMiddleware(req: Request, res:
 
         if(!foundProjectCategory) return res.status(400).json({
             status: "400 - Bad request",
-            message: `Cannot find project category with id ${id}`
+            message: `Cannot find project category with id '${id}'`
         });
 
         // success

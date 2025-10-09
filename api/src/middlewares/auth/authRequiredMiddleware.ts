@@ -10,13 +10,13 @@ export default function authRequiredMiddleware(req:Request, res:Response, next:N
     if( !token || typeof token !== "string" ){
         return res.status(401).json({
             status: "401 - Access denied",
-            message: "You must to have a bearer token in string type, make login first."
+            message: "You must to have a bearer token in string type, make login first"
         });
     };
 
     // if there is not jwt secret
     if( !JWT_SECRET ){
-        throw new Error("JWT_SECRET is not defined.");
+        throw new Error("JWT_SECRET is not defined");
     };
 
     try {

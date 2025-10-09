@@ -11,14 +11,14 @@ export default function UpdateImageCategoryMiddleware(req: Request, res: Respons
   // validating id
   if (!id || isNaN(parsedId) || !Number.isInteger(parsedId) || parsedId <= 0) {
     return res.status(400).json({
-      message: "You must provide the category 'id' as a valid positive integer in request params."
+      message: "You must provide the category 'id' as a valid positive integer in request params"
     });
   }
 
   // validating name
   if (!name || typeof name !== "string" || name.trim().length === 0) {
     return res.status(400).json({
-      message: "You must provide the image category name as a non-empty string to update."
+      message: "You must provide the image category name as a non-empty string to update"
     });
   }
 

@@ -9,7 +9,7 @@ export default async function getProjectCategoryByIdController(req: Request, res
         
         return res.status(200).json({
             status: "200 - Success",
-            message: `Successfully got project category with id ${id}`,
+            message: `Successfully got project category with id '${id}'`,
             data: foundProjectCategory
         })
     } catch (error) {

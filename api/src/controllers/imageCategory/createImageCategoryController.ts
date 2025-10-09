@@ -11,7 +11,7 @@ export default async function createImageCategoryController(req: Request, res: R
 
         return res.status(201).json({
             status: "200 - Created",
-            message: `Successfully created the image category '${name}'.`,
+            message: `Successfully created the image category '${name}'`,
             data: createdImageCategory
         })
 
@@ -20,7 +20,7 @@ export default async function createImageCategoryController(req: Request, res: R
         // internal server error
         return res.status(500).json({
             status: "500 - Internal server error",
-            message: "Something went wrong.",
+            message: "Something went wrong",
             details: error?.message || String(error)
         })
     }

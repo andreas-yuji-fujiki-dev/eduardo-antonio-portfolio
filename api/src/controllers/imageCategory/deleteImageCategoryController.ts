@@ -10,7 +10,7 @@ export default async function deleteImageCategoryController(req: Request, res: R
         
         return res.status(200).json({
             status: "200 - Success",
-            message: `Successfully deleted the image category with id ${id}`,
+            message: `Successfully deleted the image category with id '${id}'`,
             data: `Deleted: ${deletedImageCategory}`
         })
 
@@ -19,7 +19,7 @@ export default async function deleteImageCategoryController(req: Request, res: R
         // internal server error
         return res.status(500).json({
             status: "500 - Internal server error",
-            error: `An unexpected error ocurred while trying to delete image category with id ${id}`,
+            error: `An unexpected error ocurred while trying to delete image category with id '${id}'`,
             details: error?.message || String(error)
         })
     }

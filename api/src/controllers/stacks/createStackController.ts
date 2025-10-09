@@ -13,7 +13,7 @@ export default async function createStackController(req: Request, res: Response)
         if (!imageExists) {
             return res.status(404).json({
                 status: "404 - Not Found",
-                message: `Image with id ${logoId} does not exist.`,
+                message: `Image with id '${logoId}' does not exist`,
             });
         }
 
@@ -33,7 +33,7 @@ export default async function createStackController(req: Request, res: Response)
 
         return res.status(201).json({
             status: "201 - Created",
-            message: "Stack created successfully.",
+            message: "Stack created successfully",
             data: newStack,
         });
 

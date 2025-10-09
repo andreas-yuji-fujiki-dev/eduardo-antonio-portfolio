@@ -16,7 +16,7 @@ export default async function getImageCategoryByIdMiddleware(req: Request, res:R
         
         if(!foundImageCategory) return res.status(404).json({
             status: "404 - Not found",
-            message: `Cannot find image category with id ${id}`
+            message: `Cannot find image category with id '${id}'`
         });
 
         // in success case

@@ -46,7 +46,7 @@ export default [
       if (!image) {
         return res.status(404).json({
             status: "404 - Not found",
-            message: `Image with id ${id} does not exists`
+            message: `Image with id '${id}' does not exists`
         })
       }
 

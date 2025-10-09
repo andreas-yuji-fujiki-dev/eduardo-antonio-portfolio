@@ -169,7 +169,7 @@
  *                   example: "201 - Created"
  *                 message:
  *                   type: string
- *                   example: "Stack created successfully."
+ *                   example: "Stack created successfully"
  *                 data:
  *                   $ref: '#/components/schemas/Stack'
  *       400:
@@ -184,7 +184,7 @@
  *                   example: "400 - Bad Request"
  *                 message:
  *                   type: string
- *                   example: "The 'experience' field must be present and be one of these: 1 (Beginner), 2 (Intermediate), or 3 (Advanced)."
+ *                   example: "The 'experience' field must be present and be one of these: 1 (Beginner), 2 (Intermediate), or 3 (Advanced)"
  *       404:
  *         description: Imagem do logo não encontrada
  *         content:
@@ -197,7 +197,7 @@
  *                   example: "404 - Not Found"
  *                 message:
  *                   type: string
- *                   example: "Image with id 999 does not exist."
+ *                   example: "Image with id 999 does not exist"
  *       500:
  *         description: Erro interno do servidor
  *         content:
@@ -210,7 +210,7 @@
  *                   example: "500 - Internal Server Error"
  *                 message:
  *                   type: string
- *                   example: "An error occurred while creating the stack."
+ *                   example: "An error occurred while creating the stack"
  *                 error:
  *                   type: object
  */
@@ -266,7 +266,7 @@
  *                   example: "200 - Success"
  *                 message:
  *                   type: string
- *                   example: "Stack updated successfully."
+ *                   example: "Stack updated successfully"
  *                 data:
  *                   $ref: '#/components/schemas/Stack'
  *       400:
@@ -281,7 +281,7 @@
  *                   example: "400 - Bad Request"
  *                 message:
  *                   type: string
- *                   example: "If provided, 'logoId' must be a valid number."
+ *                   example: "If provided, 'logoId' must be a valid number"
  *       404:
  *         description: Stack ou imagem não encontrada
  *         content:
@@ -294,7 +294,7 @@
  *                   example: "404 - Not Found"
  *                 message:
  *                   type: string
- *                   example: "Stack with id 999 does not exist."
+ *                   example: "Stack with id 999 does not exist"
  *       500:
  *         description: Erro interno do servidor
  *         content:
@@ -307,7 +307,7 @@
  *                   example: "500 - Internal Server Error"
  *                 message:
  *                   type: string
- *                   example: "An error occurred while updating the stack."
+ *                   example: "An error occurred while updating the stack"
  *                 error:
  *                   type: object
  */
@@ -340,7 +340,7 @@
  *                   example: "200 - Success"
  *                 message:
  *                   type: string
- *                   example: "Stack with id 5 deleted successfully."
+ *                   example: "Stack with id 5 deleted successfully"
  *       400:
  *         description: Requisição inválida (ID ausente ou inválido)
  *         content:
@@ -353,7 +353,7 @@
  *                   example: "400 - Bad Request"
  *                 message:
  *                   type: string
- *                   example: "The 'id' parameter must be a valid number."
+ *                   example: "The 'id' parameter must be a valid number"
  *       404:
  *         description: Stack não encontrada
  *         content:
@@ -366,7 +366,7 @@
  *                   example: "404 - Not Found"
  *                 message:
  *                   type: string
- *                   example: "Stack with id 999 does not exist."
+ *                   example: "Stack with id 999 does not exist"
  *       500:
  *         description: Erro interno do servidor
  *         content:
@@ -379,7 +379,7 @@
  *                   example: "500 - Internal Server Error"
  *                 message:
  *                   type: string
- *                   example: "An error occurred while deleting the stack."
+ *                   example: "An error occurred while deleting the stack"
  *                 error:
  *                   type: object
  */

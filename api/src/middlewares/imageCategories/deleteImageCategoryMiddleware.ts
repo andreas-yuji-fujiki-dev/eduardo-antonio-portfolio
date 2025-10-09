@@ -6,7 +6,7 @@ export default async function deleteImageCategoryMiddleware(req: Request, res: R
 
     if(!id || typeof(Number(id)) !== 'number' ) return res.status(400).json({
         status: "400 - Bad request",
-        message: "You must provide the category id on the request params."
+        message: "You must provide the category id on the request params"
     });
 
     try {

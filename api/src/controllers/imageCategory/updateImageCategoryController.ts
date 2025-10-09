@@ -14,7 +14,7 @@ export default async function updateImageCategoryController(req: Request, res: R
 
     if (!foundCategory) {
       return res.status(404).json({
-        message: `Cannot find the category with id ${parsedId}.`
+        message: `Cannot find the category with id '${parsedId}'`
       });
     }
 
@@ -26,7 +26,7 @@ export default async function updateImageCategoryController(req: Request, res: R
 
     // success 
     return res.status(200).json({
-      message: `Successfully updated category ${parsedId} to name '${name}'.`,
+      message: `Successfully updated category '${parsedId}' to name '${name}'`,
       data: updatedImageCategory
     });
 

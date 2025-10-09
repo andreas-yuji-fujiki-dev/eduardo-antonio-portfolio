@@ -19,7 +19,7 @@ export default async function getImageCategoryByIdController( req: Request, res:
         // success case
         res.status(200).json({
             status: "200 - Success",
-            message: `Successfully got the image category with id ${id}`,
+            message: `Successfully got the image category with id '${id}'`,
             data: specificImageCategory
         })
 

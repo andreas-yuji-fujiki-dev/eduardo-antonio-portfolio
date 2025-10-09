@@ -16,8 +16,8 @@ export default async function userLoginController(req: Request, res: Response) {
 
         if (!userDatabaseInfo) {
             return res.status(404).json({
-                status: "404 - Not found.",
-                message: "User not found."
+                status: "404 - Not found",
+                message: "User not found"
             });
         }
 
@@ -27,14 +27,14 @@ export default async function userLoginController(req: Request, res: Response) {
         if (!passwordMatches) {
             return res.status(401).json({
                 status: "401 - Unauthorized",
-                message: "Wrong password."
+                message: "Wrong password"
             });
         }
 
         // get jwt secret
         const JWT_SECRET = process.env.JWT_SECRET;
         if (!JWT_SECRET) {
-            throw new Error("JWT_SECRET is not defined in environment variables.");
+            throw new Error("JWT_SECRET is not defined in environment variables");
         }
 
         // generate jwt token
@@ -44,16 +44,16 @@ export default async function userLoginController(req: Request, res: Response) {
 
         // success message
         return res.status(200).json({
-            status: "200 - Success.",
-            message: "You have successfully logged in.",
+            status: "200 - Success",
+            message: "You have successfully logged in",
             token: token
         });
 
     } catch (error) {
         // in case of internal server error
         return res.status(500).json({
-            status: "500 - Internal server error.",
-            error: "Something went wrong.",
+            status: "500 - Internal server error",
+            error: "Something went wrong",
             details: error?.message || String(error)
         });
     }

@@ -93,7 +93,7 @@ export default function TechSection() {
             `}>
                 <img 
                     src={AstronautAnimation} 
-                    alt="Astronaut being controlled by two hands animation." 
+                    alt="Astronaut being controlled by two hands animation" 
                     className={`
                         ${!isDarkTheme ? "invert" : ""}    
                     `}

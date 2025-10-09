@@ -17,7 +17,7 @@ export default function loginMiddleware(req: Request, res: Response, next: NextF
   if ( isMissingSomeField )
     return res.status(400).json({
       status: `400 - Bad request`,
-      error: `Missing fields. You must provide 'user' and 'password', both in string type.`,
+      error: `Missing fields. You must provide 'user' and 'password', both in string type",
   });
 
   // validate field types
@@ -28,7 +28,7 @@ export default function loginMiddleware(req: Request, res: Response, next: NextF
   if( someFieldHaveInvalidType ) {
     return res.status(400).json({
       status: "400 - Bad request",
-      message: "The 'user' and 'password' fields must be in string type."
+      message: "The 'user' and 'password' fields must be in string type"
     });
   };
 

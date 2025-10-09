@@ -23,7 +23,7 @@ export default async function registerProjectController(
     if (existingProject) {
       return res.status(409).json({
         status: "409 - Conflict",
-        message: "A project with this name already exists.",
+        message: "A project with this name already exists",
       });
     }
 
@@ -59,7 +59,7 @@ export default async function registerProjectController(
     // success message
     return res.status(201).json({
       status: "201 - Created",
-      message: "Project created successfully.",
+      message: "Project created successfully",
       data: newProject,
     });
 

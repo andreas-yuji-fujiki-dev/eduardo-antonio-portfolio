@@ -75,7 +75,7 @@
  *                       example: "400 - Bad request"
  *                     error:
  *                       type: string
- *                       example: "Missing fields. You must provide 'user' and 'password', both in string type."
+ *                       example: "Missing fields. You must provide 'user' and 'password', both in string type"
  *                 - type: object
  *                   properties:
  *                     status:
@@ -83,7 +83,7 @@
  *                       example: "400 - Bad request"
  *                     message:
  *                       type: string
- *                       example: "The 'user' and 'password' fields must be in string type."
+ *                       example: "The 'user' and 'password' fields must be in string type"
  *       409:
  *         description: Conflito - Usuário já existe
  *         content:
@@ -96,7 +96,7 @@
  *                   example: "409 - Conflict"
  *                 message:
  *                   type: string
- *                   example: "User novousuario already exists."
+ *                   example: "User novousuario already exists"
  *       500:
  *         description: Erro interno do servidor
  *         content:
@@ -106,7 +106,7 @@
  *               properties:
  *                 status:
  *                   type: string
- *                   example: "500 - Server internal error."
+ *                   example: "500 - Server internal error"
  *                 message:
  *                   type: string
  *                   example: "PrismaClientKnownRequestError: ..."
@@ -161,10 +161,10 @@
  *               properties:
  *                 status:
  *                   type: string
- *                   example: "404 - Not found."
+ *                   example: "404 - Not found"
  *                 message:
  *                   type: string
- *                   example: "User not found."
+ *                   example: "User not found"
  *       500:
  *         description: Erro interno do servidor
  *         content:
@@ -174,10 +174,10 @@
  *               properties:
  *                 status:
  *                   type: string
- *                   example: "500 - Internal server error."
+ *                   example: "500 - Internal server error"
  *                 message:
  *                   type: string
- *                   example: "Something went wrong."
+ *                   example: "Something went wrong"
  */
 
 /**
@@ -202,7 +202,7 @@
  *           example: "400 - Bad request"
  *         error:
  *           type: string
- *           example: "Missing fields. You must provide 'user' and 'password', both in string type."
+ *           example: "Missing fields. You must provide 'user' and 'password', both in string type"
  *     
  *     InvalidTypesError:
  *       type: object
@@ -212,5 +212,5 @@
  *           example: "400 - Bad request"
  *         message:
  *           type: string
- *           example: "The 'user' and 'password' fields must be in string type."
+ *           example: "The 'user' and 'password' fields must be in string type"
  */

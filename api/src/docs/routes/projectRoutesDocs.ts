@@ -47,7 +47,7 @@
  *                   example: "500 - Internal server error"
  *                 message:
  *                   type: string
- *                   example: "Something went wrong while fetching projects."
+ *                   example: "Something went wrong while fetching projects"
  *                 error:
  *                   type: string
  *                   example: "Error message details"
@@ -181,7 +181,7 @@
  *                   example: "201 - Created"
  *                 message:
  *                   type: string
- *                   example: "Project created successfully."
+ *                   example: "Project created successfully"
  *                 data:
  *                   $ref: '#/components/schemas/Project'
  *       409:
@@ -196,7 +196,7 @@
  *                   example: "409 - Conflict"
  *                 message:
  *                   type: string
- *                   example: "A project with this name already exists."
+ *                   example: "A project with this name already exists"
  *       422:
  *         description: Entidade não processável - Campos obrigatórios faltando
  *         content:
@@ -209,7 +209,7 @@
  *                   example: "422 - Unprocessable Entity"
  *                 error:
  *                   type: string
- *                   example: "Some required field is missing, make sure that you have informed these: name, description, more_info, deploy_link, repository_link."
+ *                   example: "Some required field is missing, make sure that you have informed these: name, description, more_info, deploy_link, repository_link"
  *       500:
  *         description: Erro interno do servidor
  *         content:
@@ -222,10 +222,10 @@
  *                   example: "500 - Internal Server Error"
  *                 message:
  *                   type: string
- *                   example: "Error while registering new project."
+ *                   example: "Error while registering new project"
  *                 error:
  *                   type: string
- *                   example: "PrismaClientValidationError: ..."
+ *                   example: "PrismaClientValidationError: .."
  */
 
 /**
@@ -303,7 +303,7 @@
  *                   example: "200 - Success"
  *                 message:
  *                   type: string
- *                   example: "Project updated successfully."
+ *                   example: "Project updated successfully"
  *                 project:
  *                   $ref: '#/components/schemas/Project'
  *       400:
@@ -324,7 +324,7 @@
  *                       example: "400 - Bad Request"
  *                     message:
  *                       type: string
- *                       example: "Project ID must be a valid number."
+ *                       example: "Project ID must be a valid number"
  *                 - type: object
  *                   properties:
  *                     status:
@@ -332,7 +332,7 @@
  *                       example: "400"
  *                     message:
  *                       type: string
- *                       example: "'name' must be a string."
+ *                       example: "'name' must be a string"
  *                 - type: object
  *                   properties:
  *                     status:
@@ -340,7 +340,7 @@
  *                       example: "400 - Bad Request"
  *                     message:
  *                       type: string
- *                       example: "Some image IDs do not exist."
+ *                       example: "Some image IDs do not exist"
  *       404:
  *         description: Projeto não encontrado
  *         content:
@@ -353,7 +353,7 @@
  *                   example: "404 - Not Found"
  *                 message:
  *                   type: string
- *                   example: "Project not found."
+ *                   example: "Project not found"
  *       500:
  *         description: Erro interno do servidor
  *         content:
@@ -366,7 +366,7 @@
  *                   example: "500 - Internal Server Error"
  *                 message:
  *                   type: string
- *                   example: "Error while updating project."
+ *                   example: "Error while updating project"
  *                 error:
  *                   type: string
  *                   example: "PrismaClientKnownRequestError: ..."
@@ -401,7 +401,7 @@
  *                   example: "200 - Success"
  *                 message:
  *                   type: string
- *                   example: "Successfully deleted the project with id 5."
+ *                   example: "Successfully deleted the project with id 5"
  *       400:
  *         description: ID inválido ou ausente
  *         content:

@@ -16,7 +16,7 @@ export default async function deleteProjectCategoryMiddleware(req: Request, res:
         
         if(!projectCategoryExists) return res.status(404).json({
             status: "404 - Not found",
-            message: `Cannot find project category with id ${id}`
+            message: `Cannot find project category with id '${id}'`
         });
 
         // success case

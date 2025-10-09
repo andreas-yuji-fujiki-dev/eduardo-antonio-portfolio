@@ -11,7 +11,7 @@ export default async function userRegisterController( req:Request, res:Response)
     if( userAlreadyExists ){
         return res.status(409).json({
             "status": "409 - Conflict",
-            "message": `User ${user} already exists.`
+            "message": `User '${user}' already exists`
         });
     };
 
@@ -37,8 +37,8 @@ export default async function userRegisterController( req:Request, res:Response)
     } catch ( error ) {
         // in case of server internal error message
         res.status(500).json({
-            status: "500 - Server internal error.",
-            error: "Something went wrong.",
+            status: "500 - Server internal error",
+            error: "Something went wrong",
             details: error?.message || String(error)
         });
     };

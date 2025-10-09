@@ -73,7 +73,7 @@
  *                   example: "400 - Bad request"
  *                 message:
  *                   type: string
- *                   example: "You need to give an valid project's id on request params."
+ *                   example: "You need to give an valid project's id on request params"
  *       404:
  *         description: Imagem não encontrada
  *         content:
@@ -151,7 +151,7 @@
  *                   example: "409 - Conflict"
  *                 message:
  *                   type: string
- *                   example: "A image with this name already exists."
+ *                   example: "A image with this name already exists"
  *       500:
  *         description: Erro interno do servidor
  *         content:
@@ -164,7 +164,7 @@
  *                   example: "500 - Server internal error"
  *                 message:
  *                   type: string
- *                   example: "An unexpected error occurred while creating a new image."
+ *                   example: "An unexpected error occurred while creating a new image"
  *                 error:
  *                   type: object
  */
@@ -211,7 +211,7 @@
  *                       example: "400 - Bad request"
  *                     message:
  *                       type: string
- *                       example: "You must send a valid image's id on request params."
+ *                       example: "You must send a valid image's id on request params"
  *                 - type: object
  *                   properties:
  *                     status:
@@ -219,7 +219,7 @@
  *                       example: "400 - Bad request"
  *                     message:
  *                       type: string
- *                       example: "You must send image's name in string format to be updated."
+ *                       example: "You must send image's name in string format to be updated"
  *       404:
  *         description: Imagem não encontrada
  *         content:

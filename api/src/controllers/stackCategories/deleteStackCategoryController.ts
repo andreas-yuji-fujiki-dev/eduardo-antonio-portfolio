@@ -11,7 +11,7 @@ export default async function deleteStackCategoryController(req: Request, res: R
         // success
         return res.status(200).json({
             status: "200 - Success",
-            message: `Successfuly deleted the stack category with id ${id}`,
+            message: `Successfuly deleted the stack category with id '${id}'`,
             data: `Deleted: ${deletedStackCategory}`
         })
 

@@ -8,7 +8,7 @@ export default async function createImageCategoryMiddleware(req: Request, res: R
     // validation
     if (!name || typeof name !== "string" || name.trim().length === 0) {
       return res.status(400).json({
-        message: "The field 'name' is required and must be a non-empty string."
+        message: "The field 'name' is required and must be a non-empty string"
       });
     };
 
@@ -18,7 +18,7 @@ export default async function createImageCategoryMiddleware(req: Request, res: R
     
     if (alreadyExists) return res.status(409).json({
         status: "409 - Conflict",
-        message: `An image category already exists with the name '${name}'.`
+        message: `An image category already exists with the name '${name}'`
     });
 
     // success case

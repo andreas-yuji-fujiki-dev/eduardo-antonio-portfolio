@@ -10,7 +10,7 @@ export default async function getStackByIdController(req:Request, res:Response){
         if( !specificStack ){
             return res.status(404).json({
                 status: "404 - Not found",
-                message: `Cannot find stack with id ${id}`
+                message: `Cannot find stack with id '${id}'`
             });
         };
 

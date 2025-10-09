@@ -12,7 +12,7 @@ export default async function deleteStackController(req: Request, res: Response)
         if ( !stackExists ) {
             return res.status(404).json({
                 status: "404 - Not Found",
-                message: `Stack with id ${id} does not exist.`,
+                message: `Stack with id '${id}' does not exist`,
             });
         }
 
@@ -21,7 +21,7 @@ export default async function deleteStackController(req: Request, res: Response)
 
         return res.status(200).json({
             status: "200 - Success",
-            message: `Stack with id ${id} deleted successfully.`,
+            message: `Stack with id '${id}' deleted successfully`,
         });
 
     } catch (error) {

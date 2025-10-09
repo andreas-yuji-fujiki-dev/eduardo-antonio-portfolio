@@ -43,7 +43,7 @@ export default function ContactSection() {
             ${!isDarkTheme ? "invert" : ""}
         `}
         src={shapeImage}
-        alt="Decorative shape that contains a space and a planet."
+        alt="Decorative shape that contains a space and a planet"
       />
 
       {/* content */}

@@ -26,7 +26,7 @@ export default function registerProjectMiddleware(
   if ( isMissingField ) {
     return res.status(422).json({
       status: "422 - Unprocessable Entity",
-      error: "Some required field is missing, make sure that you have informed these: name, description, more_info, deploy_link, repository_link."
+      error: "Some required field is missing, make sure that you have informed these: name, description, more_info, deploy_link, repository_link"
     });
   }
 

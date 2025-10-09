@@ -21,10 +21,10 @@
  *       properties:
  *         status:
  *           type: string
- *           example: "200 - Success."
+ *           example: "200 - Success"
  *         message:
  *           type: string
- *           example: "You have successfully logged in."
+ *           example: "You have successfully logged in"
  *         token:
  *           type: string
  *           example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
@@ -42,7 +42,7 @@
  *           example: "401 - Unauthorized"
  *         message:
  *           type: string
- *           example: "Wrong password."
+ *           example: "Wrong password"
  *       example:
  *         status: "401 - Unauthorized"
  *         message: "Credenciais inválidas"

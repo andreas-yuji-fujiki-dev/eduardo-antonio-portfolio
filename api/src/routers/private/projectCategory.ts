@@ -41,7 +41,7 @@
     );
 
     // update/edit
-    projectCategoriesRouter.patch('/:id',
+    projectCategoriesRouter.put('/:id',
         authRequiredMiddleware,
         updateProjectCategoryMiddleware,
         updateProjectCategoryController

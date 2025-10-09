@@ -10,11 +10,11 @@
     import deleteStackCategoryMiddleware from "../../middlewares/stackCategories/deleteStackCategoryMiddleware";
 
     // controllers
-    import getAllStackCategoriesController from "../../controllers/stackCategory/getAllStackCategoriesController";
-    import getStackCategoryByIdController from "../../controllers/stackCategory/getStackCategoryByIdController";
-    import createStackCategoryController from "../../controllers/stackCategory/createStackCategoryController";
-    import updateStackCategoryController from "../../controllers/stackCategory/updateStackCategoryController";
-    import deleteStackCategoryController from "../../controllers/stackCategory/deleteStackCategoryController";
+    import getAllStackCategoriesController from "../../controllers/stackCategories/getAllStackCategoriesController";
+    import getStackCategoryByIdController from "../../controllers/stackCategories/getStackCategoryByIdController";
+    import createStackCategoryController from "../../controllers/stackCategories/createStackCategoryController";
+    import updateStackCategoryController from "../../controllers/stackCategories/updateStackCategoryController";
+    import deleteStackCategoryController from "../../controllers/stackCategories/deleteStackCategoryController";
 
 // router config
     // definition
@@ -41,7 +41,7 @@
     );
 
     // update/edit
-    stackCategoryRouter.post('/:id', 
+    stackCategoryRouter.put('/:id', 
         authRequiredMiddleware,
         updateStackCategoryMiddleware,
         updateStackCategoryController

@@ -16,7 +16,7 @@ export default async function deleteStackCategoryMiddleware(req: Request, res: R
 
         if(!existingStackCategory) return res.status(404).json({
             status: "404 - Not found",
-            message: `Cannot find stack category with id ${id}`
+            message: `Cannot find stack category with id '${id}'`
         });
 
         // success case

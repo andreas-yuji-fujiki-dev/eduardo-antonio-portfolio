@@ -8,15 +8,15 @@ export default async function createProjectCategoryMiddleware(req: Request, res:
         // validate name
         if(!name || typeof(String(name)) !== 'string') return res.status(400).json({
             status: "400 - Bad request",
-            message: "You must provide an 'name' on request body as a valid string." 
+            message: "You must provide an 'name' on request body as a valid string" 
         });
 
         // verify if some project category already have the same name
-        const foundProjectCategoryWithSameName = await prisma.projectCategory.findFirst({ where: name });
+        const foundProjectCategoryWithSameName = await prisma.projectCategory.findUnique({ where: { name } });
         
         if(foundProjectCategoryWithSameName) return res.status(409).json({
             status: "409 - Conflict",
-            message: `An project category already exists with the name ${name}, please choose another name`
+            message: `An project category already exists with the name '${name}', please choose another name`
         });
 
         // success case
