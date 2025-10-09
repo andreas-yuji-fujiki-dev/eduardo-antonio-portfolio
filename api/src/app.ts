@@ -63,7 +63,7 @@ export class App {
       max: 10000, // limit by ip
       standardHeaders: true,
       legacyHeaders: false,
-      message: 'Too many requests from this IP, please try again later.',
+      message: 'Too many requests from this IP, please try again later',
     }));
 
     // express json allowed on body
@@ -85,7 +85,7 @@ export class App {
     this.app.use('/imageCategories', imageCategoriesRouter);
     this.app.use('/images', imagesRouter);
     
-    this.app.use('stackCategories', stackCategoryRouter);
+    this.app.use('/stackCategories', stackCategoryRouter);
     this.app.use('/stacks', stacksRouter);
   };
 
