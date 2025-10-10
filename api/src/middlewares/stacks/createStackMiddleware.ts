@@ -8,7 +8,7 @@ export default function createStackMiddleware(req: Request, res: Response, next:
     } = req.body;
 
     // experience level content validation
-    if ( !experience || ![1, 2, 3].includes(experience) ) {
+    if ( experience && ![1, 2, 3].includes(experience) ) {
         return res.status(400).json({
             status: "400 - Bad Request",
             message: "The 'experience' field must be present and be one of these: 1 (Beginner), 2 (Intermediate), or 3 (Advanced)"
@@ -16,7 +16,7 @@ export default function createStackMiddleware(req: Request, res: Response, next:
     };
 
     // name type validation
-    if (!name || typeof name !== "string") {
+    if (!name || typeof name !== "string" || String(name).trim().length === 0) {
         return res.status(400).json({
             status: "400 - Bad Request",
             message: "The 'name' field is required and must be a string",
@@ -24,13 +24,13 @@ export default function createStackMiddleware(req: Request, res: Response, next:
     };
 
     // logo id type validation
-    if (logoId === undefined || typeof logoId !== "number" || isNaN(logoId)) {
+    if (logoId !== undefined && ( typeof logoId !== "number" || isNaN( Number(logoId) ) ) ) {
         return res.status(400).json({
             status: "400 - Bad Request",
-            message: "The 'logoId' field is required and must be a valid number",
+            message: "The 'logoId' must be a valid number",
         });
     };
 
     // proceed
-    next();
+    next()
 }
