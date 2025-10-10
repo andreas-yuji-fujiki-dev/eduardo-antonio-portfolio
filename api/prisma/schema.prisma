@@ -25,7 +25,6 @@ model Image {
   projectId   Int?
   project     Project?       @relation("ProjectImages", fields: [projectId], references: [id])
   stackLogo   Stack?         @relation("StackLogo")
-
   categoryId  Int?
   category    ImageCategory? @relation(fields: [categoryId], references: [id])
 }
@@ -66,13 +65,13 @@ model StackCategory {
 }
 
 model Stack {
-  id         Int            @id @default(autoincrement())
-  name       String
+  id         Int              @id @default(autoincrement())
+  name       String           @unique
   experience Int
-  logoId     Int            @unique
   projects   ProjectStack[]
-  logo       Image          @relation("StackLogo", fields: [logoId], references: [id])
+  logoId     Int?             @unique
+  logo       Image?           @relation("StackLogo", fields: [logoId], references: [id])
 
   categoryId Int?
-  category   StackCategory? @relation(fields: [categoryId], references: [id])
+  category   StackCategory?   @relation(fields: [categoryId], references: [id])
 }
