@@ -1,11 +1,7 @@
 import { Request, Response } from "express";
 import { prisma } from "../../config/prismaClient";
-import { ProjectRequestBody } from "../../types/projectRequestBody";
 
-export default async function registerProjectController(
-  req: Request<{},{},ProjectRequestBody>,
-  res:Response
-){
+export default async function registerProjectController( req: Request, res:Response ){
   const {
       name,
       description,
@@ -13,7 +9,8 @@ export default async function registerProjectController(
       deploy_link,
       repository_link,
       imageIds,
-      stackIds
+      stackIds,
+      categoryId
   } = req.body;
 
   try {
@@ -24,8 +21,8 @@ export default async function registerProjectController(
       return res.status(409).json({
         status: "409 - Conflict",
         message: "A project with this name already exists",
-      });
-    }
+      })
+    };
 
     // creating new project
     const newProject = await prisma.project.create({
@@ -36,24 +33,38 @@ export default async function registerProjectController(
         deploy_link,
         repository_link,
 
-        // connecting images
+        ...(categoryId && { category: { connect: { id: Number(categoryId) } } }),
+
+        // connect images
         images: {
-          connect: imageIds?.map(id => ({ id })) || [],
+          connect: imageIds?.map((id: number) => ({ id })) || [],
         },
 
-        // creating relations with stacks
+        // create relation with stacks
         stacks: {
-          create: stackIds?.map(stackId => ({
-            stack: { connect: { id: stackId } }
+          create: stackIds?.map((stackId: number) => ({
+            stack: { connect: { id: stackId } },
           })) || [],
-        }
+        },
       },
-      include: {
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        more_info: true,
+        deploy_link: true,
+        repository_link: true,
+        category: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
         images: true,
         stacks: {
-          include: { stack: true }
+          include: { stack: true },
         }
-      }
+      },
     });
 
     // success message
