@@ -5,8 +5,21 @@ export default async function deleteProjectCategoryController(req: Request, res:
     const { id } = req.params;
 
     try {
-        // deleting
-        const deletedProjectCategory = await prisma.projectCategory.delete({ where: { id: Number(id) }});
+        // category to display
+        const deletedProjectCategory = await prisma.projectCategory.findUnique({ where: { id: Number(id) }});
+        
+        // deleting indeed
+        await prisma.projectCategory.delete({ where: { id: Number(id) }});
+
+        // removing project category from projects
+        await prisma.project.updateMany({
+            where: {
+                categoryId: Number(id)
+            },
+            data: {
+                categoryId: null
+            }
+        });
 
         // success
         return res.status(200).json({
