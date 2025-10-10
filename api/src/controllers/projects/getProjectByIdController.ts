@@ -7,14 +7,27 @@ export default async function getProjectByIdController(req: Request, res:Respons
     try {
         // getting project by id
         const specificProject = await prisma.project.findUnique({
-            where: {
-                id: Number(id)
-            },
-            include: {
+            where: { id: Number(id) },
+            select: {
+                id: true,
+                name: true,
+                description: true,
+                more_info: true,
+                deploy_link: true,
+                repository_link: true,
+                category: true,
                 images: true,
                 stacks: {
-                    include: {
-                        stack: true
+                    select: {
+                        stack: {
+                        select: {
+                            id: true,
+                            name: true,
+                            experience: true,
+                            category: true,
+                            logo: true
+                        }
+                        }
                     }
                 }
             }
