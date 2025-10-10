@@ -7,10 +7,12 @@ export default async function updateProjectCategoryMiddleware(req: Request, res:
     
     try {
         // validating id
-        if(!id || typeof(Number(id)) !== 'number' ) return res.status(400).json({
-            status: "400 - Bad request",
-            message: "You must provide an valid id on request params" 
-        });
+        if (!id || isNaN(Number(id)) || Number(id) <= 0) {
+            return res.status(400).json({
+                status: "400 - Bad request",
+                message: "You must provide a valid integer ID on request params",
+            })
+        };
 
         // validating name from body
         if(!name || typeof(String(name)) !== 'string' ) return res.status(400).json({
