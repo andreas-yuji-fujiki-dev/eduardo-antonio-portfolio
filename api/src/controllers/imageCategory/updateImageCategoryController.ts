@@ -9,15 +9,6 @@ export default async function updateImageCategoryController(req: Request, res: R
   const { name } = req.body;
 
   try {
-    // verify if exists
-    const foundCategory = await prisma.imageCategory.findUnique({ where: { id: parsedId } });
-
-    if (!foundCategory) {
-      return res.status(404).json({
-        message: `Cannot find the category with id '${parsedId}'`
-      });
-    }
-
     // update
     const updatedImageCategory = await prisma.imageCategory.update({
       where: { id: parsedId },
