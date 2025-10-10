@@ -11,7 +11,9 @@ export default async function getImageByIdController(req:Request, res:Response){
             select: {
                 id: true,
                 name: true,
-                stackLogo: true
+                stackLogo: true,
+                category: true,
+                project: true
             }
         });
 
