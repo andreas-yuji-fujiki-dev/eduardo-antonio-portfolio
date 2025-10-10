@@ -13,13 +13,21 @@ import { UploadImageTypes } from '@/types/api/images/UploadImageTypes';
 export async function getAllImages(): Promise<ImageObjectTypes[]> {
   try {
     const response = await api.get<ApiImagesResponseTypes>('/images', authHeader);
-    return response.data.data.map(img => ({
-      ...img,
-      url: `/api/uploads/${img.name}`
-    }));
+
+    const images = response?.data?.data;
+    
+    if (Array.isArray(images)) {
+      return images.map(img => ({
+        ...img,
+        url: `/api/uploads/${img.name}`,
+      }));
+    }
+
+    console.warn('Unexpected API response structure:', response?.data);
+    return [];
   } catch (error) {
     console.error('Error fetching images:', error);
-    throw error;
+    return [];
   }
 };
 
