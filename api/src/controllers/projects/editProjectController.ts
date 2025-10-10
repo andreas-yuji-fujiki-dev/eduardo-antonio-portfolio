@@ -12,11 +12,11 @@ export default async function editProjectController(req: Request, res: Response)
     repository_link,
     imageIds,
     stackIds,
-    categoryId
+    categoryId,
   } = req.body;
 
   try {
-    // update basic fields of the project
+    // updates basic fields of the project
     await prisma.project.update({
       where: { id: Number(id) },
       data: {
@@ -25,7 +25,9 @@ export default async function editProjectController(req: Request, res: Response)
         ...(more_info !== undefined && { more_info }),
         ...(deploy_link !== undefined && { deploy_link }),
         ...(repository_link !== undefined && { repository_link }),
-        ...(categoryId !== undefined && { categoryId: categoryId === null ? null : Number(categoryId) }),
+        ...(categoryId !== undefined && {
+          categoryId: categoryId === null ? null : Number(categoryId),
+        }),
       },
     });
 
@@ -42,7 +44,7 @@ export default async function editProjectController(req: Request, res: Response)
         });
       }
 
-      // remove images that is not related anymore
+      // removing older images
       await prisma.image.updateMany({
         where: {
           projectId: Number(id),
@@ -51,7 +53,7 @@ export default async function editProjectController(req: Request, res: Response)
         data: { projectId: null },
       });
 
-      // Relaciona novas imagens
+      // relaciona novas
       await prisma.image.updateMany({
         where: { id: { in: imageIds } },
         data: { projectId: Number(id) },
@@ -81,17 +83,26 @@ export default async function editProjectController(req: Request, res: Response)
           stackId,
         }));
 
-        await prisma.projectStack.createMany({
-          data: newRelations,
-        });
+        await prisma.projectStack.createMany({ data: newRelations });
       }
     }
 
-    // returning updated complete project
+    // search updated project
     const projectWithRelations = await prisma.project.findUnique({
       where: { id: Number(id) },
-      include: {
-        category: true, // including project too
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        more_info: true,
+        deploy_link: true,
+        repository_link: true,
+        category: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
         images: true,
         stacks: {
           include: { stack: true },
@@ -104,7 +115,6 @@ export default async function editProjectController(req: Request, res: Response)
       message: "Project updated successfully",
       project: projectWithRelations,
     });
-
   } catch (error) {
     return res.status(500).json({
       status: "500 - Internal server error",
