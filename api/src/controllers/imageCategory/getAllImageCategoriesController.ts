@@ -4,14 +4,17 @@ import { prisma } from "../../config/prismaClient";
 export default async function getAllImageCategoriesController(req: Request, res: Response) {
     try {
         // get all
-        const allImageCategories = await prisma.imageCategory.findMany()
+        const allImageCategories = await prisma.imageCategory.findMany({
+            include: {
+                images: true
+            }
+        });
 
         return res.status(200).json({
             status: "200 - Success",
-            message: !!allImageCategories.length 
-                ? "Successfully got all the stacks"
-                : "No image categories found...",
-            data: allImageCategories
+            data: !!allImageCategories.length 
+                ? allImageCategories 
+                : "No image categories found..."
         })
 
     } catch ( error: unknown ) {
