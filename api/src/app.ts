@@ -79,13 +79,13 @@ export class App {
     this.app.use('/', slashRouter);
     this.app.use('/auth', authRouter);
     
-    this.app.use('/projectCategories', projectCategoriesRouter);
+    this.app.use('/projectCategory', projectCategoriesRouter);
     this.app.use('/projects', projectsRouter);
 
-    this.app.use('/imageCategories', imageCategoriesRouter);
+    this.app.use('/imageCategory', imageCategoriesRouter);
     this.app.use('/images', imagesRouter);
     
-    this.app.use('/stackCategories', stackCategoryRouter);
+    this.app.use('/stackCategory', stackCategoryRouter);
     this.app.use('/stacks', stacksRouter);
   };
 
