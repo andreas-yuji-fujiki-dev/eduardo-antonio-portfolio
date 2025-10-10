@@ -8,10 +8,7 @@ export default async function getAllProjectCategoriesController(req: Request, re
 
         return res.status(200).json({
             status: "200 - Success",
-            message: allProjectCategories.length > 0 
-                ? "No project categories found..."
-                :  "Successfully got all project categories",
-            data: allProjectCategories
+            data: !allProjectCategories.length ? "No project categories found..." : allProjectCategories
         })
     } catch (error) {
         // internal server error
