@@ -9,15 +9,6 @@ export default async function updateImageController(req: Request, res: Response)
     const { name, projectId, stackId, categoryId } = req.body;
     const existingImage = (req as any).existingImage;
 
-    // verify if at least one field was sended
-    if (!req.file && !name && projectId === undefined && stackId === undefined && categoryId === undefined) {
-      return res.status(400).json({ 
-        status: 400,
-        message: 'No fields provided for update',
-        data: null
-      });
-    }
-
     const updateData: {
       name?: string;
       projectId?: number | null;
@@ -96,14 +87,7 @@ export default async function updateImageController(req: Request, res: Response)
     return res.status(200).json({
       status: 200,
       message: 'Image updated successfully',
-      data: {
-        id: updatedImage.id,
-        name: updatedImage.name,
-        url: `/uploads/${updatedImage.name}`,
-        projectId: updatedImage.projectId,
-        stackId: updatedImage.stackLogo?.id || null,
-        categoryId: updatedImage.category?.id || null
-      }
+      data: updatedImage
     });
 
   } catch (error) {
