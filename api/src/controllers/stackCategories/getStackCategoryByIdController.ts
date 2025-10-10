@@ -5,7 +5,12 @@ export default async function getStackCategoryByIdController(req: Request, res: 
     try {
         const { id } = req.params;
 
-        const foundStackCategory = await prisma.stackCategory.findUnique({ where: { id: Number(id) } });
+        const foundStackCategory = await prisma.stackCategory.findUnique({ 
+            where: { id: Number(id) },
+            include: {
+                stacks: true
+            } 
+        });
 
         return res.status(200).json({
             status: "200 - Success",
