@@ -5,10 +5,34 @@ export default async function getAllProjectsController(req: Request, res: Respon
   try {
     // get all projects
     const allProjects = await prisma.project.findMany({
-      include: {
-        images: true,
-        stacks: { include: { stack: true } },
-        category: true
+      select: {
+          id: true,
+          name: true,
+          description: true,
+          more_info: true,
+          deploy_link: true,
+          repository_link: true,
+          category: true,
+          images: {
+            select: {
+              name: true,
+              id: true,
+              category: true
+            }
+          },
+          stacks: {
+              select: {
+                stack: {
+                  select: {
+                    id: true,
+                    name: true,
+                    experience: true,
+                    category: true,
+                    logo: true
+                  }
+                }
+              }
+          }
       }
     });
 
