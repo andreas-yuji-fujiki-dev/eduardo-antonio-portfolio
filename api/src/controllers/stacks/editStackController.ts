@@ -3,70 +3,66 @@ import { prisma } from "../../config/prismaClient";
 
 export default async function editStackController(req: Request, res: Response) {
     const { id } = req.params;
-    const { name, experience, logoId, categoryId } = req.body;
+    const { name, experience, logoId, categoryId, projectIds } = req.body;
 
     try {
-        // verify if stack exists
-        const existingStack = await prisma.stack.findUnique({
-            where: { id: Number(id) },
-        });
+        const stackId = Number(id);
 
-        if (!existingStack) {
-            return res.status(404).json({
-                status: "404 - Not Found",
-                message: `Stack with id '${id}' does not exist`,
-            });
-        }
-
-        // verify if logo exists
-        if (logoId !== undefined) {
-            const imageExists = await prisma.image.findUnique({ where: { id: logoId } });
-
-            if (!imageExists) {
-                return res.status(404).json({
-                    status: "404 - Not Found",
-                    message: `Image with id '${logoId}' does not exist`,
-                });
-            }
-        }
-
-        // verify if category exists
-        if (categoryId !== undefined && categoryId !== null) {
-            const categoryExists = await prisma.stackCategory.findUnique({
-                where: { id: Number(categoryId) },
-            });
-
-            if (!categoryExists) {
-                return res.status(404).json({
-                    status: "404 - Not Found",
-                    message: `Stack category with id '${categoryId}' does not exist`,
-                });
-            }
-        }
-
-        // update stack
-        const updatedStack = await prisma.stack.update({
-            where: { id: Number(id) },
+        // update stack fields (excluding projects)
+        await prisma.stack.update({
+            where: { id: stackId },
             data: {
                 ...(name !== undefined && { name }),
                 ...(experience !== undefined && { experience }),
-                ...(logoId !== undefined && { logo: { connect: { id: logoId } } }),
-                ...(categoryId !== undefined && {
-                category: categoryId === null
-                    ? { disconnect: true } // remove relation
-                    : { connect: { id: Number(categoryId) } } // connect
-                }),
+                ...(logoId !== undefined && { logo: { connect: { id: Number(logoId) } } }),
+                ...(categoryId !== undefined && { category: { connect: { id: Number(categoryId) } } }),
             },
+        });
+
+        // connect projects if provided
+        if (projectIds !== undefined && projectIds.length > 0) {
+            const existingRelations = await prisma.projectStack.findMany({
+                where: {
+                    stackId,
+                    projectId: { in: projectIds.map(Number) },
+                },
+                select: { projectId: true },
+            });
+
+            const newRelations = projectIds
+                .map(Number)
+                .filter(pid => !existingRelations.some(r => r.projectId === pid))
+                .map(pid => ({ projectId: pid, stackId }));
+
+            if (newRelations.length > 0) {
+                await prisma.projectStack.createMany({ data: newRelations });
+            }
+        }
+
+        // fetch the updated stack including all related data
+        const updatedStack = await prisma.stack.findUnique({
+            where: { id: stackId },
             include: {
                 logo: true,
                 category: true,
+                projects: true
             },
         });
+
+        if (!updatedStack) {
+            return res.status(500).json({
+                status: "500 - Internal server error",
+                error: "Failed to fetch updated stack",
+            });
+        }
+
+        // remove unnecessary fields
+        const { categoryId: _categoryId, logoId: _logoId, ...stackWithoutIds } = updatedStack;
 
         return res.status(200).json({
             status: "200 - Success",
             message: "Stack updated successfully",
-            data: updatedStack,
+            data: stackWithoutIds,
         });
 
     } catch (error) {
