@@ -8,16 +8,16 @@ export default async function getAllImagesController(req: Request, res: Response
             select: {
                 id: true,
                 name: true,
-                projectId: true,
-                stackLogo: true,
+                category: true,
+                project: true,
+                stackLogo: true
             }
         });
 
         // success message
         return res.status(200).json({
             status: "200 - Success",
-            message: "Successfully got all images",
-            data: !!allImages.length ? allImages : []
+            data: !!allImages.length ? allImages : "No images found..."
         });
 
     } catch (error) {
