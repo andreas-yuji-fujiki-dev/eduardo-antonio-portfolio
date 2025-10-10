@@ -3,15 +3,12 @@ import { prisma } from "../../config/prismaClient";
 
 export default async function getAllStackCategoriesController(req: Request, res: Response){
     try {
-        const allStackCategories = await prisma.stackCategory.findMany();
+        const allStackCategories = await prisma.stackCategory.findMany({ include: { stacks: true } });
 
         // success 
         return res.status(200).json({
             status: "200 - Success",
-            message: !!allStackCategories.length
-                ? "Successfully got all stack categories"
-                : "No stack categories found...",
-            data: allStackCategories
+            data: !!allStackCategories.length ? allStackCategories : "No stack categories found..."
         })
     } catch (error) {
         return res.status(500).json({
