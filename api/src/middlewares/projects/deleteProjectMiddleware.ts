@@ -12,5 +12,5 @@ export default function deleteProjectMiddleware(req:Request, res:Response, next:
     };
     
     // proceed
-    next();
+    next()
 };
