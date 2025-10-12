@@ -5,7 +5,7 @@ export default async function createImageCategoryController(req: Request, res: R
     try {
         const { name } = req.body;
 
-        // creating
+        // creating indeed
         const createdImageCategory = 
             await prisma.imageCategory.create({ data: { name } });
 
