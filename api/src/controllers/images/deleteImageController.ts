@@ -21,7 +21,7 @@ export default async function deleteImageController(req: Request, res: Response)
 
         // return data
         return res.status(200).json({
-            status: 200,
+            status: "200 - Success",
             message: "Image deleted successfully",
             data: {
                 id: deletedImage.id,

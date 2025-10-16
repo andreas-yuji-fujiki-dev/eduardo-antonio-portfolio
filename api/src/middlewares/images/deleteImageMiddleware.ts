@@ -18,7 +18,7 @@ export default async function deleteImageMiddleware(req: Request, res: Response,
 
         if (!image) {
             return res.status(404).json({
-                status: 404,
+                status: "404 - Not found",
                 message: `Image with id '${id}' was not found`
             });
         }

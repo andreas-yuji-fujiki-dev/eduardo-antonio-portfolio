@@ -21,6 +21,7 @@ export default async function getAllStacksController(req: Request, res: Response
 
         return res.status(200).json({
             status: "200 - Success",
+            message: "Successfully got all the stacks",
             data: stacksWithoutIds.length ? stacksWithoutIds : "No stacks found..."
         });
 

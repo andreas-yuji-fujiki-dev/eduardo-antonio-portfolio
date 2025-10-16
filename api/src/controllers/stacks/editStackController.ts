@@ -61,7 +61,7 @@ export default async function editStackController(req: Request, res: Response) {
 
         return res.status(200).json({
             status: "200 - Success",
-            message: "Stack updated successfully",
+            message: `Stack with id '${id}' updated successfully`,
             data: stackWithoutIds,
         });
 

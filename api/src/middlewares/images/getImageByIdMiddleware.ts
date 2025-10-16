@@ -5,7 +5,7 @@ import validateId from "../../utils/validateId";
 export default async function getImageByIdMiddleware(req:Request, res:Response, next:NextFunction){
     const { id } = req.params;
 
-    // id must exist
+    // id must exists
     const errorValidatingId = validateId('id', id, res);
     if( errorValidatingId ) return errorValidatingId;
 

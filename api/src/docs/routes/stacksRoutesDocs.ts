@@ -197,7 +197,7 @@
  *                   example: "404 - Not Found"
  *                 message:
  *                   type: string
- *                   example: "Image with id 999 does not exist"
+ *                   example: "Image with id 999 does not exists"
  *       500:
  *         description: Erro interno do servidor
  *         content:
@@ -294,7 +294,7 @@
  *                   example: "404 - Not Found"
  *                 message:
  *                   type: string
- *                   example: "Stack with id 999 does not exist"
+ *                   example: "Stack with id 999 does not exists"
  *       500:
  *         description: Erro interno do servidor
  *         content:
@@ -366,7 +366,7 @@
  *                   example: "404 - Not Found"
  *                 message:
  *                   type: string
- *                   example: "Stack with id 999 does not exist"
+ *                   example: "Stack with id 999 does not exists"
  *       500:
  *         description: Erro interno do servidor
  *         content:

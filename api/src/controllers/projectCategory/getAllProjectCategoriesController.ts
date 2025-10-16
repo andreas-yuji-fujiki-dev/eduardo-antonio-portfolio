@@ -8,6 +8,7 @@ export default async function getAllProjectCategoriesController(req: Request, re
 
         return res.status(200).json({
             status: "200 - Success",
+            message: "Successfully got all the project categories",
             data: !allProjectCategories.length ? "No project categories found..." : allProjectCategories
         })
     } catch (error) {

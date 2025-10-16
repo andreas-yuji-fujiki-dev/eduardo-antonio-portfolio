@@ -36,7 +36,8 @@ export default async function getProjectByIdController(req: Request, res:Respons
         // success or not found message
         return res.status(200).json({
             status: "200 - Success",
-            data: specificProject ? specificProject : "Not found..."
+            message: `Successfully got the project with id '${id}'`,
+            data: specificProject
         });
 
     } catch (error) {

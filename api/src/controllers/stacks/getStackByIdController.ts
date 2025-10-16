@@ -31,6 +31,7 @@ export default async function getStackByIdController(req: Request, res: Response
 
         return res.status(200).json({
             status: "200 - Success",
+            message: `Successfully got the stack with id '${id}'`,
             data: stackWithoutIds
         });
 

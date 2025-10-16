@@ -14,7 +14,7 @@ export default async function getStackCategoryByIdController(req: Request, res: 
 
         return res.status(200).json({
             status: "200 - Success",
-            message: `Successfuly found stack category with id '${id}'`,
+            message: `Successfully found stack category with id '${id}'`,
             data: foundStackCategory
         });
         

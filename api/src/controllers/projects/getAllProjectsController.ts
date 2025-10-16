@@ -39,6 +39,7 @@ export default async function getAllProjectsController(req: Request, res: Respon
     // success message
     return res.status(200).json({
       status: "200 - Success",
+      message: "Successfully got all the projects",
       data: !allProjects.length ? 'No projects found...' : allProjects
     });
 

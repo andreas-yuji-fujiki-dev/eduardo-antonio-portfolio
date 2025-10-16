@@ -340,7 +340,7 @@
  *                       example: "400 - Bad Request"
  *                     message:
  *                       type: string
- *                       example: "Some image IDs do not exist"
+ *                       example: "Some image IDs do not exists"
  *       404:
  *         description: Projeto não encontrado
  *         content:

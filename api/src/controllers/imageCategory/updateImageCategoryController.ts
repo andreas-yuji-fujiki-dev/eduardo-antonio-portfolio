@@ -17,6 +17,7 @@ export default async function updateImageCategoryController(req: Request, res: R
 
     // success 
     return res.status(200).json({
+      status: "200 - Success",
       message: `Successfully updated category '${parsedId}' to name '${name}'`,
       data: updatedImageCategory
     });

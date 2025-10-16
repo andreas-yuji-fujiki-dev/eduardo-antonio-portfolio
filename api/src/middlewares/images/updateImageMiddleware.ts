@@ -44,7 +44,7 @@ export default async function updateImageMiddleware(req: Request, res: Response,
     if (!imageExists) {
       return res.status(404).json({
         status: "404 - Not Found",
-        message: `Image with id '${id}' does not exist`,
+        message: `Image with id '${id}' does not exists`,
       });
     }
 
@@ -57,7 +57,7 @@ export default async function updateImageMiddleware(req: Request, res: Response,
       if (!projectExists) {
         return res.status(404).json({
           status: "404 - Not Found",
-          message: `Project with id '${projectId}' does not exist`,
+          message: `Project with id '${projectId}' does not exists`,
         });
       }
     }
@@ -70,7 +70,7 @@ export default async function updateImageMiddleware(req: Request, res: Response,
       if (!stackExists) {
         return res.status(404).json({
           status: "404 - Not Found",
-          message: `Stack with id '${stackId}' does not exist`,
+          message: `Stack with id '${stackId}' does not exists`,
         });
       }
     }

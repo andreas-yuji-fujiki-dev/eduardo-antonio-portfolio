@@ -13,6 +13,7 @@ export default async function getAllImageCategoriesController(req: Request, res:
         // success
         return res.status(200).json({
             status: "200 - Success",
+            message: "Successfully got all image categories",
             data: !!allImageCategories.length 
                 ? allImageCategories 
                 : "No image categories found..."

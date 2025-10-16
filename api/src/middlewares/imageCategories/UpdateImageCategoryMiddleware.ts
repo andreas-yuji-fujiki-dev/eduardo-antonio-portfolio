@@ -26,6 +26,7 @@ export default async function UpdateImageCategoryMiddleware(req: Request, res: R
 
     if (!foundCategory) {
       return res.status(404).json({
+        status: "404 - Not found",
         message: `Cannot find the category with id '${parsedId}'`
       })
     };

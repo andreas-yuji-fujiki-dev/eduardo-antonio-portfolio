@@ -9,7 +9,7 @@ export default function authRequiredMiddleware(req:Request, res:Response, next:N
     // if there is not token
     if( !token || typeof token !== "string" ){
         return res.status(401).json({
-            status: "401 - Access denied",
+            status: "401 - Unauthorized",
             message: "You must to have a bearer token in string type, make login first"
         })
     };

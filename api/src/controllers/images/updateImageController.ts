@@ -86,7 +86,7 @@ export default async function updateImageController(req: Request, res: Response)
     // success message
     return res.status(200).json({
       status: 200,
-      message: 'Image updated successfully',
+      message: `Image with id '${id}' has been updated successfully`,
       data: updatedImage
     });
 

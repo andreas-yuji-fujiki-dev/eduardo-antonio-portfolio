@@ -8,8 +8,10 @@ export default async function getAllStackCategoriesController(req: Request, res:
         // success 
         return res.status(200).json({
             status: "200 - Success",
+            message: "Successfully got all the stack categories",
             data: !!allStackCategories.length ? allStackCategories : "No stack categories found..."
         })
+
     } catch (error) {
         return res.status(500).json({
             // internal server error

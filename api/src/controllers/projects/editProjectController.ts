@@ -40,7 +40,7 @@ export default async function editProjectController(req: Request, res: Response)
       if (existingImages.length !== imageIds.length) {
         return res.status(400).json({
           status: "400 - Bad Request",
-          message: "Some image IDs do not exist",
+          message: "Some image IDs do not exists",
         });
       }
 
@@ -69,7 +69,7 @@ export default async function editProjectController(req: Request, res: Response)
       if (existingStacks.length !== stackIds.length) {
         return res.status(400).json({
           status: "400 - Bad Request",
-          message: "Some stack IDs do not exist",
+          message: "Some stack IDs do not exists",
         });
       }
 
@@ -112,7 +112,7 @@ export default async function editProjectController(req: Request, res: Response)
 
     return res.status(200).json({
       status: "200 - Success",
-      message: "Project updated successfully",
+      message: `Project with id '${id}' has been updated successfully`,
       project: projectWithRelations,
     });
   } catch (error) {

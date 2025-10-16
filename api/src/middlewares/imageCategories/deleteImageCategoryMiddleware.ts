@@ -12,7 +12,7 @@ export default async function deleteImageCategoryMiddleware(req: Request, res: R
         const errorValidatingId = validateId('id', id, res);
         if ( errorValidatingId ) return errorValidatingId;
 
-        // verify if image category exist
+        // verify if image category exists
         const imageCategory = await prisma.imageCategory.findUnique({ where: { id: Number(id) } });
         
         if( !imageCategory ) return res.status(404).json({

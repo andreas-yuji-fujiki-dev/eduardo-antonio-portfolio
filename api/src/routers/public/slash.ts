@@ -5,7 +5,8 @@ const slashRouter = Router();
 slashRouter.get('/', ( req, res ) => {
     res.status(200).json({
         status: 200,
-        message: 'Hello, World!'
+        message: 'Hello, World!',
+        easteregg: "O_O"
     })
 })
 

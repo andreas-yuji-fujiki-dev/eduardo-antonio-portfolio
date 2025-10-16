@@ -68,7 +68,7 @@ export default async function registerProjectMiddleware(req: Request, res: Respo
       if (!categoryExists) {
         return res.status(404).json({
           status: "404 - Not found",
-          message: `Project category with id '${categoryId}' does not exist`,
+          message: `Project category with id '${categoryId}' does not exists`,
         });
       }
     }

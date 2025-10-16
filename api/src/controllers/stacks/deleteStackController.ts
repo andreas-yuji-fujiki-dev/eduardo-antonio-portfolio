@@ -7,14 +7,14 @@ export default async function deleteStackController(req: Request, res: Response)
     try {
 
         // verify if stack exists
-        const stackExists = await prisma.stack.findUnique({ where: { id: Number(id) }});
+        const existingStack = await prisma.stack.findUnique({ where: { id: Number(id) }});
 
-        if ( !stackExists ) {
+        if ( !existingStack ) {
             return res.status(404).json({
                 status: "404 - Not Found",
-                message: `Stack with id '${id}' does not exist`,
-            });
-        }
+                message: `Stack with id '${id}' does not exists`,
+            })
+        };
 
         // deleting stack
         await prisma.stack.delete({ where: { id: Number(id) }});
@@ -22,7 +22,8 @@ export default async function deleteStackController(req: Request, res: Response)
         return res.status(200).json({
             status: "200 - Success",
             message: `Stack with id '${id}' deleted successfully`,
-        });
+            data: `Deleted: ${existingStack}`
+        })
 
     } catch (error) {
         // in case of server internal error

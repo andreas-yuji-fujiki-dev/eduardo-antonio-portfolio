@@ -1,1 +1,1 @@
-This must exists because if this folder is empty, the uploads folder will not be sync with github, resulting in bugs while trying to upload images on frontend (folder will not exist)!
+This must exists because if this folder is empty, the uploads folder will not be sync with github, resulting in bugs while trying to upload images on frontend (folder will not exists)!

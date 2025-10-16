@@ -28,6 +28,7 @@ export default async function getImageByIdController(req:Request, res:Response){
         // success case
         return res.status(200).json({
             status: "200 - Success",
+            message: `Successfully got the image with id '${id}'`,
             data: specificImage
         });
 
