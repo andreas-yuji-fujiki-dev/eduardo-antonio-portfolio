@@ -48,32 +48,33 @@ export default async function updateImageMiddleware(req: Request, res: Response,
       });
     }
 
-    // check related entities only if provided
+    // check existance of related entities only if provided
     if (projectId) {
-      const projectExists = await prisma.project.findUnique({
-        where: { id: Number(projectId) },
-      });
+      const projectExists = await prisma.project.findUnique({ where: { id: Number(projectId) }});
 
-      if (!projectExists) {
-        return res.status(404).json({
+      if (!projectExists) return res.status(404).json({
           status: "404 - Not Found",
           message: `Project with id '${projectId}' does not exists`,
-        });
-      }
-    }
+        })
+    };
 
     if (stackId) {
-      const stackExists = await prisma.stack.findUnique({
-        where: { id: Number(stackId) },
-      });
+      const stackExists = await prisma.stack.findUnique({ where: { id: Number(stackId) }});
 
-      if (!stackExists) {
-        return res.status(404).json({
+      if (!stackExists) return res.status(404).json({
           status: "404 - Not Found",
           message: `Stack with id '${stackId}' does not exists`,
-        });
-      }
-    }
+        })
+    };
+
+    if(categoryId) {
+      const categoryExists = await prisma.imageCategory.findUnique({ where: { id: Number(categoryId) } });
+
+      if(!categoryExists) return res.status(404).json({
+        status: "404 - Not found",
+        message: `Image category with id '${categoryId}' does not exists`
+      })
+    };
 
     (req as any).existingImage = imageExists;
     return next();
@@ -83,6 +84,6 @@ export default async function updateImageMiddleware(req: Request, res: Response,
       status: "500 - Internal Server Error",
       error: "An unexpected error occurred",
       details: error?.message || String(error),
-    });
+    })
   }
 }

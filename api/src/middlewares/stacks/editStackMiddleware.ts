@@ -10,36 +10,42 @@ export default async function editStackMiddleware(req: Request, res: Response, n
         const { name, experience, logoId, categoryId, projectIds } = req.body;
 
         // string field validation
-        if (name !== undefined) {
+        if (name) {
             const invalid = validateString("name", name, res);
             if (invalid) return invalid;
+
+            const nameConflict = await prisma.stack.findUnique({ where: { name } });
+            if(nameConflict) return res.status(409).json({
+                status: "409 - Conflict",
+                message: `A stack already exists with the name '${name}'`
+            })
         }
 
         // numeric field validation
-        if (experience !== undefined) {
+        if (experience) {
             const invalid = validateId("experience", experience, res);
             if (invalid) return invalid;
         }
 
-        if (logoId !== undefined) {
+        if (logoId) {
             const invalid = validateId("logoId", logoId, res);
             if (invalid) return invalid;
         }
 
         // nullable numeric field validation
-        if (categoryId !== undefined && categoryId !== null) {
+        if (categoryId) {
             const invalid = validateId("categoryId", categoryId, res);
             if (invalid) return invalid;
         }
 
         // number array validation
-        if (projectIds !== undefined) {
+        if (projectIds) {
             const invalid = validateNumberArray("projectIds", projectIds, res);
             if (invalid) return invalid;
         }
 
         // existence validation
-        if (logoId !== undefined) {
+        if (logoId) {
             const existingLogoImage = await prisma.image.findUnique({
                 where: { id: Number(logoId) }
             });

@@ -12,9 +12,9 @@ export default async function createStackMiddleware(req: Request, res: Response,
         const errorValidatingName = validateString('name', name, res);
         if( errorValidatingName ) return errorValidatingName;
 
-        // verify if a stack already exists with the provided name
-        const stackAlreadyExistsWithThisName = await prisma.stack.findUnique({ where: { name } });
-        if( stackAlreadyExistsWithThisName ) return res.status(409).json({
+        // avoid name conflict
+        const nameConflict = await prisma.stack.findUnique({ where: { name } });
+        if( nameConflict ) return res.status(409).json({
             status: "409 - Conflict",
             message: `A stack already exists with the name '${name}'`
         });
@@ -24,14 +24,14 @@ export default async function createStackMiddleware(req: Request, res: Response,
             return res.status(400).json({
                 status: "400 - Bad Request",
                 message: "The 'experience' field must be present and be one of these: 1 (Beginner), 2 (Intermediate), or 3 (Advanced)"
-            });
+            })
         };
 
         // logo id type validation
         const errorValidatingLogoId = validateId('logoId', logoId, res);
         if( errorValidatingLogoId ) return errorValidatingLogoId;
 
-        // verify if a logo exists with the provided id
+        // logo existance validation
         const existingLogoImage = await prisma.image.findUnique({ where: { id: Number(logoId) }});
         if( !existingLogoImage ) return res.status(404).json({
             status: "404 - Not found",

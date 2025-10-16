@@ -11,10 +11,10 @@ export default async function createStackCategoryMiddleware(req: Request, res: R
         const errorValidatingName = validateString('name', name, res);
         if( errorValidatingName ) return errorValidatingName;
 
-        // verify if some category already exists with this name
-        const foundStackCategoryWithSameName = await prisma.stackCategory.findUnique({ where: { name } });
+        // avoid name conflict
+        const nameConflict = await prisma.stackCategory.findUnique({ where: { name } });
 
-        if( foundStackCategoryWithSameName ) return res.status(409).json({
+        if( nameConflict ) return res.status(409).json({
             status: "409 - Conflict",
             message: `Stack category with name '${name}' already exists`
         });

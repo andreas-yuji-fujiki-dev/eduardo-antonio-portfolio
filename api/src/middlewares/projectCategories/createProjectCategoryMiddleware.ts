@@ -11,7 +11,7 @@ export default async function createProjectCategoryMiddleware(req: Request, res:
         const errorValidatingName = validateString('name', name, res);
         if( errorValidatingName ) return errorValidatingName;
 
-        // verify if some project category already have the same name
+        // avoid name conflict
         const foundProjectCategoryWithSameName = await prisma.projectCategory.findUnique({ where: { name } });
         
         if(foundProjectCategoryWithSameName) return res.status(409).json({

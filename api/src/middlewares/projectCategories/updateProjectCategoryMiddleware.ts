@@ -17,6 +17,13 @@ export default async function updateProjectCategoryMiddleware(req: Request, res:
         const errorValidatingName = validateString('name', name, res);
         if( errorValidatingName ) return errorValidatingName;
 
+        // avoid name conflict
+        const nameConflict = await prisma.projectCategory.findUnique({ where: { name }});
+        if( nameConflict ) return res.status(409).json({
+            status: "409 - Conflict",
+            message: `A project category already exists with the name '${name}'`
+        });
+
         // verify if project category exists
         const foundProjectCategory = await prisma.projectCategory.findUnique({ where: { id: Number(id) } });
 

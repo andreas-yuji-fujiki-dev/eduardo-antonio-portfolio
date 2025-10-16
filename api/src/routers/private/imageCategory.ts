@@ -9,7 +9,6 @@
     import UpdateImageCategoryMiddleware from "../../middlewares/imageCategories/updateImageCategoryMiddleware";
     import deleteImageCategoryMiddleware from "../../middlewares/imageCategories/deleteImageCategoryMiddleware";
 
-
     // controllers
     import getAllImageCategories from "../../controllers/imageCategory/getAllImageCategoriesController";
     import getImageCategoryByIdController from "../../controllers/imageCategory/getImageCategoryByIdController";

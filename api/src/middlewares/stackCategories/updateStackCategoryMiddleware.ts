@@ -16,6 +16,12 @@ export default async function updateStackCategoryMiddleware(req: Request, res: R
         const errorValidatingName = validateString('name', name, res);
         if( errorValidatingName ) return errorValidatingName;
 
+        const nameConflict = prisma.stackCategory.findUnique({ where: { name } });
+        if(nameConflict) return res.status(409).json({
+            status: "409 - Conflict",
+            message: `A stack category already exists with the name '${name}'`
+        });
+
         // verify if stack category exists
         const existingStackCategoryFound = await prisma.stackCategory.findUnique({ where: { id: Number(id) } });
         

@@ -21,6 +21,13 @@ export default async function UpdateImageCategoryMiddleware(req: Request, res: R
     const errorValidatingName = validateString('name', name, res);
     if( errorValidatingName ) return errorValidatingName;
 
+    // avoid name conflict
+    const duplicatedName = await prisma.imageCategory.findUnique({ where: { name } });
+    if( duplicatedName ) return res.status(409).json({
+      status: "409 - Conflict",
+      message: `An image category already exists with the name '${name}', please choose another one`
+    });
+
     // verify if image category exists
     const foundCategory = await prisma.imageCategory.findUnique({ where: { id: parsedId } });
 
@@ -34,6 +41,7 @@ export default async function UpdateImageCategoryMiddleware(req: Request, res: R
     // success case
     (req as any).imageCategoryId = parsedId;
     next()
+    
   } catch (error) {
     // internal server error
     return res.status(500).json({
