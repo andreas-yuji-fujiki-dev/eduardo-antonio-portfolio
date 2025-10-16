@@ -6,7 +6,7 @@
     import authRequiredMiddleware from "../../middlewares/auth/authRequiredMiddleware";
     import getImageCategoryByIdMiddleware from "../../middlewares/imageCategories/getImageCategoryByIdMiddleware";
     import createImageCategoryMiddleware from "../../middlewares/imageCategories/createImageCategoryMiddleware";
-    import UpdateImageCategoryMiddleware from "../../middlewares/imageCategories/UpdateImageCategoryMiddleware";
+    import UpdateImageCategoryMiddleware from "../../middlewares/imageCategories/updateImageCategoryMiddleware";
     import deleteImageCategoryMiddleware from "../../middlewares/imageCategories/deleteImageCategoryMiddleware";
 
 
