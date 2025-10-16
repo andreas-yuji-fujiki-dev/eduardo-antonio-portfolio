@@ -7,7 +7,7 @@
     import getImageByIdMiddleware from "../../middlewares/images/getImageByIdMiddleware";
     import createImageMiddleware from "../../middlewares/images/createImageMiddleware";
     import updateImageMiddleware from "../../middlewares/images/updateImageMiddleware";
-    import replaceImageMiddleware from '../../middlewares/images/replaceImageMiddleware ';
+    import replaceImageMiddleware from '../../middlewares/images/replaceImageMiddleware';
     import deleteImageMiddleware from "../../middlewares/images/deleteImageMiddleware";
     
     // controllers

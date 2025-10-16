@@ -1,26 +1,26 @@
 import { Request, Response, NextFunction } from "express";
 import { prisma } from "../../config/prismaClient";
 
+import validateString from "../../utils/validateString";
+
 export default async function createStackCategoryMiddleware(req: Request, res: Response, next: NextFunction){
     try {
         // validate name
         const { name } = req.body;
 
-        if(!name || String(name).trim().length === 0) return res.status(400).json({
-            status: "400 - Bad request",
-            message: "You must provide the category name in request body"
-        });
+        const errorValidatingName = validateString('name', name, res);
+        if( errorValidatingName ) return errorValidatingName;
 
         // verify if some category already exists with this name
         const foundStackCategoryWithSameName = await prisma.stackCategory.findUnique({ where: { name } });
 
-        if(foundStackCategoryWithSameName) return res.status(409).json({
+        if( foundStackCategoryWithSameName ) return res.status(409).json({
             status: "409 - Conflict",
             message: `Stack category with name '${name}' already exists`
         });
 
         // success case
-        next();
+        next()
         
     } catch (error) {
         // internal server error

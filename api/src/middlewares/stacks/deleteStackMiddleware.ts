@@ -1,16 +1,14 @@
 import { Request, Response, NextFunction } from "express";
 
+import validateId from "../../utils/validateId";
+
 export default function deleteStackMiddleware(req: Request, res: Response, next: NextFunction) {
     const { id } = req.params;
 
     // id type validation
-    if( !id || isNaN(Number(id)) ){
-        return res.status(400).json({
-            status: "400 - Bad Request",
-            message: "The 'id' parameter must be a valid number",
-        });
-    };
+    const errorValidatingId = validateId('id', id, res);
+    if( errorValidatingId ) return errorValidatingId;
 
     // proceed
-    next();
+    next()
 }

@@ -1,6 +1,6 @@
 import { Response } from "express";
 
-export default function validateString(str: any, res: Response, fieldName = "string") {
+export default function validateString( fieldName = "string", str: any, res: Response ) {
   if (
     typeof str !== "string" ||
     str.trim().length === 0

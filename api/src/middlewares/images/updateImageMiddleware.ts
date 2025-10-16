@@ -1,18 +1,16 @@
 import { Request, Response, NextFunction } from "express";
 import { prisma } from "../../config/prismaClient";
 
+import validateId from "../../utils/validateId";
+
 export default async function updateImageMiddleware(req: Request, res: Response, next: NextFunction) {
   const { id } = req.params;
   const { projectId, stackId, categoryId } = req.body;
 
   try {
     // validate image id
-    if (!id || isNaN(Number(id))) {
-      return res.status(400).json({
-        status: "400 - Bad Request",
-        message: "You must provide a valid numeric 'id' in request params"
-      })
-    };
+    const errorValidatingImageId = validateId('id', id, res);
+    if( errorValidatingImageId ) return errorValidatingImageId;
 
     // verify if category exists
     const existingImageCategory = await prisma.imageCategory.findUnique({ where: { id: Number(id) }});
@@ -22,30 +20,17 @@ export default async function updateImageMiddleware(req: Request, res: Response,
       message: `Image category with id '${id}' does not exists`
     });
 
-    // helper to validate optional IDs
-    const validateId = (value: any) =>
-      value !== undefined && value !== null && (!String(value).trim().length || isNaN(Number(value)));
+    // projectId validation
+    const errorValidatingProjectId = validateId('projectId', projectId, res);
+    if( errorValidatingProjectId ) return errorValidatingProjectId;
 
-    if (validateId(projectId)) {
-      return res.status(400).json({
-        status: "400 - Bad Request",
-        message: "'projectId' must be a valid integer number"
-      });
-    }
+    // stackId validation
+    const errorValidatingStackId = validateId('stackId', stackId, res);
+    if( errorValidatingStackId ) return errorValidatingStackId;
 
-    if (validateId(stackId)) {
-      return res.status(400).json({
-        status: "400 - Bad Request",
-        message: "'stackId' must be a valid integer number"
-      });
-    }
-
-    if (validateId(categoryId)) {
-      return res.status(400).json({
-        status: "400 - Bad request",
-        message: "'categoryId' must be a valid integer number"
-      })
-    }
+    // categoryId validation
+    const errorValidatingCategoryId = validateId('categoryId', categoryId, res);
+    if ( errorValidatingCategoryId ) return errorValidatingCategoryId;
 
     // check if image exists
     const imageExists = await prisma.image.findUnique({

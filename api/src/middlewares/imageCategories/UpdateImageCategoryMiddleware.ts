@@ -1,6 +1,9 @@
 import { Request, Response, NextFunction } from "express";
 import { prisma } from "../../config/prismaClient";
 
+import validateId from "../../utils/validateId";
+import validateString from "../../utils/validateString";
+
 export default async function UpdateImageCategoryMiddleware(req: Request, res: Response, next: NextFunction) {
   try {
     // id
@@ -11,18 +14,12 @@ export default async function UpdateImageCategoryMiddleware(req: Request, res: R
     const { name } = req.body;
 
     // validating id
-    if (!id || isNaN(parsedId) || !Number.isInteger(parsedId) || parsedId <= 0) {
-      return res.status(400).json({
-        message: "You must provide the category 'id' as a valid positive integer in request params"
-      })
-    };
+    const errorValidatingId = validateId('id', id, res);
+    if (errorValidatingId) return errorValidatingId;
 
     // validating name
-    if (!name || typeof name !== "string" || name.trim().length === 0) {
-      return res.status(400).json({
-        message: "You must provide the image category name as a non-empty string to update"
-      });
-    }
+    const errorValidatingName = validateString('name', name, res);
+    if( errorValidatingName ) return errorValidatingName;
 
     // verify if image category exists
     const foundCategory = await prisma.imageCategory.findUnique({ where: { id: parsedId } });

@@ -1,9 +1,13 @@
 import { Request, Response, NextFunction } from "express";
 import { prisma } from "../../config/prismaClient";
 
-export default async function registerProjectMiddleware( req: Request, res: Response, next: NextFunction ) {
+import validateId from "../../utils/validateId";
+import validateString from "../../utils/validateString";
+import validateNumberArray from "../../utils/validateNumbersArray";
+
+export default async function registerProjectMiddleware(req: Request, res: Response, next: NextFunction) {
   try {
-    const { 
+    const {
       name,
       description,
       more_info,
@@ -14,7 +18,7 @@ export default async function registerProjectMiddleware( req: Request, res: Resp
       categoryId
     } = req.body;
 
-    // all this fields are required
+    // requiredFields
     const requiredFields = {
       name,
       description,
@@ -24,59 +28,60 @@ export default async function registerProjectMiddleware( req: Request, res: Resp
     };
 
     const missingFields = Object.entries(requiredFields)
-      .filter(([_, value]) => !value || String(value).trim() === "")
+      .filter(([_, value]) => value === undefined || value === null)
       .map(([key]) => key);
-    
+
     if (missingFields.length > 0) {
       return res.status(400).json({
         status: "400 - Bad request",
         error: `Missing required field(s): ${missingFields.join(", ")}`,
-        hint:
-          "Required: 'name', 'description', 'more_info', 'deploy_link', 'repository_link'. Optional: 'imageIds', 'stackIds', 'categoryId'",
-      })
-    };
+        hint: "Required: 'name', 'description', 'more_info', 'deploy_link', 'repository_link'. Optional: 'imageIds', 'stackIds', 'categoryId'",
+      });
+    }
 
-    // arrays validation
-    if (imageIds && !Array.isArray(imageIds)) {
-      return res.status(400).json({
-        status: "400 - Bad request",
-        error: "'imageIds' must be an array of IDs",
-      })
-    };
+    // required strings validation
+    for (const [key, value] of Object.entries(requiredFields)) {
+      const invalid = validateString(key, value, res);
+      if (invalid) return invalid;
+    }
 
-    if (stackIds && !Array.isArray(stackIds)) {
-      return res.status(400).json({
-        status: "400 - Bad request",
-        error: "'stackIds' must be an array of IDs",
-      })
-    };
+    // validating number arrays
+    if (imageIds) {
+      const invalid = validateNumberArray("imageIds", imageIds, res);
+      if (invalid) return invalid;
+    }
 
-    if (categoryId && isNaN(Number(categoryId))) {
-      return res.status(400).json({
-        status: "400 - Bad request",
-        error: "'categoryId' must be a valid integer number",
-      })
-    };
+    if (stackIds) {
+      const invalid = validateNumberArray("stackIds", stackIds, res);
+      if (invalid) return invalid;
+    }
 
-    // verify if category exists (if provided id)
-    if( categoryId ){
-      const cateogryExists = await prisma.projectCategory.findUnique({ where: { id: Number(categoryId) }});
+    // validating categoryId
+    if (categoryId) {
+      const invalid = validateId("categoryId", categoryId, res);
+      if (invalid) return invalid;
 
-      if(!cateogryExists) return res.status(400).json({
-        status: "400 - Bad request",
-        message: `Project category with id '${categoryId}' does not exists`
-      })
-    };
+      const categoryExists = await prisma.projectCategory.findUnique({
+        where: { id: Number(categoryId) },
+      });
 
-    // proceed
+      if (!categoryExists) {
+        return res.status(404).json({
+          status: "404 - Not found",
+          message: `Project category with id '${categoryId}' does not exist`,
+        });
+      }
+    }
+
+    // success case
     next()
-    
-  } catch (error) {
+
+  } catch (error: any) {
     // internal server error
     return res.status(500).json({
       status: "500 - Internal server error",
-      error: "An unexpected error ocurred",
-      details: error?.message || String(error)
-    })
+      error: "An unexpected error occurred",
+      details: error?.message || String(error),
+    });
   }
 }

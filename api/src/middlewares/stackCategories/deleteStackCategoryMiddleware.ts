@@ -1,15 +1,15 @@
 import { Request, Response, NextFunction } from "express";
 import { prisma } from "../../config/prismaClient";
 
+import validateId from "../../utils/validateId";
+
 export default async function deleteStackCategoryMiddleware(req: Request, res: Response, next: NextFunction){
     try {
         const { id } = req.params;
 
         // validating id
-        if(!id || String(id).trim().length === 0) return res.status(400).json({
-            status: "400 - Bad request",
-            message: "You must provide an valid id on request params as a valid integer number"
-        });
+        const errorValidatingId = validateId('id', id, res);
+        if( errorValidatingId ) return errorValidatingId;
 
         // verify if the stack category exists
         const existingStackCategory = await prisma.stackCategory.findUnique({ where: { id: Number(id) }});

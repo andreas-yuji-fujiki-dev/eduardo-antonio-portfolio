@@ -1,15 +1,15 @@
 import { Request, Response, NextFunction } from "express";
 import { prisma } from "../../config/prismaClient";
 
+import validateId from "../../utils/validateId";
+
 export default async function getStackCategoryByIdMiddleware(req: Request, res: Response, next: NextFunction){
     try {
         // validate id
         const { id } = req.params;
 
-        if(!id || String(id).trim().length === 0) return res.status(400).json({
-            status: "400 - Bad request",
-            message: "You must provide a valid integer id on request params to search by id"
-        });
+        const errorValidatingId = validateId('id', id, res);
+        if( errorValidatingId ) return errorValidatingId;
 
         // verify if stack category exists
         const existingStackCategory = await prisma.stackCategory.findUnique({ where: { id: Number(id) }});
@@ -21,8 +21,8 @@ export default async function getStackCategoryByIdMiddleware(req: Request, res: 
 
         // success
         next()
-    } catch (error) {
 
+    } catch (error) {
         // internal server error
         return res.status(500).json({
             status: "500 - Internal server error",

@@ -1,6 +1,10 @@
 import { Request, Response, NextFunction } from "express";
 import { prisma } from "../../config/prismaClient";
 
+import validateId from "../../utils/validateId";
+import validateString from "../../utils/validateString";
+import validateNumberArray from "../../utils/validateNumbersArray";
+
 export default async function editProjectMiddleware(req: Request, res: Response, next: NextFunction) {
   const { id } = req.params;
 
@@ -15,83 +19,65 @@ export default async function editProjectMiddleware(req: Request, res: Response,
     categoryId
   } = req.body;
 
-  // project's id validation
-  if (!id || isNaN(Number(id))) {
-    return res.status(400).json({
-      status: "400 - Bad Request",
-      message: "Project ID must be a valid number",
-    })
-  };
+  // validate project id
+  const errorValidatingProjectId = validateId('id', id, res);
+  if (errorValidatingProjectId) return errorValidatingProjectId;
 
-  // validation: at least one field must be present
-  if (
-    name === undefined &&
-    description === undefined &&
-    more_info === undefined &&
-    deploy_link === undefined &&
-    repository_link === undefined &&
-    imageIds === undefined &&
-    stackIds === undefined &&
-    categoryId === undefined
-  ) {
-    return res.status(400).json({
-      status: "400 - Bad Request",
-      message: "At least one field must be provided for update",
-    });
-  };
-
-  // types validation
-  if (name !== undefined && typeof name !== "string") {
-    return res.status(400).json({ status: "400 - Bad request", message: "'name' must be a string" })
-  };
-
-  if (description !== undefined && typeof description !== "string") {
-    return res.status(400).json({ status: "400 - Bad request", message: "'description' must be a string" })
-  };
-
-  if (more_info !== undefined && typeof more_info !== "string") {
-    return res.status(400).json({ status: "400 - Bad request", message: "'more_info' must be a string" })
-  };
-
-  if (deploy_link !== undefined && typeof deploy_link !== "string") {
-    return res.status(400).json({ status: "400 - Bad request", message: "'deploy_link' must be a string" })
-  };
-
-  if (repository_link !== undefined && typeof repository_link !== "string") {
-    return res.status(400).json({ status: "400 - Bad request", message: "'repository_link' must be a string" })
-  };
-
-  if (imageIds !== undefined) {
-    if (!Array.isArray(imageIds) || !imageIds.every(id => typeof id === "number" && !isNaN(id))) {
-      return res.status(400).json({ status: "400 - Bad request", message: "'imageIds' must be an array of numbers" })
-    }
-  };
-
-  if (stackIds !== undefined) {
-    if (!Array.isArray(stackIds) || !stackIds.every(id => typeof id === "number" && !isNaN(id))) {
-      return res.status(400).json({ status: "400  - Bad request", message: "'stackIds' must be an array of numbers" })
-    }
-  };
-
-  if (categoryId !== undefined && (isNaN(Number(categoryId)) || !Number.isInteger(Number(categoryId)))) {
-    return res.status(400).json({ status: "400 - Bad request", message: "'categoryId' must be a valid integer number" })
-  };
-
-  // verify if project exists
+  // check if project exists
   const project = await prisma.project.findUnique({
     where: { id: Number(id) },
     include: { category: true }
   });
 
-  if ( !project ) {
+  if (!project) {
     return res.status(404).json({
       status: "404 - Not Found",
       message: "Project not found",
     });
-  };
-  
-  // check if category exists (only if provided)
-  if (categoryId !== undefined && categoryId !== null) {
+  }
+
+  // validate strings
+  if (name) {
+    const error = validateString('name', name, res);
+    if (error) return error;
+  }
+
+  if (description) {
+    const error = validateString('description', description, res);
+    if (error) return error;
+  }
+
+  if (more_info) {
+    const error = validateString('more_info', more_info, res);
+    if (error) return error;
+  }
+
+  if (deploy_link) {
+    const error = validateString('deploy_link', deploy_link, res);
+    if (error) return error;
+  }
+
+  if (repository_link) {
+    const error = validateString('repository_link', repository_link, res);
+    if (error) return error;
+  }
+
+  // validate arrays
+  if (Array.isArray(imageIds)) {
+    const error = validateNumberArray('imageIds', imageIds, res);
+    if (error) return error;
+  }
+
+  if (Array.isArray(stackIds)) {
+    const error = validateNumberArray('stackIds', stackIds, res);
+    if (error) return error;
+  }
+
+  // validate category id
+  if (categoryId) {
+    const error = validateId('categoryId', categoryId, res);
+    if (error) return error;
+
     const categoryExists = await prisma.projectCategory.findUnique({
       where: { id: Number(categoryId) },
     });
@@ -104,9 +90,8 @@ export default async function editProjectMiddleware(req: Request, res: Response,
     }
   }
 
-  // append project into request
+  // attach project to request
   (req as any).project = project;
 
-  // success case
-  next()
-} 
+  next();
+}

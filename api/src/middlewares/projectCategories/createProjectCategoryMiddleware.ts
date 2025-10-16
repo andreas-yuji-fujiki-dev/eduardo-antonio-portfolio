@@ -1,15 +1,15 @@
 import { Request, Response, NextFunction } from "express";
 import { prisma } from "../../config/prismaClient";
 
+import validateString from "../../utils/validateString";
+
 export default async function createProjectCategoryMiddleware(req: Request, res: Response, next: NextFunction){
     const { name } = req.body;
 
     try {
         // validate name
-        if(!name || typeof(String(name)) !== 'string') return res.status(400).json({
-            status: "400 - Bad request",
-            message: "You must provide an 'name' on request body as a valid string" 
-        });
+        const errorValidatingName = validateString('name', name, res);
+        if( errorValidatingName ) return errorValidatingName;
 
         // verify if some project category already have the same name
         const foundProjectCategoryWithSameName = await prisma.projectCategory.findUnique({ where: { name } });

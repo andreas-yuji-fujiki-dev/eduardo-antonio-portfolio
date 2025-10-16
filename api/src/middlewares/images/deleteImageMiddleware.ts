@@ -1,16 +1,14 @@
 import { Request, Response, NextFunction } from "express";
 import { prisma } from "../../config/prismaClient";
 
+import validateId from "../../utils/validateId";
+
 export default async function deleteImageMiddleware(req: Request, res: Response, next: NextFunction) {
     const { id } = req.params;
 
     // id validation
-    if (!id || isNaN(Number(id))) {
-        return res.status(400).json({
-            status: 400,
-            message: "You must provide a valid image's id on request params"
-        });
-    }
+    const errorValidatingId = validateId('id', id, res);
+    if( errorValidatingId ) return errorValidatingId;
 
     try {
         // verifying if image exists

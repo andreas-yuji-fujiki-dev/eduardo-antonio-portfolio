@@ -1,15 +1,15 @@
 import { Request, Response, NextFunction } from "express";
 import { prisma } from "../../config/prismaClient";
 
+import validateId from "../../utils/validateId";
+
 export default async function deleteProjectCategoryMiddleware(req: Request, res: Response, next: NextFunction){
     try {
         const { id } = req.params;
 
         // validating id
-        if(!id || typeof(Number(id)) !== 'number') return res.status(400).json({
-            status: "400 - Bad request",
-            message: "You must provide an id to delete an project category"
-        });
+        const errorValidatingId = validateId('id', id, res);
+        if( errorValidatingId ) return errorValidatingId;
 
         // verify if project category exists
         const projectCategoryExists = await prisma.projectCategory.findUnique({ where: { id: Number(id) }});

@@ -1,32 +1,32 @@
 import { Request, Response, NextFunction } from "express";
 import { prisma } from "../../config/prismaClient";
 
+import validateId from "../../utils/validateId";
+import validateString from "../../utils/validateString";
+
 export default async function updateStackCategoryMiddleware(req: Request, res: Response, next: NextFunction){
     try {
         // validating fields
         const { id } = req.params;
         const { name } = req.body;
 
-        if(!id || String(id).trim().length === 0) return res.status(400).json({
-            status: "400 - Bad reuqest",
-            message: "You must provide an valid id on request params"
-        });
+        const errorValidatingId = validateId('id', id, res);
+        if( errorValidatingId ) return errorValidatingId;
 
-        if(!name || String(name).trim().length === 0) return res.status(400).json({
-            status: "400 - Bad request",
-            message: "You need to provide a name to update the stack category"
-        });
+        const errorValidatingName = validateString('name', name, res);
+        if( errorValidatingName ) return errorValidatingName;
 
         // verify if stack category exists
         const existingStackCategoryFound = await prisma.stackCategory.findUnique({ where: { id: Number(id) } });
         
-        if(!existingStackCategoryFound) return res.status(404).json({
+        if( !existingStackCategoryFound ) return res.status(404).json({
             status: "404 - Not found",
             message: `Cannot find stack category with id '${id}'`
         });
 
-        // success
+        // success case
         next()
+
     } catch (error) {
         // internal server error
         return res.status(500).json({

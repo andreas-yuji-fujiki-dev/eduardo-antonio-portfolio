@@ -1,16 +1,15 @@
 import { Request, Response, NextFunction } from "express";
 import { prisma } from "../../config/prismaClient";
 
+import validateId from "../../utils/validateId";
+
 export default async function getImageCategoryByIdMiddleware(req: Request, res:Response, next:NextFunction){
     try {
         const { id } = req.params;
         
         // in case of wrong format or not given id
-        if(!id || typeof(Number(id)) !== "number" || String(id).trim().length === 0 || !Number.isInteger(Number(id))) 
-            return res.status(400).json({
-                status: "400 - Bad request",
-                message: "ID must be an valid integer number"
-            });
+        const erroValidatingId = validateId('id', id, res);
+        if( erroValidatingId ) return erroValidatingId;
 
         // verify if exists
         const foundImageCategory = await prisma.imageCategory.findUnique({ where: { id: Number(id) }});

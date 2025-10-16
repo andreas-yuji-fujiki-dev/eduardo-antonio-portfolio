@@ -9,7 +9,7 @@ export default async function deleteImageCategoryMiddleware(req: Request, res: R
     try {
         
         // validating id
-        const errorValidatingId = validateId(id, res);
+        const errorValidatingId = validateId('id', id, res);
         if ( errorValidatingId ) return errorValidatingId;
 
         // verify if image category exist

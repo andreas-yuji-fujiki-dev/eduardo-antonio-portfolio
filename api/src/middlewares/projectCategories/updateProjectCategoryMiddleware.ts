@@ -1,29 +1,26 @@
 import { Request, Response, NextFunction } from "express";
 import { prisma } from "../../config/prismaClient";
 
+import validateId from "../../utils/validateId";
+import validateString from "../../utils/validateString";
+
 export default async function updateProjectCategoryMiddleware(req: Request, res: Response, next: NextFunction){
     const { id } = req.params;
     const { name } = req.body;
     
     try {
         // validating id
-        if (!id || isNaN(Number(id)) || Number(id) <= 0) {
-            return res.status(400).json({
-                status: "400 - Bad request",
-                message: "You must provide a valid integer ID on request params",
-            })
-        };
+        const errorValidatingId = validateId('id', id, res);
+        if( errorValidatingId ) return errorValidatingId;
 
         // validating name from body
-        if(!name || typeof(String(name)) !== 'string' ) return res.status(400).json({
-            status: "400 - Bad request",
-            message: "You need to provide the name to edit on the request body"
-        });
+        const errorValidatingName = validateString('name', name, res);
+        if( errorValidatingName ) return errorValidatingName;
 
         // verify if project category exists
         const foundProjectCategory = await prisma.projectCategory.findUnique({ where: { id: Number(id) } });
 
-        if(!foundProjectCategory) return res.status(400).json({
+        if( !foundProjectCategory ) return res.status(400).json({
             status: "400 - Bad request",
             message: `Cannot find project category with id '${id}'`
         });

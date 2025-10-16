@@ -1,6 +1,6 @@
 import { Response } from "express";
 
-export default function validateNumberArray(arr: any, res: Response, fieldName = "array") {
+export default function validateNumberArray( fieldName = "array", arr: any, res: Response ) {
   if (!Array.isArray(arr) || arr.length === 0) {
     return res.status(400).json({
       status: "400 - Bad request",

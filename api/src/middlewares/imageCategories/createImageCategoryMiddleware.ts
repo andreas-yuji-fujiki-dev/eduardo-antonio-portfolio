@@ -1,16 +1,16 @@
 import { Request, Response, NextFunction } from "express";
 import { prisma } from "../../config/prismaClient";
 
+import validateString from "../../utils/validateString";
+
 export default async function createImageCategoryMiddleware(req: Request, res: Response, next: NextFunction) {
   const { name } = req.body;
 
   try {
     // validation
-    if (!name || typeof name !== "string" || name.trim().length === 0) {
-      return res.status(400).json({
-        message: "The field 'name' is required and must be a non-empty string"
-      })
-    };
+    const errorValidatingName = validateString('name', name, res);
+
+    if( errorValidatingName ) return errorValidatingName;
 
     // checking if a category with this name already exists
     const alreadyExists = 

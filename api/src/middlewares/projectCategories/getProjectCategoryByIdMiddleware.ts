@@ -1,15 +1,15 @@
 import { Request, Response, NextFunction } from "express";
 import { prisma } from "../../config/prismaClient";
 
+import validateId from "../../utils/validateId";
+
 export default async function getProjectCategoryByIdMiddleware(req: Request, res: Response, next: NextFunction){
     const { id } = req.params;
 
     try {
         // validating id
-        if(!id || typeof(Number(id)) !== 'number')  return res.status(400).json({
-            status: "400 - Bad request",
-            message: "ID must be an valid integer number"
-        });
+        const errorValidatingId = validateId('id', id, res);
+        if( errorValidatingId ) return errorValidatingId;
 
         // verify if exists
         const foundProjectCategory = await prisma.projectCategory.findUnique({ where: { id: Number(id) }});
