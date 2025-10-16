@@ -17,11 +17,10 @@ export default async function createImageCategoryController(req: Request, res: R
         })
 
     } catch (error) {
-        
         // internal server error
         return res.status(500).json({
             status: "500 - Internal server error",
-            message: "Something went wrong",
+            error: "Something went wrong",
             details: error?.message || String(error)
         })
     }

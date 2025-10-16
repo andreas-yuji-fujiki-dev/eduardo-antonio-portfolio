@@ -49,13 +49,6 @@ export default async function editStackController(req: Request, res: Response) {
             },
         });
 
-        if (!updatedStack) {
-            return res.status(500).json({
-                status: "500 - Internal server error",
-                error: "Failed to fetch updated stack",
-            });
-        }
-
         // remove unnecessary fields
         const { categoryId: _categoryId, logoId: _logoId, ...stackWithoutIds } = updatedStack;
 

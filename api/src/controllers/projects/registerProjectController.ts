@@ -20,7 +20,7 @@ export default async function registerProjectController( req: Request, res:Respo
     if (existingProject) {
       return res.status(409).json({
         status: "409 - Conflict",
-        message: "A project with this name already exists",
+        message: `A project with the name '${name}' already exists`,
       })
     };
 

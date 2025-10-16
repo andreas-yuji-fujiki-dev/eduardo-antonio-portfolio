@@ -10,8 +10,8 @@ export default async function userRegisterController( req:Request, res:Response)
     
     if( userAlreadyExists ){
         return res.status(409).json({
-            "status": "409 - Conflict",
-            "message": `User '${user}' already exists`
+            status: "409 - Conflict",
+            message: `User '${user}' already exists`
         });
     };
 
@@ -32,6 +32,7 @@ export default async function userRegisterController( req:Request, res:Response)
         // 'created' message
         return res.status(201).json({
             status: "201 - Created",
+            message: `Successfully created the user '${user}'`,
             data: newUser
         });   
     } catch ( error ) {

@@ -15,8 +15,9 @@ export default async function createImageController(req: Request, res: Response)
 
     // returning the created image
     return res.status(201).json({
+      status: "201 - Created",
       message: 'Image uploaded successfully',
-      image: {
+      data: {
         id: image.id,
         name: image.name,
         url: `/uploads/${filename}`
