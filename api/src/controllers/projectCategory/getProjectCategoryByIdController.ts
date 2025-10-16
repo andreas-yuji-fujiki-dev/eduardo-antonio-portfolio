@@ -5,8 +5,10 @@ export default async function getProjectCategoryByIdController(req: Request, res
     const { id } = req.params;
     
     try {
+        // get specifict project category
         const foundProjectCategory = await prisma.projectCategory.findUnique({ where: { id: Number(id) } });
         
+        // success
         return res.status(200).json({
             status: "200 - Success",
             message: `Successfully got project category with id '${id}'`,

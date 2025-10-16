@@ -6,16 +6,12 @@ export default async function createImageController(req: Request, res: Response)
   try {
     if (!req.file) {
       return res.status(400).json({ error: 'No image uploaded' });
-    }
+    };
 
     const { filename } = req.file;
 
     // creating the image on database
-    const image = await prisma.image.create({
-      data: {
-        name: filename,
-      }
-    });
+    const image = await prisma.image.create({ data: { name: filename }});
 
     // returning the created image
     return res.status(201).json({

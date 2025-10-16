@@ -10,6 +10,7 @@ export default async function getAllImageCategoriesController(req: Request, res:
             }
         });
 
+        // success
         return res.status(200).json({
             status: "200 - Success",
             data: !!allImageCategories.length 
@@ -18,7 +19,7 @@ export default async function getAllImageCategoriesController(req: Request, res:
         })
 
     } catch ( error: unknown ) {
-        // in case of server internal error
+        // server internal error
          return res.status(500).json({
             status: "500 - Internal server error",
             error: "Something went wrong while fetching image categories",

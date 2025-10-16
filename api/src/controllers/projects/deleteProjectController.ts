@@ -22,6 +22,7 @@ export default async function deleteProjectController(req: Request, res: Respons
       },
     });
 
+    // success
     return res.status(200).json({
       status: "200 - Success",
       message: `Successfully deleted the project with id '${id}'`,

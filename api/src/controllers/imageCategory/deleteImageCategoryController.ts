@@ -15,7 +15,6 @@ export default async function deleteImageCategoryController(req: Request, res: R
         })
 
     } catch (error) {
-        
         // internal server error
         return res.status(500).json({
             status: "500 - Internal server error",
