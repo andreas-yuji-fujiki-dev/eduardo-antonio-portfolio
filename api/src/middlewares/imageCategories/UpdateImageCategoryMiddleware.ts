@@ -10,15 +10,6 @@ export default async function UpdateImageCategoryMiddleware(req: Request, res: R
     // name
     const { name } = req.body;
 
-    // verify if image category exists
-    const foundCategory = await prisma.imageCategory.findUnique({ where: { id: parsedId } });
-
-    if (!foundCategory) {
-      return res.status(404).json({
-        message: `Cannot find the category with id '${parsedId}'`
-      })
-    };
-
     // validating id
     if (!id || isNaN(parsedId) || !Number.isInteger(parsedId) || parsedId <= 0) {
       return res.status(400).json({
@@ -32,6 +23,15 @@ export default async function UpdateImageCategoryMiddleware(req: Request, res: R
         message: "You must provide the image category name as a non-empty string to update"
       });
     }
+
+    // verify if image category exists
+    const foundCategory = await prisma.imageCategory.findUnique({ where: { id: parsedId } });
+
+    if (!foundCategory) {
+      return res.status(404).json({
+        message: `Cannot find the category with id '${parsedId}'`
+      })
+    };
 
     // success case
     (req as any).imageCategoryId = parsedId;

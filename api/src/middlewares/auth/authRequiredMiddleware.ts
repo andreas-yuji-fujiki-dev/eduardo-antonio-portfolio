@@ -11,7 +11,7 @@ export default function authRequiredMiddleware(req:Request, res:Response, next:N
         return res.status(401).json({
             status: "401 - Access denied",
             message: "You must to have a bearer token in string type, make login first"
-        });
+        })
     };
 
     // if there is not jwt secret

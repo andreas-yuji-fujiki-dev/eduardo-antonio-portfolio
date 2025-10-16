@@ -1,16 +1,17 @@
 import { Request, Response, NextFunction } from "express";
 import { prisma } from "../../config/prismaClient";
 
+import validateId from "../../utils/validateId";
+
 export default async function deleteImageCategoryMiddleware(req: Request, res: Response, next: NextFunction){
     const { id } = req.params;
 
-    if(!id || typeof(Number(id)) !== 'number' ) return res.status(400).json({
-        status: "400 - Bad request",
-        message: "You must provide the category id on the request params"
-    });
-
     try {
         
+        // validating id
+        const errorValidatingId = validateId(id, res);
+        if ( errorValidatingId ) return errorValidatingId;
+
         // verify if image category exist
         const imageCategory = await prisma.imageCategory.findUnique({ where: { id: Number(id) } });
         

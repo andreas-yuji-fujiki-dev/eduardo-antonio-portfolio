@@ -1,18 +1,15 @@
 import { Request, Response, NextFunction } from "express";
 
 export default function loginMiddleware(req: Request, res: Response, next: NextFunction) {
-  // request body must exist
-  if ( !req.body ) {
-    return res.status(400).json({
-      status: "400 Bad Request",
-      error: "Request body is missing",
-    });
-  }
-
+  
   const { user, password } = req.body;
 
   // check if there is some missing field
-  const isMissingSomeField = !user || !password;
+  const isMissingSomeField = 
+    !user 
+    || !password 
+    || String(user).trim().length === 0 
+    || String(password).trim().length === 0;
 
   if ( isMissingSomeField )
     return res.status(400).json({

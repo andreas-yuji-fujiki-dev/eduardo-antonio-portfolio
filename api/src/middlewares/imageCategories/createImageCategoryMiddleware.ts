@@ -9,7 +9,7 @@ export default async function createImageCategoryMiddleware(req: Request, res: R
     if (!name || typeof name !== "string" || name.trim().length === 0) {
       return res.status(400).json({
         message: "The field 'name' is required and must be a non-empty string"
-      });
+      })
     };
 
     // checking if a category with this name already exists
@@ -25,6 +25,7 @@ export default async function createImageCategoryMiddleware(req: Request, res: R
     next()
 
   } catch (error) {
+    // internal server error
     return res.status(500).json({
         status: "500 - Internal server error",
         error: "An unexpected error ocurred",
