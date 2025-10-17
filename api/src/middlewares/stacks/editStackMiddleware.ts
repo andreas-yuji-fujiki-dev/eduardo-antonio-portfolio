@@ -7,7 +7,15 @@ import validateNumberArray from "../../utils/validateNumbersArray";
 
 export default async function editStackMiddleware(req: Request, res: Response, next: NextFunction) {
     try {
+        const { id } = req.params;
         const { name, experience, logoId, categoryId, projectIds } = req.body;
+
+        // stack existance validation
+        const stackExists = await prisma.stack.findUnique({ where: { id: Number(id) } });
+        if(!stackExists) return res.status(404).json({
+            status: "404 - Not found",
+            message: `Cannot find the stack with id '${id}'`
+        });
 
         // string field validation
         if (name) {

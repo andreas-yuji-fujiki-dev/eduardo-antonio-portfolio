@@ -12,16 +12,14 @@ export default async function deleteImageMiddleware(req: Request, res: Response,
 
     try {
         // verifying if image exists
-        const image = await prisma.image.findUnique({ 
-            where: { id: Number(id) }
-        });
+        const image = await prisma.image.findUnique({ where: { id: Number(id) }});
 
         if (!image) {
             return res.status(404).json({
                 status: "404 - Not found",
                 message: `Image with id '${id}' was not found`
-            });
-        }
+            })
+        };
 
         // adding image into request to use it on controller
         req.imageToDelete = image;

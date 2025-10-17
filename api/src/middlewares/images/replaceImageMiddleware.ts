@@ -39,9 +39,7 @@ export default [
     
     try {
       // verify if image exists
-      const image = await prisma.image.findUnique({
-        where: { id: Number(id) }
-      });
+      const image = await prisma.image.findUnique({ where: { id: Number(id) }});
 
       if (!image) {
         return res.status(404).json({
@@ -52,7 +50,8 @@ export default [
 
       // add the current image into request
       req.existingImage = image;
-      next();
+      next()
+
     } catch (error) {
       // if error, remove the uploaded file
       if (req.file) {
@@ -60,7 +59,6 @@ export default [
           if (err) console.error('Error deleting file:', err);
         });
       }
-      next(error);
     }
   }
-];
+]

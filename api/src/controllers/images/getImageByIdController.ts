@@ -17,14 +17,6 @@ export default async function getImageByIdController(req:Request, res:Response){
             }
         });
 
-        // if image does not exists
-        if( !specificImage ){
-            return res.status(404).json({
-                status: "404 - Not found",
-                message: `Project with id '${id}' was not found...`
-            });
-        };
-
         // success case
         return res.status(200).json({
             status: "200 - Success",

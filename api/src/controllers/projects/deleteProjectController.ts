@@ -5,22 +5,11 @@ export default async function deleteProjectController(req: Request, res: Respons
   const { id } = req.params;
 
   try {
-    // verify if project exists
+    // project to display on response
     const existingProject = await prisma.project.findUnique({ where: { id: Number(id) }});
-    
-    if( !existingProject ){
-      return res.status(404).json({
-        status: "404 - Not found",
-        message: `Project with id '${id}' does not exists`
-      });
-    };
 
     // deleting
-    await prisma.project.delete({
-      where: {
-        id: Number(id),
-      },
-    });
+    await prisma.project.delete({ where: { id: Number(id) }});
 
     // success
     return res.status(200).json({

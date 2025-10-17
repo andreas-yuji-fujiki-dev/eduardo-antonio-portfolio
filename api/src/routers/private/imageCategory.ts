@@ -35,6 +35,11 @@
             getImageCategoryByIdController
         );
 
+        // search
+        imageCategoriesRouter.get('/search',
+            authRequiredMiddleware
+        );
+
         // register/create
         imageCategoriesRouter.post('/',
             authRequiredMiddleware,
