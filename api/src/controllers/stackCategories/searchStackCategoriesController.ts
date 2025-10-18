@@ -3,7 +3,7 @@ import { prisma } from "../../config/prismaClient";
 
 import validateString from "../../utils/validateString";
 
-export default async function searchImageCategoryController(req: Request, res: Response) {
+export default async function searchStackCategoriesController(req: Request, res: Response) {
   try {
     const { q } = req.query;
 
@@ -12,9 +12,9 @@ export default async function searchImageCategoryController(req: Request, res: R
     
     const formattedQuery = String(q).toLowerCase();
 
-    const searchResult = await prisma.imageCategory.findMany({
+    const searchResult = await prisma.stackCategory.findMany({
       where: { name: { contains: formattedQuery } },
-      include: { images: true }
+      include: { stacks: true }
     });
 
     return res.status(200).json({
