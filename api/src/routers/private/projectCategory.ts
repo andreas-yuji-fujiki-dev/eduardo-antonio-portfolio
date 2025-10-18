@@ -12,6 +12,7 @@
     // controllers
     import getAllProjectCategoriesController from "../../controllers/projectCategory/getAllProjectCategoriesController";
     import getProjectCategoryByIdController from "../../controllers/projectCategory/getProjectCategoryByIdController";
+    import searchProjectCategoriesController from "../../controllers/projectCategory/searchProjectCategoriesController";
     import createProjectCategoryController from "../../controllers/projectCategory/createProjectCategoryController";
     import updateProjectCategoryController from "../../controllers/projectCategory/updateProjectCategoryController";
     import deleteProjectCategoryController from "../../controllers/projectCategory/deleteProjectCategoryController";
@@ -31,6 +32,12 @@
         authRequiredMiddleware,
         getProjectCategoryByIdMiddleware,
         getProjectCategoryByIdController
+    );
+
+    // search
+    projectCategoriesRouter.get('/search',
+        authRequiredMiddleware,
+        searchProjectCategoriesController
     );
 
     // register/create

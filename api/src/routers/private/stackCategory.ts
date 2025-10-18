@@ -12,6 +12,7 @@
     // controllers
     import getAllStackCategoriesController from "../../controllers/stackCategories/getAllStackCategoriesController";
     import getStackCategoryByIdController from "../../controllers/stackCategories/getStackCategoryByIdController";
+    import searchStackCategoriesController from "../../controllers/stackCategories/searchStackCategoriesController";
     import createStackCategoryController from "../../controllers/stackCategories/createStackCategoryController";
     import updateStackCategoryController from "../../controllers/stackCategories/updateStackCategoryController";
     import deleteStackCategoryController from "../../controllers/stackCategories/deleteStackCategoryController";
@@ -31,6 +32,12 @@
         authRequiredMiddleware,
         getStackCategoryByIdMiddleware,
         getStackCategoryByIdController
+    );
+
+    // search
+    stackCategoryRouter.get('/search',
+        authRequiredMiddleware,
+        searchStackCategoriesController
     );
 
     // register/create

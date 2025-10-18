@@ -13,6 +13,7 @@
     // controllers
     import getAllImagesController from "../../controllers/images/getAllImagesController";
     import getImageByIdController from "../../controllers/images/getImageByIdController";
+    import searchImagesController from "../../controllers/images/searchImagesController";
     import createImageController from "../../controllers/images/createImageController";
     import updateImageController from "../../controllers/images/updateImageController";
     import replaceImageController from '../../controllers/images/replaceImageController';
@@ -35,6 +36,12 @@
             authRequiredMiddleware,
             getImageByIdMiddleware,
             getImageByIdController
+        );
+
+        // search
+        imagesRouter.get('/search',
+            authRequiredMiddleware,
+            searchImagesController
         );
 
         // register/create

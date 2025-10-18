@@ -12,6 +12,7 @@
     // controllers
     import registerProjectController from "../../controllers/projects/registerProjectController";
     import getAllProjectsController from "../../controllers/projects/getAllProjectsController";
+    import searchProjectsController from "../../controllers/projects/searchProjectsController";
     import getProjectByIdController from "../../controllers/projects/getProjectByIdController";
     import editProjectController from "../../controllers/projects/editProjectController";
     import deleteProjectController from "../../controllers/projects/deleteProjectController";
@@ -33,6 +34,12 @@
             authRequiredMiddleware, 
             getProjectByIdMiddleware, 
             getProjectByIdController
+        );
+
+        // search
+        projectsRouter.get('/search',
+            authRequiredMiddleware,
+            searchProjectsController
         );
 
         // register/create project

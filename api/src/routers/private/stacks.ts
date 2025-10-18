@@ -12,6 +12,7 @@
     // controllers
     import getAllStacksController from "../../controllers/stacks/getAllStacksController";
     import getStackByIdController from "../../controllers/stacks/getStackByIdController";
+    import searchStacksController from "../../controllers/stacks/searchStacksController";
     import createStackController from "../../controllers/stacks/createStackController";
     import editStackController from "../../controllers/stacks/editStackController";
     import deleteStackController from "../../controllers/stacks/deleteStackController";
@@ -33,6 +34,12 @@
             authRequiredMiddleware,
             getStackByIdMiddleware,
             getStackByIdController
+        );
+
+        // search
+        stacksRouter.get('/search',
+            authRequiredMiddleware,
+            searchStacksController
         );
 
         // register/create
