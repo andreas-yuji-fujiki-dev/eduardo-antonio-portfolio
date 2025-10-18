@@ -12,14 +12,14 @@
     // controllers
     import getAllImageCategories from "../../controllers/imageCategory/getAllImageCategoriesController";
     import getImageCategoryByIdController from "../../controllers/imageCategory/getImageCategoryByIdController";
+    import searchImageCategoryController from "../../controllers/imageCategory/searchImageCategoryController";
     import createImageCategoryController from "../../controllers/imageCategory/createImageCategoryController";
     import updateImageCategoryController from "../../controllers/imageCategory/updateImageCategoryController";
     import deleteImageCategoryController from "../../controllers/imageCategory/deleteImageCategoryController";
 
-
 // router config
     // definition
-    const imageCategoriesRouter = Router()
+    const imageCategoriesRouter = Router();
     
     // routes register
         // get all
@@ -37,7 +37,8 @@
 
         // search
         imageCategoriesRouter.get('/search',
-            authRequiredMiddleware
+            authRequiredMiddleware,
+            searchImageCategoryController
         );
 
         // register/create
