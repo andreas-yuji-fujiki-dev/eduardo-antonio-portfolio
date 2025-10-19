@@ -5,6 +5,7 @@
     // middlewares
     import authRequiredMiddleware from "../../middlewares/auth/authRequiredMiddleware";
     import getStackCategoryByIdMiddleware from "../../middlewares/stackCategories/getStackCategoryByIdMiddleware";
+    import searchStackCategoriesMiddleware from "../../middlewares/stackCategories/searchStackCategoriesMiddleware";
     import createStackCategoryMiddleware from "../../middlewares/stackCategories/createStackCategoryMiddleware";
     import updateStackCategoryMiddleware from "../../middlewares/stackCategories/updateStackCategoryMiddleware";
     import deleteStackCategoryMiddleware from "../../middlewares/stackCategories/deleteStackCategoryMiddleware";
@@ -30,6 +31,7 @@
     // search
     stackCategoryRouter.get('/search',
         authRequiredMiddleware,
+        searchStackCategoriesMiddleware,
         searchStackCategoriesController
     );
 

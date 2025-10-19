@@ -4,7 +4,9 @@
     
     // middlewares
     import authRequiredMiddleware from "../../middlewares/auth/authRequiredMiddleware";
+    
     import getStackByIdMiddleware from "../../middlewares/stacks/getStackByIdMiddleware";
+    import searchStacksMiddleware from "../../middlewares/stacks/searchStacksMiddleware";
     import createStackMiddleware from "../../middlewares/stacks/createStackMiddleware";
     import editStackMiddleware from "../../middlewares/stacks/editStackMiddleware";
     import deleteStackMiddleware from "../../middlewares/stacks/deleteStackMiddleware";
@@ -32,6 +34,7 @@
         // search
         stacksRouter.get('/search',
             authRequiredMiddleware,
+            searchStacksMiddleware,
             searchStacksController
         );
 

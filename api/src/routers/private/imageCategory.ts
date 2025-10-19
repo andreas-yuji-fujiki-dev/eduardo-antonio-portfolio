@@ -4,6 +4,7 @@
 
     // middlewares
     import authRequiredMiddleware from "../../middlewares/auth/authRequiredMiddleware";
+    import searchImageCategoriesMiddleware from "../../middlewares/imageCategories/searchImageCategoriesMiddleware";
     import getImageCategoryByIdMiddleware from "../../middlewares/imageCategories/getImageCategoryByIdMiddleware";
     import createImageCategoryMiddleware from "../../middlewares/imageCategories/createImageCategoryMiddleware";
     import UpdateImageCategoryMiddleware from "../../middlewares/imageCategories/updateImageCategoryMiddleware";
@@ -31,6 +32,7 @@
         // search
         imageCategoriesRouter.get('/search',
             authRequiredMiddleware,
+            searchImageCategoriesMiddleware,
             searchImageCategoryController
         );
 

@@ -4,6 +4,7 @@
 
     // middlewares
     import authRequiredMiddleware from "../../middlewares/auth/authRequiredMiddleware";
+    import searchProjectCategoriesMiddleware from "../../middlewares/projectCategories/searchProjectCategoriesMiddleware";
     import getProjectCategoryByIdMiddleware from "../../middlewares/projectCategories/getProjectCategoryByIdMiddleware";
     import createProjectCategoryMiddleware from "../../middlewares/projectCategories/createProjectCategoryMiddleware";
     import updateProjectCategoryMiddleware from "../../middlewares/projectCategories/updateProjectCategoryMiddleware";
@@ -30,6 +31,7 @@
     // search
     projectCategoriesRouter.get('/search',
         authRequiredMiddleware,
+        searchProjectCategoriesMiddleware,
         searchProjectCategoriesController
     );
 

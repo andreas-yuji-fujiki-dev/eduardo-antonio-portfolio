@@ -4,6 +4,7 @@
     
     // middlewares
     import registerProjectMiddleware from "../../middlewares/projects/registerProjectMiddleware";
+    import searchProjectsMiddleware from "../../middlewares/projects/searchProjectsMiddleware";
     import authRequiredMiddleware from "../../middlewares/auth/authRequiredMiddleware";
     import getProjectByIdMiddleware from "../../middlewares/projects/getProjectByIdMiddleware";
     import editProjectMiddleware from "../../middlewares/projects/editProjectMiddleware";
@@ -32,6 +33,7 @@
         // search
         projectsRouter.get('/search',
             authRequiredMiddleware,
+            searchProjectsMiddleware,
             searchProjectsController
         );
 

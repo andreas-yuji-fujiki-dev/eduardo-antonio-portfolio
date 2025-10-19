@@ -4,6 +4,7 @@
 
     // middlewares
     import authRequiredMiddleware from "../../middlewares/auth/authRequiredMiddleware";
+    import searchImagesMiddleware from "../../middlewares/images/searchImagesMiddleware";
     import getImageByIdMiddleware from "../../middlewares/images/getImageByIdMiddleware";
     import createImageMiddleware from "../../middlewares/images/createImageMiddleware";
     import updateImageMiddleware from "../../middlewares/images/updateImageMiddleware";
@@ -34,6 +35,7 @@
         // search
         imagesRouter.get('/search',
             authRequiredMiddleware,
+            searchImagesMiddleware,
             searchImagesController
         );
 
