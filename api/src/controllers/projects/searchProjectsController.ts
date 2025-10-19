@@ -13,7 +13,15 @@ export default async function searchProjectsController(req: Request, res: Respon
     const formattedQuery = String(q).toLowerCase();
 
     const searchResult = await prisma.project.findMany({
-      where: { name: { contains: formattedQuery } },
+      where: {
+        OR: [
+          { name: { contains: formattedQuery } },
+          { description: { contains: formattedQuery } },
+          { more_info: { contains: formattedQuery } },
+          { repository_link: { contains: formattedQuery } },
+          { deploy_link: { contains: formattedQuery } }
+        ]
+      },
       include: { 
         category: true,
         images: true,
