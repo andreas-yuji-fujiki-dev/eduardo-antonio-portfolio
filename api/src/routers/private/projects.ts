@@ -29,17 +29,17 @@
             getAllProjectsController
         );
 
+        // search
+        projectsRouter.get('/search',
+            authRequiredMiddleware,
+            searchProjectsController
+        );
+
         // get project by id
         projectsRouter.get('/:id', 
             authRequiredMiddleware, 
             getProjectByIdMiddleware, 
             getProjectByIdController
-        );
-
-        // search
-        projectsRouter.get('/search',
-            authRequiredMiddleware,
-            searchProjectsController
         );
 
         // register/create project

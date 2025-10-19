@@ -29,17 +29,17 @@
             getAllStacksController
         );
 
+        // search
+        stacksRouter.get('/search',
+            authRequiredMiddleware,
+            searchStacksController
+        );
+
         // get by id
         stacksRouter.get('/:id',
             authRequiredMiddleware,
             getStackByIdMiddleware,
             getStackByIdController
-        );
-
-        // search
-        stacksRouter.get('/search',
-            authRequiredMiddleware,
-            searchStacksController
         );
 
         // register/create

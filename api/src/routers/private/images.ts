@@ -29,19 +29,19 @@
         imagesRouter.get('/', 
             authRequiredMiddleware,
             getAllImagesController
-        ); 
+        );
+        
+        // search
+        imagesRouter.get('/search',
+            authRequiredMiddleware,
+            searchImagesController
+        );
 
         // get by id
         imagesRouter.get('/:id',
             authRequiredMiddleware,
             getImageByIdMiddleware,
             getImageByIdController
-        );
-
-        // search
-        imagesRouter.get('/search',
-            authRequiredMiddleware,
-            searchImagesController
         );
 
         // register/create

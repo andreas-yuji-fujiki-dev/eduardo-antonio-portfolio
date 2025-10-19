@@ -28,17 +28,17 @@
             getAllImageCategories
         );
 
+        // search
+        imageCategoriesRouter.get('/search',
+            authRequiredMiddleware,
+            searchImageCategoryController
+        );
+
         // get by id
         imageCategoriesRouter.get('/:id',
             authRequiredMiddleware,
             getImageCategoryByIdMiddleware,
             getImageCategoryByIdController
-        );
-
-        // search
-        imageCategoriesRouter.get('/search',
-            authRequiredMiddleware,
-            searchImageCategoryController
         );
 
         // register/create

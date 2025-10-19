@@ -27,17 +27,17 @@
         getAllStackCategoriesController
     );
 
+    // search
+    stackCategoryRouter.get('/search',
+        authRequiredMiddleware,
+        searchStackCategoriesController
+    );
+
     // get by id
     stackCategoryRouter.get('/:id', 
         authRequiredMiddleware,
         getStackCategoryByIdMiddleware,
         getStackCategoryByIdController
-    );
-
-    // search
-    stackCategoryRouter.get('/search',
-        authRequiredMiddleware,
-        searchStackCategoriesController
     );
 
     // register/create

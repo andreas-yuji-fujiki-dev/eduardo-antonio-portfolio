@@ -27,17 +27,17 @@
         getAllProjectCategoriesController
     );
 
+    // search
+    projectCategoriesRouter.get('/search',
+        authRequiredMiddleware,
+        searchProjectCategoriesController
+    );
+
     // get by id
     projectCategoriesRouter.get('/:id',
         authRequiredMiddleware,
         getProjectCategoryByIdMiddleware,
         getProjectCategoryByIdController
-    );
-
-    // search
-    projectCategoriesRouter.get('/search',
-        authRequiredMiddleware,
-        searchProjectCategoriesController
     );
 
     // register/create
