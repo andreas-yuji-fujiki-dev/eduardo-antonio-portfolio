@@ -11,8 +11,8 @@
 
     // controllers
     import getAllProjectCategoriesController from "../../controllers/projectCategory/getAllProjectCategoriesController";
-    import getProjectCategoryByIdController from "../../controllers/projectCategory/getProjectCategoryByIdController";
     import searchProjectCategoriesController from "../../controllers/projectCategory/searchProjectCategoriesController";
+    import getProjectCategoryByIdController from "../../controllers/projectCategory/getProjectCategoryByIdController";
     import createProjectCategoryController from "../../controllers/projectCategory/createProjectCategoryController";
     import updateProjectCategoryController from "../../controllers/projectCategory/updateProjectCategoryController";
     import deleteProjectCategoryController from "../../controllers/projectCategory/deleteProjectCategoryController";

@@ -11,8 +11,8 @@
 
     // controllers
     import getAllImageCategories from "../../controllers/imageCategory/getAllImageCategoriesController";
-    import getImageCategoryByIdController from "../../controllers/imageCategory/getImageCategoryByIdController";
     import searchImageCategoryController from "../../controllers/imageCategory/searchImageCategoryController";
+    import getImageCategoryByIdController from "../../controllers/imageCategory/getImageCategoryByIdController";
     import createImageCategoryController from "../../controllers/imageCategory/createImageCategoryController";
     import updateImageCategoryController from "../../controllers/imageCategory/updateImageCategoryController";
     import deleteImageCategoryController from "../../controllers/imageCategory/deleteImageCategoryController";

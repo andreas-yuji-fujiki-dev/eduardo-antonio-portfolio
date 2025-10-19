@@ -11,8 +11,8 @@
 
     // controllers
     import getAllStackCategoriesController from "../../controllers/stackCategories/getAllStackCategoriesController";
-    import getStackCategoryByIdController from "../../controllers/stackCategories/getStackCategoryByIdController";
     import searchStackCategoriesController from "../../controllers/stackCategories/searchStackCategoriesController";
+    import getStackCategoryByIdController from "../../controllers/stackCategories/getStackCategoryByIdController";
     import createStackCategoryController from "../../controllers/stackCategories/createStackCategoryController";
     import updateStackCategoryController from "../../controllers/stackCategories/updateStackCategoryController";
     import deleteStackCategoryController from "../../controllers/stackCategories/deleteStackCategoryController";
