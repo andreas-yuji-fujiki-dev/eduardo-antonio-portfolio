@@ -3,8 +3,17 @@ import { prisma } from "../../config/prismaClient";
 
 export default async function getAllImagesController(req: Request, res: Response) {
     try {
+
+        const page = parseInt(req.query.page as string) || 1;
+        const limit = parseInt(req.query.limit as string) || 5;
+        const skip = (page - 1) * limit;
+
+        // const totalImages = await prisma.image.count();  <--- deixei comentato porem, caso futuramente queira implementar no teu frontend um numerador de paginas.
+
         // get all images
         const allImages = await prisma.image.findMany({
+            skip,
+            take: limit,
             select: {
                 id: true,
                 name: true,
