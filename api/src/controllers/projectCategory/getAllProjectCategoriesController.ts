@@ -3,12 +3,32 @@ import { prisma } from "../../config/prismaClient";
 
 export default async function getAllProjectCategoriesController(req: Request, res: Response){
     try {
-        // success case
-        const allProjectCategories = await prisma.projectCategory.findMany();
 
+        // pagination
+        const page = parseInt(req.query.page as string) || 1;
+        const limit = parseInt(req.query.limit as string) || 2;
+        const skip = (page - 1) * limit;
+
+        
+        const allProjectCategories = await prisma.projectCategory.findMany({
+            skip,
+            take: limit 
+        })
+
+        // total number of existing categories projects
+        const totalProjectCategories = await prisma.projectCategory.count()
+
+        // success case
         return res.status(200).json({
             status: "200 - Success",
             message: "Successfully got all the project categories",
+            pagination: {
+                currentPage: page, limit,
+                totalItens: totalProjectCategories,
+                totalPages: Math.ceil( totalProjectCategories / limit ),
+                hasPrevPage: page > 1,
+                hasNextPage: page * limit < totalProjectCategories
+            },
             data: !allProjectCategories.length ? "No project categories found..." : allProjectCategories
         })
     } catch (error) {
