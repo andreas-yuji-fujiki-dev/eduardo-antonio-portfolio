@@ -1,133 +1,55 @@
 /**
  * @swagger
  * tags:
- *   name: Stacks
- *   description: Endpoints para manipulação de stacks
+ *   - name: Stack Categories
+ *     description: Endpoints para gerenciamento de categorias de stacks
+ *
+ *   - name: Stacks
+ *     description: Endpoints para gerenciamento de stacks
  */
+
+
+/* ============================================================
+   📌 Stack Categories Routes
+   ============================================================ */
 
 /**
  * @swagger
- * /stacks:
+ * /stackCategory:
  *   get:
- *     summary: Lista todas as stacks disponíveis
- *     tags: [Stacks]
- *     security:
- *       - bearerAuth: [] 
+ *     summary: Listar todas as categorias de stacks
+ *     tags: ["Stack Categories"]
  *     responses:
  *       200:
- *         description: Lista de stacks retornada com sucesso
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                   example: "200 - Success"
- *                 message:
- *                   type: string
- *                   example: "Successfully got all the stacks"
- *                 data:
- *                   oneOf:
- *                     - type: array
- *                       items:
- *                         $ref: '#/components/schemas/Stack'
- *                     - type: string
- *                       example: "No stacks found..."
- *       500:
- *         description: Erro interno no servidor
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                   example: "500 - Internal server error"
- *                 message:
- *                   type: string
- *                   example: "An unexpected error has occurred while listing all the stacks"
- *                 error:
- *                   type: object
+ *         description: Lista retornada com sucesso
  */
 
 /**
  * @swagger
- * /stacks/{id}:
+ * /stackCategory/{id}:
  *   get:
- *     summary: Obtém uma stack específica pelo ID
- *     tags: [Stacks]
- *     security:
- *       - bearerAuth: []
+ *     summary: Buscar categoria pelo ID
+ *     tags: ["Stack Categories"]
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
+ *         description: ID da categoria
  *         schema:
- *           type: integer
- *         description: ID numérico da stack
+ *           type: string
  *     responses:
  *       200:
- *         description: Stack encontrada com sucesso
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                   example: "200 - Success"
- *                 data:
- *                   $ref: '#/components/schemas/Stack'
- *       400:
- *         description: Requisição inválida (ID ausente ou não numérico)
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                   example: "400 - Bad request"
- *                 message:
- *                   type: string
- *                   example: "You need to provide project's id to search by id"
+ *         description: Categoria retornada com sucesso
  *       404:
- *         description: Stack não encontrada
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                   example: "404 - Not found"
- *                 message:
- *                   type: string
- *                   example: "Cannot find stack with id 999"
- *       500:
- *         description: Erro interno do servidor
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                   example: "500 - Server internal error"
- *                 message:
- *                   type: string
- *                   example: "An unexpected error has occurred while getting stack by id"
+ *         description: Categoria não encontrada
  */
 
 /**
  * @swagger
- * /stacks:
+ * /stackCategory:
  *   post:
- *     summary: Cria uma nova stack
- *     tags: [Stacks]
- *     security:
- *       - bearerAuth: []
+ *     summary: Criar uma nova categoria de stack
+ *     tags: ["Stack Categories"]
  *     requestBody:
  *       required: true
  *       content:
@@ -136,103 +58,33 @@
  *             type: object
  *             required:
  *               - name
- *               - experience
- *               - logoId
  *             properties:
  *               name:
  *                 type: string
- *                 description: Nome da stack
- *                 example: "React"
- *               experience:
- *                 type: integer
- *                 enum: [1, 2, 3]
- *                 description: |
- *                   Nível de experiência:
- *                    - 1 = Beginner
- *                    - 2 = Intermediate
- *                    - 3 = Advanced
- *                 example: 2
- *               logoId:
- *                 type: integer
- *                 description: ID da imagem do logo
- *                 example: 5
+ *                 description: Nome da categoria
+ *                 example: Frontend
  *     responses:
  *       201:
- *         description: Stack criada com sucesso
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                   example: "201 - Created"
- *                 message:
- *                   type: string
- *                   example: "Stack created successfully"
- *                 data:
- *                   $ref: '#/components/schemas/Stack'
+ *         description: Categoria criada com sucesso
  *       400:
- *         description: Requisição inválida (validação de campos)
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                   example: "400 - Bad Request"
- *                 message:
- *                   type: string
- *                   example: "The 'experience' field must be present and be one of these: 1 (Beginner), 2 (Intermediate), or 3 (Advanced)"
- *       404:
- *         description: Imagem do logo não encontrada
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                   example: "404 - Not Found"
- *                 message:
- *                   type: string
- *                   example: "Image with id 999 does not exists"
- *       500:
- *         description: Erro interno do servidor
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                   example: "500 - Internal Server Error"
- *                 message:
- *                   type: string
- *                   example: "An error occurred while creating the stack"
- *                 error:
- *                   type: object
+ *         description: Erro ao validar dados
  */
 
 /**
  * @swagger
- * /stacks/{id}:
- *   put:
- *     summary: Atualiza uma stack existente
- *     description: Todos os campos são opcionais - apenas os campos fornecidos serão atualizados
- *     tags: [Stacks]
- *     security:
- *       - bearerAuth: []
+ * /stackCategory/{id}:
+ *   patch:
+ *     summary: Atualizar uma categoria existente
+ *     tags: ["Stack Categories"]
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
+ *         description: ID da categoria
  *         schema:
- *           type: integer
- *         description: ID numérico da stack a ser atualizada
+ *           type: string
  *     requestBody:
- *       required: false
+ *       required: true
  *       content:
  *         application/json:
  *           schema:
@@ -240,146 +92,150 @@
  *             properties:
  *               name:
  *                 type: string
- *                 nullable: true
- *                 description: Novo nome da stack
- *                 example: "React Native"
- *               experience:
+ *                 example: Mobile
+ *     responses:
+ *       200:
+ *         description: Categoria atualizada com sucesso
+ *       404:
+ *         description: Categoria não encontrada
+ */
+
+/**
+ * @swagger
+ * /stackCategory/{id}:
+ *   delete:
+ *     summary: Deletar categoria por ID
+ *     tags: ["Stack Categories"]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID da categoria
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Categoria deletada com sucesso
+ *       404:
+ *         description: Categoria não encontrada
+ */
+
+
+
+/* ============================================================
+   📌 Stacks Routes
+   ============================================================ */
+
+/**
+ * @swagger
+ * /stacks:
+ *   get:
+ *     summary: Listar todas as stacks
+ *     tags: ["Stacks"]
+ *     responses:
+ *       200:
+ *         description: Lista carregada com sucesso
+ */
+
+/**
+ * @swagger
+ * /stacks/{id}:
+ *   get:
+ *     summary: Buscar stack pelo ID
+ *     tags: ["Stacks"]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID da stack
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Stack retornada com sucesso
+ *       404:
+ *         description: Stack não encontrada
+ */
+
+/**
+ * @swagger
+ * /stacks:
+ *   post:
+ *     summary: Criar uma nova stack
+ *     tags: ["Stacks"]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *               - categoryId
+ *             properties:
+ *               name:
  *                 type: string
- *                 nullable: true
- *                 description: Novo nível de experiência
- *                 example: "Advanced"
- *               logoId:
- *                 type: integer
- *                 nullable: true
- *                 description: Novo ID da imagem do logo
- *                 example: 7
+ *                 description: Nome da stack
+ *                 example: ReactJS
+ *               categoryId:
+ *                 type: string
+ *                 description: ID da categoria associada
+ *                 example: 65e4a951c837ebba12345678
+ *     responses:
+ *       201:
+ *         description: Stack criada com sucesso
+ *       400:
+ *         description: Erro ao validar dados
+ */
+
+/**
+ * @swagger
+ * /stacks/{id}:
+ *   patch:
+ *     summary: Atualizar uma stack existente
+ *     tags: ["Stacks"]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID da stack
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 example: Next.js
+ *               categoryId:
+ *                 type: string
+ *                 example: 65e4a951c837ebba12345678
  *     responses:
  *       200:
  *         description: Stack atualizada com sucesso
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                   example: "200 - Success"
- *                 message:
- *                   type: string
- *                   example: "Stack updated successfully"
- *                 data:
- *                   $ref: '#/components/schemas/Stack'
- *       400:
- *         description: Requisição inválida (validação de campos)
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                   example: "400 - Bad Request"
- *                 message:
- *                   type: string
- *                   example: "If provided, 'logoId' must be a valid number"
  *       404:
- *         description: Stack ou imagem não encontrada
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                   example: "404 - Not Found"
- *                 message:
- *                   type: string
- *                   example: "Stack with id 999 does not exists"
- *       500:
- *         description: Erro interno do servidor
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                   example: "500 - Internal Server Error"
- *                 message:
- *                   type: string
- *                   example: "An error occurred while updating the stack"
- *                 error:
- *                   type: object
+ *         description: Stack não encontrada
  */
 
 /**
  * @swagger
  * /stacks/{id}:
  *   delete:
- *     summary: Remove uma stack existente
- *     tags: [Stacks]
- *     security:
- *       - bearerAuth: []
+ *     summary: Deletar stack pelo ID
+ *     tags: ["Stacks"]
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
+ *         description: ID da stack
  *         schema:
- *           type: integer
- *         description: ID numérico da stack a ser removida
+ *           type: string
  *     responses:
  *       200:
- *         description: Stack removida com sucesso
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                   example: "200 - Success"
- *                 message:
- *                   type: string
- *                   example: "Stack with id 5 deleted successfully"
- *       400:
- *         description: Requisição inválida (ID ausente ou inválido)
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                   example: "400 - Bad Request"
- *                 message:
- *                   type: string
- *                   example: "The 'id' parameter must be a valid number"
+ *         description: Stack deletada com sucesso
  *       404:
  *         description: Stack não encontrada
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                   example: "404 - Not Found"
- *                 message:
- *                   type: string
- *                   example: "Stack with id 999 does not exists"
- *       500:
- *         description: Erro interno do servidor
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                   example: "500 - Internal Server Error"
- *                 message:
- *                   type: string
- *                   example: "An error occurred while deleting the stack"
- *                 error:
- *                   type: object
  */
