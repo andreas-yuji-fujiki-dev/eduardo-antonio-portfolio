@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 import { prisma } from "../../config/prismaClient";
+import { PaginationQuery } from "../../types/pagination";
 
-export default async function getAllImagesController(req: Request, res: Response) {
+export default async function getAllImagesController(req: Request<{}, {}, {}, PaginationQuery>, res: Response) {
     try {
         
         // pagination
@@ -21,7 +22,7 @@ export default async function getAllImagesController(req: Request, res: Response
                 stackLogo: true
             }
         });
-
+        
         // number of total exinsting images
         const totalImages = await prisma.image.count()
 
@@ -48,3 +49,4 @@ export default async function getAllImagesController(req: Request, res: Response
         });
     }
 };
+
