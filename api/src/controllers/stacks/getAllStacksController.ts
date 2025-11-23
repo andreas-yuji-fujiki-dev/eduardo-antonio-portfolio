@@ -1,14 +1,15 @@
 import { Request, Response } from "express";
 import { prisma } from "../../config/prismaClient";
+import { PaginationQuery } from "../../types/pagination";
 
-export default async function getAllStacksController(req: Request, res: Response) {
+export default async function getAllStacksController(req: Request<{}, {}, {}, PaginationQuery>, res: Response) {
     try {
 
         // pagination
         const page = parseInt(req.query.page as string) || 1;
         const limit = parseInt(req.query.limit as string) || 5;
         const skip = (page - 1) * limit;
-
+        
         // get all stacks
         const allStacks = await prisma.stack.findMany({
             skip,
