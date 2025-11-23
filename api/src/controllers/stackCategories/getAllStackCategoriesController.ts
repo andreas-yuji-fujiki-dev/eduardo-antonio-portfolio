@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
 import { prisma } from "../../config/prismaClient";
-import { parse } from "path";
+import { parse } from "path"; // import não ultilizado
+import { PaginationQuery } from "../../types/pagination";
 
-export default async function getAllStackCategoriesController(req: Request, res: Response){
+export default async function getAllStackCategoriesController(req: Request<{}, {}, {}, PaginationQuery>, res: Response){
     try {
 
         // pagination

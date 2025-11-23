@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 import { prisma } from "../../config/prismaClient";
+import { PaginationQuery } from "../../types/pagination";
 
-export default async function getAllImageCategoriesController(req: Request, res: Response) {
+export default async function getAllImageCategoriesController(req: Request<{}, {}, {}, PaginationQuery>, res: Response) {
     try {
 
         // pagination

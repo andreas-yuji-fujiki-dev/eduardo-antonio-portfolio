@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 import { prisma } from "../../config/prismaClient";
+import { PaginationQuery } from "../../types/pagination";
 
-export default async function getAllProjectCategoriesController(req: Request, res: Response){
+export default async function getAllProjectCategoriesController(req: Request<{}, {}, {}, PaginationQuery >, res: Response){
     try {
 
         // pagination
@@ -17,7 +18,7 @@ export default async function getAllProjectCategoriesController(req: Request, re
 
         // total number of existing categories projects
         const totalProjectCategories = await prisma.projectCategory.count()
-
+        
         // success case
         return res.status(200).json({
             status: "200 - Success",
