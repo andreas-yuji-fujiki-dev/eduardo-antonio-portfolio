@@ -7,7 +7,7 @@
     import searchImageCategoriesMiddleware from "../../middlewares/imageCategories/searchImageCategoriesMiddleware";
     import getImageCategoryByIdMiddleware from "../../middlewares/imageCategories/getImageCategoryByIdMiddleware";
     import createImageCategoryMiddleware from "../../middlewares/imageCategories/createImageCategoryMiddleware";
-    import UpdateImageCategoryMiddleware from "../../middlewares/imageCategories/updateImageCategoryMiddleware"; // Pode dar erro, existem 2 arquivos de mesmo nome com a unica diferença sendo suas letras maisculas e minusculas //
+    import UpdateImageCategoryMiddleware from "../../middlewares/imageCategories/UpdateImageCategoryMiddleware";
     import deleteImageCategoryMiddleware from "../../middlewares/imageCategories/deleteImageCategoryMiddleware";
 
     // controllers
