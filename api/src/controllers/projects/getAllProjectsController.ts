@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
 import { prisma } from "../../config/prismaClient";
-import { toASCII } from "punycode";
+import { toASCII } from "punycode"; // import não ultilizado
+import { PaginationQuery } from "../../types/pagination";
 
-export default async function getAllProjectsController(req: Request, res: Response) {
+export default async function getAllProjectsController(req: Request<{}, {}, {}, PaginationQuery>, res: Response) {
   try {
 
     // pagination
