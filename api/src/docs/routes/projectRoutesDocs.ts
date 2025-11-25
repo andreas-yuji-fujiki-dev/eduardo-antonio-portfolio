@@ -40,30 +40,185 @@
  * @swagger
  * /projectCategory:
  *   get:
- *     summary: Listar todas as categorias de projetos
+ *     summary: Lista todas as categorias de projetos com paginação
+ *     description: |
+ *       Retorna todas as categorias de projetos paginadas.
+ *       **REQUER AUTENTICAÇÃO** via Bearer token.
+ *       
  *     tags: [Project Categories]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *           default: 1
+ *         description: Número da página (começa em 1)
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *           default: 5
+ *         description: Quantidade de itens por página (padrão 5)
  *     responses:
  *       200:
- *         description: Lista de categorias retornada com sucesso.
+ *         description: Lista de categorias retornada com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "200 - Success"
+ *                 message:
+ *                   type: string
+ *                   example: "Successfully got all the project categories"
+ *                 pagination:
+ *                   type: object
+ *                   properties:
+ *                     currentPage:
+ *                       type: integer
+ *                       example: 1
+ *                     limit:
+ *                       type: integer
+ *                       example: 2
+ *                     totalItens:
+ *                       type: integer
+ *                       example: 10
+ *                     totalPages:
+ *                       type: integer
+ *                       example: 5
+ *                     hasPrevPage:
+ *                       type: boolean
+ *                       example: false
+ *                     hasNextPage:
+ *                       type: boolean
+ *                       example: true
+ *                 data:
+ *                   oneOf:
+ *                     - type: array
+ *                       items:
+ *                         type: object
+ *                         description: Todos os campos do modelo ProjectCategory
+ *                     - type: string
+ *                       example: "No project categories found..."
+ *       401:
+ *         description: Token ausente, inválido ou expirado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/UnauthorizedError'
+ *       500:
+ *         description: Erro interno do servidor
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "500 - Internal server error"
+ *                 error:
+ *                   type: string
+ *                   example: "An unexpected error ocurred"
+ *                 details:
+ *                   type: string
+ *                   example: "Prisma error: ..."
  */
 
 /**
  * @swagger
- * /projectCategory/{id}:
+ * /projectCategory/search:
  *   get:
- *     summary: Buscar uma categoria específica pelo ID
+ *     summary: Busca categorias de projetos por nome
+ *     description: |
+ *       Busca categorias de projetos que contenham o termo pesquisado no campo 'name'.
+ *       
+ *       **REQUER AUTENTICAÇÃO** via Bearer token.
+ *       A busca é case-insensitive e inclui a relação completa com projetos.
  *     tags: [Project Categories]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
- *       - in: path
- *         name: id
+ *       - in: query
+ *         name: q
  *         required: true
  *         schema:
  *           type: string
+ *           minLength: 1
+ *         description: Termo de busca no campo 'name' (obrigatório)
  *     responses:
  *       200:
- *         description: Categoria encontrada.
- *       404:
- *         description: Categoria não encontrada.
+ *         description: Busca realizada com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "200 - Success"
+ *                 message:
+ *                   type: string
+ *                   example: "Successfully searched"
+ *                 data:
+ *                   oneOf:
+ *                     - type: array
+ *                       items:
+ *                         type: object
+ *                         properties:
+ *                           id:
+ *                             type: integer
+ *                             example: 1
+ *                           name:
+ *                             type: string
+ *                             example: "Web Development"
+ *                           projects:
+ *                             type: array
+ *                             description: Todos os projetos relacionados com todos os campos
+ *                             items:
+ *                               type: object
+ *                     - type: string
+ *                       example: "Nothing found..."
+ *       400:
+ *         description: Parâmetro de busca inválido ou faltando
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "400 - Bad request"
+ *                 message:
+ *                   type: string
+ *                   example: "'query' must be a non-empty string"
+ *       401:
+ *         description: Token ausente, inválido ou expirado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/UnauthorizedError'
+ *       500:
+ *         description: Erro interno do servidor
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "500 - Internal server error"
+ *                 error:
+ *                   type: string
+ *                   example: "An unexpected error ocurred"
+ *                 details:
+ *                   type: string
+ *                   example: "Prisma error: Database connection failed"
  */
 
 /**
@@ -117,7 +272,93 @@
  *         description: Categoria não encontrada.
  */
 
-
+/**
+ * @swagger
+ * /projectCategory/{id}:
+ *   get:
+ *     summary: Busca uma categoria de projeto específica pelo ID
+ *     description: |
+ *       Retorna uma categoria de projeto específica pelo ID com TODOS os campos do modelo.
+ *       
+ *       **REQUER AUTENTICAÇÃO** via Bearer token.
+ *       
+ *     tags: [Project Categories]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *         description: ID numérico da categoria de projeto (≥1, inteiro, positivo)
+ *     responses:
+ *       200:
+ *         description: Categoria encontrada e retornada com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "200 - Success"
+ *                 message:
+ *                   type: string
+ *                   example: "Successfully got project category with id '1'"
+ *                 data:
+ *                   type: object
+ *                   description: Todos os campos do modelo ProjectCategory
+ *       400:
+ *         description: ID inválido (retornado pelo validateId do middleware)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "400 - Bad request"
+ *                 message:
+ *                   type: string
+ *                   example: "'id' must be a valid integer and positive number"
+ *       401:
+ *         description: Token ausente, inválido ou expirado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/UnauthorizedError'
+ *       404:
+ *         description: Categoria não encontrada com o ID especificado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "404 - Not found"
+ *                 message:
+ *                   type: string
+ *                   example: "Cannot find project category with id '999'"
+ *       500:
+ *         description: Erro interno do servidor
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "500 - Internal server error"
+ *                 error:
+ *                   type: string
+ *                   example: "An unexpected error ocurred"
+ *                 details:
+ *                   type: string
+ *                   example: "Prisma error: ..."
+ */
 
  /** @swagger
  * /projects:
