@@ -12,7 +12,7 @@ export default async function getImageByIdMiddleware(req:Request, res:Response, 
         if( errorValidatingId ) return errorValidatingId;
 
         // image must exists
-        const imageExists = await prisma.project.findUnique({ where: { id: Number(id) }});
+        const imageExists = await prisma.image.findUnique({ where: { id: Number(id) }}); // antes estava:  const imageExists = await prisma.project.findUnique({ where: { id: Number(id) }});
         if(!imageExists) return res.status(404).json({
             status: "404 - Not found",
             message: `The image with id '${id}' does not exists`
