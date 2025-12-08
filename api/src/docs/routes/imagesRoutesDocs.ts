@@ -484,12 +484,255 @@
  *             schema:
  *               $ref: '#/components/schemas/InternalError'
  *
- *   post:
- *     summary: Faz upload de uma nova imagem
- *     description: Faz upload do arquivo (campo `image`) e registra um novo registro no banco.
- *     tags: [Images]
+ 
+
+/**
+ * @swagger
+ * /images/search:
+ *   get:
+ *     summary: Search images by name
+ *     description: |
+ *       Endpoint para buscar imagens pelo nome (case-insensitive).
+ *       **Requer autenticação JWT via Bearer Token**
+ *       .
+ *     tags: ["Images"]
  *     security:
- *       - BearerAuth: []
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: q
+ *         required: true
+ *         description: Termo de busca para filtrar imagens pelo nome
+ *         schema:
+ *           type: string
+ *           example: "logo"
+ *     responses:
+ *       200:
+ *         description: Successfully searched images
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "200 - Success"
+ *                 message:
+ *                   type: string
+ *                   example: "Successfully searched"
+ *                 data:
+ *                   oneOf:
+ *                     - type: array
+ *                       items:
+ *                         type: object
+ *                         properties:
+ *                           id:
+ *                             type: integer
+ *                             example: 1
+ *                           name:
+ *                             type: string
+ *                             example: "react-logo"
+ *                           category:
+ *                             type: object
+ *                           project:
+ *                             type: object
+ *                           stackLogo:
+ *                             type: object
+ *                     - type: string
+ *                       example: "Nothing found..."
+ *       400:
+ *         description: Bad Request - Invalid query parameter
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ValidationError'
+ *       401:
+ *         description: Unauthorized - Missing or invalid token
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "401 - Unauthorized"
+ *                 message:
+ *                   type: string
+ *                   example: "You must to have a bearer token in string type, make login first"
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "500 - Internal server error"
+ *                 error:
+ *                   type: string
+ *                   example: "An unexpected error ocurred"
+ *                 details:
+ *                   type: string
+ *                   example: "Error description here"
+ */
+
+/**
+ * @swagger
+ * components:
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ *   schemas:
+ *     ValidationError:
+ *       type: object
+ *       properties:
+ *         status:
+ *           type: string
+ *           example: "400 - Bad Request"
+ *         message:
+ *           type: string
+ *           example: "Invalid or missing 'query' parameter"
+ */
+
+/**
+ * @swagger
+ * /images/{id}:
+ *   get:
+ *     summary: Get image by ID
+ *     description: |
+ *       Endpoint para obter uma imagem específica pelo seu ID.
+ *       **Requer autenticação JWT via Bearer Token**
+ *     tags: ["Images"]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID da imagem a ser buscada
+ *         schema:
+ *           type: integer
+ *           example: 1
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved the image
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "200 - Success"
+ *                 message:
+ *                   type: string
+ *                   example: "Successfully got the image with id '1'"
+ *                 data:
+ *                   type: object
+ *                   nullable: true
+ *                   properties:
+ *                     id:
+ *                       type: integer
+ *                       example: 1
+ *                     name:
+ *                       type: string
+ *                       example: "react-logo"
+ *                     stackLogo:
+ *                       type: object
+ *                     category:
+ *                       type: object
+ *                     project:
+ *                       type: object
+ *       400:
+ *         description: Bad Request - Invalid ID format
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ValidationError'
+ *       401:
+ *         description: Unauthorized - Missing or invalid token
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "401 - Unauthorized"
+ *                 message:
+ *                   type: string
+ *                   example: "You must to have a bearer token in string type, make login first"
+ *       404:
+ *         description: Image not found 
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "404 - Not found"
+ *                 message:
+ *                   type: string
+ *                   example: "The image with id '1' does not exists"
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "500 - Internal server error"
+ *                 error:
+ *                   type: string
+ *                   example: "An unexpected error ocurred"
+ *                 details:
+ *                   type: string
+ *                   example: "Error description here"
+ */
+
+/**
+ * @swagger
+ * components:
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ *   schemas:
+ *     ValidationError:
+ *       type: object
+ *       properties:
+ *         status:
+ *           type: string
+ *           example: "400 - Bad Request"
+ *         message:
+ *           type: string
+ *           example: "Invalid ID format"
+ */
+
+/**
+ * @swagger
+ * /images:
+ *   post:
+ *     summary: Upload and create a new image
+ *     description: |
+ *       Endpoint para upload e criação de uma nova imagem no sistema.
+ *       **Requer autenticação JWT via Bearer Token**
+ *       
+ *       - Apenas arquivos de imagem são aceitos (JPEG, PNG, GIF)
+ *       - Tamanho máximo: 10MB  
+ *       **Nome do arquivo:** Será renomeado para formato `image-{timestamp}-{random}.{ext}`
+ *       
+ *       **Em caso de erro:** O arquivo enviado é automaticamente removido do servidor
+ *     tags: ["Images"]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -502,12 +745,14 @@
  *               image:
  *                 type: string
  *                 format: binary
- *               name:
- *                 type: string
- *                 description: Nome opcional (mas seu controller usa o filename)
+ *                 description: |
+ *                   Arquivo de imagem com as seguintes especificações:
+ *                   - Formatos permitidos: JPEG, JPG, PNG, GIF
+ *                   - Mime-types permitidos: image/jpeg, image/png, image/gif
+ *                   - Tamanho máximo: 10MB
  *     responses:
  *       201:
- *         description: Imagem criada com sucesso
+ *         description: Image created successfully
  *         content:
  *           application/json:
  *             schema:
@@ -524,57 +769,86 @@
  *                   properties:
  *                     id:
  *                       type: integer
- *                       example: 12
+ *                       example: 1
  *                     name:
  *                       type: string
- *                       example: "image-1634234234-123.png"
+ *                       example: "image-1234567890123.jpg"
  *                     url:
  *                       type: string
- *                       example: "/uploads/image-1634234234-123.png"
+ *                       example: "/uploads/image-1234567890123.jpg"
  *       400:
- *         description: Nenhum arquivo enviado ou arquivo inválido
+ *         description: Bad Request - Validation error
+ *         content:
+ *           application/json:
+ *             examples:
+ *               noImageUploaded:
+ *                 summary: No image file provided
+ *                 value:
+ *                   error: "No image uploaded"
+ *               invalidFileType:
+ *                 summary: Invalid file type or format
+ *                 value:
+ *                   error: "Only JPEG, PNG, GIF are allowed!"
+ *       401:
+ *         description: Unauthorized - Missing or invalid token
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "401 - Unauthorized"
+ *                 message:
+ *                   type: string
+ *                   example: "You must to have a bearer token in string type, make login first"
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "500 - Internal server error"
  *                 error:
  *                   type: string
- *                   example: "No image uploaded"
- *       401:
- *         description: Token ausente ou inválido
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/UnauthorizedError'
- *       500:
- *         description: Erro interno ao criar imagem (remove o arquivo enviado em caso de falha)
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/InternalError'
+ *                   example: "An unexpected error ocurred"
+ *                 details:
+ *                   type: string
+ *                   example: "Error description here"
  */
 
 /**
  * @swagger
- * /images/search:
+ * /images:
  *   get:
- *     summary: Busca imagens por termo
- *     description: Busca imagens pelo campo `name` (contains). Usa query param `q`.
- *     tags: [Images]
+ *     summary: Get all images with pagination
+ *     description: |
+ *       Endpoint para listar todas as imagens do sistema com suporte a paginação.
+ *       **Requer autenticação JWT via Bearer Token**
+ *     tags: ["Images"]
  *     security:
- *       - BearerAuth: []
+ *       - bearerAuth: []
  *     parameters:
  *       - in: query
- *         name: q
+ *         name: page
+ *         required: false
+ *         description: Número da página (padrão 1)
  *         schema:
- *           type: string
- *         required: true
- *         description: 'Termo de busca (ex: "logo")'
-
+ *           type: integer
+ *           example: 1
+ *       - in: query
+ *         name: limit
+ *         required: false
+ *         description: Quantidade de itens por página (padrão 5)
+ *         schema:
+ *           type: integer
+ *           example: 5
  *     responses:
  *       200:
- *         description: Resultado da busca
+ *         description: Successfully retrieved all images
  *         content:
  *           application/json:
  *             schema:
@@ -585,80 +859,185 @@
  *                   example: "200 - Success"
  *                 message:
  *                   type: string
- *                   example: "Successfully searched"
+ *                   example: "Successfully got all images"
+ *                 pagination:
+ *                   type: object
+ *                   properties:
+ *                     currentPage:
+ *                       type: integer
+ *                       example: 1
+ *                     limit:
+ *                       type: integer
+ *                       example: 5
+ *                     totalPages:
+ *                       type: integer
+ *                       example: 3
+ *                     totalItems:
+ *                       type: integer
+ *                       example: 12
+ *                     hasPrevPage:
+ *                       type: boolean
+ *                       example: false
+ *                     hasNextPage:
+ *                       type: boolean
+ *                       example: true
  *                 data:
  *                   oneOf:
  *                     - type: array
  *                       items:
- *                         $ref: '#/components/schemas/ImageFull'
+ *                         type: object
+ *                         properties:
+ *                           id:
+ *                             type: integer
+ *                           name:
+ *                             type: string
+ *                           category:
+ *                             type: string
+ *                           project:
+ *                             type: string
+ *                           stackLogo:
+ *                             type: string
  *                     - type: string
- *                       example: "Nothing found..."
- *       400:
- *         description: Query `q` ausente ou inválida
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/InvalidOrMissingFieldError'
+ *                       example: "No images found..."
  *       401:
- *         description: Token ausente ou inválido
+ *         description: Unauthorized - Missing or invalid token
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/UnauthorizedError'
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "401 - Unauthorized"
+ *                 message:
+ *                   type: string
+ *                   example: "You must to have a bearer token in string type, make login first"
  *       500:
- *         description: Erro interno durante a busca
+ *         description: Internal server error
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/InternalError'
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "500 - Server internal error"
+ *                 error:
+ *                   type: string
+ *                   example: "An error occurred while trying to list all images"
+ *                 details:
+ *                   type: string
+ *                   example: "Error description here"
  */
 
 /**
  * @swagger
  * /images/{id}:
- *   get:
- *     summary: Obtém uma imagem pelo ID
- *     description: Retorna o registro da imagem especificada pelo `id`.
- *     tags: [Images]
+ *   put:
+ *     summary: Update an existing image
+ *     description: |
+ *       Endpoint para atualizar uma imagem existente no sistema.
+ *       **Requer autenticação JWT via Bearer Token**
+ *       
+ *       **Funcionalidades:**
+ *       - Atualizar arquivo de imagem (upload de novo arquivo)
+ *       - Renomear arquivo existente
+ *       - Atualizar relações (project, stack, category)
+ *       - Remover relações (setando para null)
+ *       
+ *       **Validações do Middleware:**
+ *       1. Valida formato de todos os IDs (id, projectId, stackId, categoryId)
+ *       2. Verifica se a imagem existe
+ *       3. Verifica se a image category existe
+ *     tags: ["Images"]
  *     security:
- *       - BearerAuth: []
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
+ *         description: ID da imagem a ser atualizada
  *         schema:
  *           type: integer
- *         description: ID da imagem
+ *           example: 1
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               image:
+ *                 type: string
+ *                 format: binary
+ *                 description: |
+ *                   - Substitui o arquivo existente
+ *                   - Remove o arquivo antigo automaticamente
+ *                   - Formatos: JPEG, PNG, GIF (validação via multer)
+ *               name:
+ *                 type: string
+ *                 description: |
+ *                   Novo nome para o arquivo (opcional)
+ *                   - Se não fornecer extensão, mantém a original
+ *                   - Exemplo: "nova-imagem.jpg" ou "nova-imagem"
+ *               projectId:
+ *                 type: integer
+ *                 nullable: true
+ *                 description: |
+ *                   ID do projeto relacionado (opcional)
+ *                   - Use null para remover a relação
+ *                   - Exemplo: 1 ou null
+ *               stackId:
+ *                 type: integer
+ *                 nullable: true
+ *                 description: |
+ *                   ID da stack relacionada (opcional)
+ *                   - Use null para remover a relação
+ *                   - Exemplo: 2 ou null
+ *               categoryId:
+ *                 type: integer
+ *                 nullable: true
+ *                 description: |
+ *                   ID da categoria da imagem (opcional)
+ *                   - Use null para remover a relação
+ *                   - Exemplo: 3 ou null
  *     responses:
  *       200:
- *         description: Imagem encontrada
+ *         description: Image updated successfully
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties:
  *                 status:
- *                   type: string
- *                   example: "200 - Success"
+ *                   type: integer
+ *                   example: 200
  *                 message:
  *                   type: string
- *                   example: "Successfully got the image with id '1'"
+ *                   example: "Image with id '1' has been updated successfully"
  *                 data:
- *                   $ref: '#/components/schemas/ImageFull'
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: integer
+ *                       example: 1
+ *                     name:
+ *                       type: string
+ *                       example: "image-1234567890123.jpg"
+ *                     project:
+ *                       type: object
+ *                     stackLogo:
+ *                       type: object
+ *                     category:
+ *                       type: object
  *       400:
- *         description: ID inválido
+ *         description: Bad Request - Invalid ID format
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/InvalidIdError'
+ *               $ref: '#/components/schemas/ValidationError'
  *       401:
- *         description: Token ausente ou inválido
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/UnauthorizedError'
- *       404:
- *         description: Imagem não encontrada
+ *         description: Unauthorized - Missing or invalid token
  *         content:
  *           application/json:
  *             schema:
@@ -666,17 +1045,79 @@
  *               properties:
  *                 status:
  *                   type: string
- *                   example: "404 - Not found"
+ *                   example: "401 - Unauthorized"
  *                 message:
  *                   type: string
- *                   example: "The image with id '1' does not exists"
+ *                   example: "You must to have a bearer token in string type, make login first"
+ *       404:
+ *         description: Not Found - Entity not found
+ *         content:
+ *           application/json:
+ *             examples:
+ *               imageNotFound:
+ *                 summary: Image not found
+ *                 value:
+ *                   status: "404 - Not Found"
+ *                   message: "Image with id '1' does not exists"
+ *               imageCategoryNotFound:
+ *                 summary: Image category not found
+ *                 value:
+ *                   status: "404 - Not found"
+ *                   message: "Image category with id '1' does not exists"
+ *               projectNotFound:
+ *                 summary: Project not found
+ *                 value:
+ *                   status: "404 - Not Found"
+ *                   message: "Project with id '1' does not exists"
+ *               stackNotFound:
+ *                 summary: Stack not found
+ *                 value:
+ *                   status: "404 - Not Found"
+ *                   message: "Stack with id '1' does not exists"
+ *               categoryNotFound:
+ *                 summary: Image category not found
+ *                 value:
+ *                   status: "404 - Not found"
+ *                   message: "Image category with id '1' does not exists"
  *       500:
- *         description: Erro interno ao obter imagem
+ *         description: Internal server error
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/InternalError'
- *
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "500 - Internal server error"
+ *                 error:
+ *                   type: string
+ *                   example: "An unexpected error ocurred"
+ *                 details:
+ *                   type: string
+ *                   example: "Error description here"
+ */
+
+/**
+ * @swagger
+ * components:
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ *   schemas:
+ *     ValidationError:
+ *       type: object
+ *       properties:
+ *         status:
+ *           type: string
+ *           example: "400 - Bad Request"
+ *         message:
+ *           type: string
+ *           example: "Invalid ID format for parameter 'id'"
+ */
+
+/**
  *   put:
  *     summary: Atualiza metadados ou renomeia/substitui arquivo da imagem
  *     description: Atualiza campos (`name`, `projectId`, `stackId`, `categoryId`). Pode também receber `image` multipart para trocar o arquivo fisico; em caso de upload parcial, o middleware remove arquivo se necessário.
@@ -825,17 +1266,38 @@
  * @swagger
  * /images/{id}/replace:
  *   put:
- *     summary: Substitui o arquivo da imagem (replace)
- *     description: Recebe um novo arquivo multipart em `image`, remove o arquivo antigo e atualiza o registro com o novo `name`.
- *     tags: [Images]
+ *     summary: Replace image file (upload new file and delete old one)
+ *     description: |
+ *       Endpoint para substituir completamente o arquivo de uma imagem existente.
+ *       **Requer autenticação JWT via Bearer Token**
+ *       
+ *       **Funcionalidade:**
+ *       1. Recebe novo arquivo de imagem via upload
+ *       2. Remove fisicamente o arquivo antigo do servidor
+ *       3. Atualiza no banco apenas o nome do arquivo
+ *       
+ *       **Validações:**
+ *       - Verifica se a imagem existe (404 se não)
+ *       - Valida tipo de arquivo (jpeg, jpg, png, gif)
+ *       - Valida tamanho (max 5MB)
+ *       - Campo obrigatório: 'image' (multipart/form-data)
+ *       
+ *       **Nome do arquivo:** Gerado automaticamente no formato `image-{timestamp}-{random}.{ext}`
+ *       
+ *       **Cleanup Automático:**
+ *       - Em caso de erro: remove arquivo enviado
+ *       - Ignora erro se arquivo antigo não existir (ENOENT)
+ *     tags: ["Images"]
  *     security:
- *       - BearerAuth: []
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
+ *         description: ID da imagem a ser substituída
  *         schema:
  *           type: integer
+ *           example: 1
  *     requestBody:
  *       required: true
  *       content:
@@ -848,17 +1310,22 @@
  *               image:
  *                 type: string
  *                 format: binary
+ *                 description: |
+ *                   Novo arquivo de imagem
+ *                   - Formatos permitidos: JPEG, JPG, PNG, GIF
+ *                   - Tamanho máximo: 5MB
+ *                   - Valida extensão e mime-type
  *     responses:
  *       200:
- *         description: Imagem substituída com sucesso
+ *         description: Image replaced successfully
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties:
  *                 status:
- *                   type: string
- *                   example: "200 - Success"
+ *                   type: integer
+ *                   example: 200
  *                 message:
  *                   type: string
  *                   example: "Image replaced successfully"
@@ -867,34 +1334,42 @@
  *                   properties:
  *                     id:
  *                       type: integer
- *                       example: 12
+ *                       example: 1
  *                     name:
  *                       type: string
- *                       example: "image-1634234234-NEW.png"
+ *                       example: "image-1234567890123.jpg"
  *                     url:
  *                       type: string
- *                       example: "/uploads/image-1634234234-NEW.png"
+ *                       example: "/uploads/image-1234567890123.jpg"
  *       400:
- *         description: Arquivo não enviado
+ *         description: Bad Request
+ *         content:
+ *           application/json:
+ *             examples:
+ *               noImageProvided:
+ *                 summary: No image file provided
+ *                 value:
+ *                   status: 400
+ *                   message: "No image file provided"
+ *               invalidFileType:
+ *                 summary: Invalid file type
+ *                 value:
+ *                   error: "Apenas imagens são permitidas!"
+ *       401:
+ *         description: Unauthorized - Missing or invalid token
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties:
  *                 status:
- *                   type: integer
- *                   example: 400
+ *                   type: string
+ *                   example: "401 - Unauthorized"
  *                 message:
  *                   type: string
- *                   example: "No image file provided"
- *       401:
- *         description: Token ausente ou inválido
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/UnauthorizedError'
+ *                   example: "You must to have a bearer token in string type, make login first"
  *       404:
- *         description: Imagem antiga não encontrada (antes de substituir)
+ *         description: Image not found
  *         content:
  *           application/json:
  *             schema:
@@ -907,11 +1382,150 @@
  *                   type: string
  *                   example: "Image with id '1' does not exists"
  *       500:
- *         description: Erro interno ao substituir imagem (remove o novo arquivo em caso de falha)
+ *         description: Internal server error
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/InternalError'
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "500 - Internal server error"
+ *                 error:
+ *                   type: string
+ *                   example: "An unexpected error ocurred"
+ *                 details:
+ *                   type: string
+ *                   example: "Error description here"
+ */
+
+/**
+ * @swagger
+ * /images/{id}:
+ *   delete:
+ *     summary: Delete an image (database record and physical file)
+ *     description: |
+ *       Endpoint para deletar uma imagem do sistema.
+ *       **Requer autenticação JWT via Bearer Token**
+ *       
+ *       **Ação Dupla:**
+ *       1. Remove o registro do banco de dados
+ *       2. Remove o arquivo físico do servidor (pasta 'uploads')
+ *       
+ *       **Validações do Middleware:**
+ *       - Valida formato do ID
+ *       - Verifica se a imagem existe (404 se não)
+ *       
+ *       **Comportamento do Controller:**
+ *       - Deleta do banco primeiro
+ *       - Tenta deletar arquivo físico
+ *       - Ignora erro se arquivo já não existir (ENOENT)
+ *       - Se falhar deletar arquivo, lança erro (throw)
+ *       
+ *       **Nota:** A ordem é importante - deleta do banco primeiro para evitar
+ *       situação onde o arquivo é deletado mas o registro permanece.
+ *     tags: ["Images"]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID da imagem a ser deletada
+ *         schema:
+ *           type: integer
+ *           example: 1
+ *     responses:
+ *       200:
+ *         description: Image deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "200 - Success"
+ *                 message:
+ *                   type: string
+ *                   example: "Image deleted successfully"
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: integer
+ *                       example: 1
+ *                     name:
+ *                       type: string
+ *                       example: "image-1234567890123.jpg"
+ *       400:
+ *         description: Bad Request - Invalid ID format
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ValidationError'
+ *       401:
+ *         description: Unauthorized - Missing or invalid token
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "401 - Unauthorized"
+ *                 message:
+ *                   type: string
+ *                   example: "You must to have a bearer token in string type, make login first"
+ *       404:
+ *         description: Image not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "404 - Not found"
+ *                 message:
+ *                   type: string
+ *                   example: "Image with id '1' was not found"
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "500 - Internal server error"
+ *                 error:
+ *                   type: string
+ *                   example: "An unexpected error ocurred"
+ *                 details:
+ *                   type: string
+ *                   example: "Error description here"
+ */
+
+/**
+ * @swagger
+ * components:
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ *   schemas:
+ *     ValidationError:
+ *       type: object
+ *       properties:
+ *         status:
+ *           type: string
+ *           example: "400 - Bad Request"
+ *         message:
+ *           type: string
+ *           example: "Invalid ID format for parameter 'id'"
  */
 
 /**
