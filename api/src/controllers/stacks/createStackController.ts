@@ -12,7 +12,7 @@ export default async function createStackController(req: Request, res: Response)
                 experience,
                 ...(logoId !== undefined && { logo: { connect: { id: logoId } } }),
             },
-            include: { 
+            include: {
                 category: true, 
                 logo: true,
                 projects: true 
@@ -27,7 +27,7 @@ export default async function createStackController(req: Request, res: Response)
             status: "201 - Created",
             message: "Stack created successfully",
             data: stackWithoutIds
-        })
+        });
 
     } catch (error) {
         // internal server error

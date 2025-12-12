@@ -9,7 +9,7 @@ export default function AuthLayout({
     return (
         <html lang="en">
             <body className="min-h-screen bg-gray-50">
-                <AppHeaderWithoutNav />
+                {/* <AppHeaderWithoutNav /> */}
                 { children }
             </body>
         </html>

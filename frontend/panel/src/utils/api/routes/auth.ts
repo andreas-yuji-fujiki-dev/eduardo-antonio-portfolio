@@ -1,6 +1,7 @@
 import { api } from "../api";
-import { AxiosResponse } from "axios";
 
+// types
+import { AxiosResponse } from "axios";
 import { AuthBodyContentTypes } from "@/types/api/AuthBodyContentTypes";
 
 // login
