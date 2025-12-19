@@ -1,4 +1,5 @@
 /uploads/*.*
+/dist
 
 /prisma/migrations
 

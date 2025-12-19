@@ -3,48 +3,22 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div
-      className={`
-        flex
-        justify-evenly
-        items-center
-        p-5  
-      `}
+      className="flex justify-evenly items-center p-5 "
     >
-      <img 
+      <img
         src="/shapes/home-shape.svg" 
         alt="Generic shape"
-        className={`
-          w-[45%]  
-        `} 
+        className="w-[45%]"
       />
 
       <div
-        className={`
-          flex
-          flex-col
-          justify-center
-          items-center
-          w-[42%]
-          h-[75vh]
-
-          border-1
-          rounded-3xl
-        `}
+        className="flex flex-col justify-center items-center w-[42%] h-[75vh] border-1 rounded-3xl"
       >
         <div
-          className={`
-            flex
-            flex-col
-            gap-4
-            w-[72%]
-          `}
+          className="flex flex-col gap-4 w-[72%]"
         >
           <h2
-            className={`
-              text-6xl
-              font-bold
-              ml-[-5px]  
-            `}
+            className="text-6xl font-bold ml-[-5px]"
           >
             Get Started!
           </h2>
@@ -53,14 +27,7 @@ export default function Home() {
           </p>
 
           <ul
-            className={`
-              flex
-              flex-col
-              gap-2
-              list-disc
-              opacity-80
-              mt-4
-            `}
+            className="flex flex-col gap-2 list-disc opacity-80 mt-4"
           >
             <li>
               <span className="font-bold">

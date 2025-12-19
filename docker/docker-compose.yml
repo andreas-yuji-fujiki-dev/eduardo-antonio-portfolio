@@ -1,0 +1,39 @@
+services:
+  # API
+  api:
+    build:
+      context: ../api
+      dockerfile: ../docker/api/Dockerfile
+    container_name: portfolio-api
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=file:/app/data/dev.db
+      - JWT_SECRET=dfff9d0f5f5c9745b90b8d392bd2e7e0
+    volumes:
+      - ../api:/app
+      - /app/node_modules
+      - api_data:/app/data
+    command: npx ts-node-dev --respawn --transpile-only src/server.ts
+    restart: unless-stopped
+
+  # Panel (Admin)
+  panel:
+    build:
+      context: ../frontend/panel  # Contexto: pasta do panel
+      dockerfile: ../../docker/panel/Dockerfile  # ← CORREÇÃO AQUI!
+    container_name: portfolio-panel
+    ports:
+      - "3002:3002"
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_API_URL=http://api:3001/
+      - JWT_SECRET=dfff9d0f5f5c9745b90b8d392bd2e7e0
+    depends_on:
+      - api
+    restart: unless-stopped
+
+volumes:
+  api_data:
+    driver: local
