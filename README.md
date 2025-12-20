@@ -3,7 +3,7 @@
 A **portfolio management API** designed to centralize projects, stacks, images, and categories, providing structured data for both the administrative panel and the public portfolio website.
 
 - 🐳 [How to run the project (Docker)](./docker/README.md)
-- 📘 [Backend documentation](./api/README.MD)
+- 📘 [Backend documentation](./api/README.md)
 
 - 🧱 [Architecture Overview](#architecture-overview)
 - 🤝 [Partners Credits](#credits)
