@@ -1,0 +1,10 @@
+node_modules
+npm-debug.log
+dist
+.env
+*.db
+*.db-journal
+.DS_Store
+.git
+.gitignore
+docker-compose.*.yml

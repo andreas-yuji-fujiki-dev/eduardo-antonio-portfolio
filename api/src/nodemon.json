@@ -1,0 +1,8 @@
+{
+  "watch": ["src"],
+  "ext": "ts,json",
+  "ignore": ["src/**/*.spec.ts", "dist", "node_modules"],
+  "exec": "ts-node --transpile-only src/server.ts",
+  "legacyWatch": true,
+  "pollingInterval": 1000
+}

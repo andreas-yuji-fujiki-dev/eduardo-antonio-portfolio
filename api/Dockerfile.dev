@@ -1,0 +1,28 @@
+FROM node:20-alpine
+
+WORKDIR /usr/src/app
+
+# Instala as dependências do sistema
+RUN apk add --no-cache openssl
+
+# Copia os arquivos de definição de dependências
+COPY package*.json ./
+COPY prisma ./prisma/
+
+# Instala todas as dependências (incluindo dev)
+RUN npm install
+
+# Instala nodemon globalmente (opcional, mas pode ajudar)
+RUN npm install -g nodemon
+
+# Copia o restante do código
+COPY . .
+
+# Gera o Prisma Client
+RUN npx prisma generate
+
+# Expõe a porta
+EXPOSE 3001
+
+# Comando para desenvolvimento
+CMD ["npm", "run", "dev"]

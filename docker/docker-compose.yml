@@ -3,52 +3,25 @@ services:
   api:
     build:
       context: ../api
-      dockerfile: ../docker/api/Dockerfile
+      dockerfile: Dockerfile.dev
     container_name: portfolio-api
     ports:
       - "3001:3001"
-    environment:
-      - NODE_ENV=development
-      - DATABASE_URL=file:/app/data/dev.db
-      - JWT_SECRET=dfff9d0f5f5c9745b90b8d392bd2e7e0
     volumes:
-      - ../api:/app
-      - /app/node_modules
-      - api_data:/app/data
-    command: npx ts-node-dev --respawn --transpile-only src/server.ts
-    restart: unless-stopped
-
-  # Panel (Admin)
-  panel:
-    build:
-      context: ../frontend/panel
-      dockerfile: ../../docker/panel/Dockerfile
-    container_name: portfolio-panel
-    ports:
-      - "3002:3002"
+      - ../api:/usr/src/app
+      - /usr/src/app/node_modules
+      - ../api/prisma:/usr/src/app/prisma
     environment:
-      - NODE_ENV=production
-      - NEXT_PUBLIC_API_URL=http://api:3001/
-      - JWT_SECRET=dfff9d0f5f5c9745b90b8d392bd2e7e0
-    depends_on:
-      - api
+      - DATABASE_URL=file:/usr/src/app/dev.db
+      - JWT_SECRET=${JWT_SECRET:-dfff9d0f5f5c9745b90b8d392bd2e7e0}
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+      - CHOKIDAR_INTERVAL=1000
+    working_dir: /usr/src/app
+    command: >
+      sh -c "
+        npx prisma migrate deploy &&
+        npx prisma generate &&
+        npm run dev
+      "
     restart: unless-stopped
-
-  # Portfolio (Site público) - ADICIONE ESTE BLOCO
-  portfolio:
-    build:
-      context: ../frontend/portfolio
-      dockerfile: ../../docker/portfolio/Dockerfile
-    container_name: portfolio-site
-    ports:
-      - "3000:3000"
-    environment:
-      - NODE_ENV=production
-      - NEXT_PUBLIC_API_URL=http://api:3001/
-    depends_on:
-      - api
-    restart: unless-stopped
-
-volumes:
-  api_data:
-    driver: local

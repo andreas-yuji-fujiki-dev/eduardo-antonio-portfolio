@@ -6,7 +6,7 @@ slashRouter.get('/', ( req, res ) => {
     res.status(200).json({
         status: 200,
         message: 'Hello, World!',
-        easteregg: "O_O"
+        easteregg: "O_O!"
     })
 })
 
