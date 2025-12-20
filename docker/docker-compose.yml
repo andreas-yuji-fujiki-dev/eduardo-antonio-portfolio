@@ -1,5 +1,5 @@
 services:
-  # API
+  # Portfolio API
   api:
     build:
       context: ../api
@@ -13,7 +13,7 @@ services:
       - ../api/prisma:/usr/src/app/prisma
     environment:
       - DATABASE_URL=file:/usr/src/app/dev.db
-      - JWT_SECRET=${JWT_SECRET:-dfff9d0f5f5c9745b90b8d392bd2e7e0}
+      - JWT_SECRET="dfff9d0f5f5c9745b90b8d392bd2e7e0"
       - NODE_ENV=development
       - CHOKIDAR_USEPOLLING=true
       - CHOKIDAR_INTERVAL=1000
@@ -25,3 +25,61 @@ services:
         npm run dev
       "
     restart: unless-stopped
+    networks:
+      - portfolio-network
+
+  # Portfolio Next.js (Admin Panel)
+  panel:
+    build:
+      context: ../frontend/panel
+      dockerfile: Dockerfile.dev
+    container_name: portfolio-panel
+    ports:
+      - "3002:3002"
+    volumes:
+      - ../frontend/panel:/app
+      - /app/node_modules
+      - /app/.next
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:3001/
+      - JWT_SECRET="dfff9d0f5f5c9745b90b8d392bd2e7e0"
+      - NODE_ENV=development
+      - WATCHPACK_POLLING=true
+      - CHOKIDAR_USEPOLLING=true
+    working_dir: /app
+    command: npm run dev:docker
+    depends_on:
+      - api
+    restart: unless-stopped
+    networks:
+      - portfolio-network
+
+  # Portfolio Next.js (Public Site)
+  site:
+    build:
+      context: ../frontend/portfolio
+      dockerfile: Dockerfile.dev
+    container_name: portfolio-site
+    ports:
+      - "3000:3000"
+    volumes:
+      - ../frontend/portfolio:/app
+      - /app/node_modules
+      - /app/.next
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:3001/
+      - JWT_SECRET="dfff9d0f5f5c9745b90b8d392bd2e7e0"
+      - NODE_ENV=development
+      - WATCHPACK_POLLING=true  # Esta é a chave para hot reload!
+      - CHOKIDAR_USEPOLLING=true
+    working_dir: /app
+    command: npm run dev:docker  # ou npx next dev --port 3000 --hostname 0.0.0.0
+    depends_on:
+      - api
+    restart: unless-stopped
+    networks:
+      - portfolio-network
+
+networks:
+  portfolio-network:
+    driver: bridge

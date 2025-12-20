@@ -1,0 +1,22 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Instala dependências necessárias para watch do Next.js
+RUN apk add --no-cache libc6-compat
+
+# Copia arquivos de definição
+COPY package*.json ./
+COPY .env ./
+
+# Instala dependências
+RUN npm install
+
+# Copia o restante
+COPY . .
+
+# Expõe a porta
+EXPOSE 3000
+
+# Comando com turbopack
+CMD ["npm", "run", "dev:docker"]
