@@ -21,8 +21,8 @@ services:
   # Panel (Admin)
   panel:
     build:
-      context: ../frontend/panel  # Contexto: pasta do panel
-      dockerfile: ../../docker/panel/Dockerfile  # ← CORREÇÃO AQUI!
+      context: ../frontend/panel
+      dockerfile: ../../docker/panel/Dockerfile
     container_name: portfolio-panel
     ports:
       - "3002:3002"
@@ -30,6 +30,21 @@ services:
       - NODE_ENV=production
       - NEXT_PUBLIC_API_URL=http://api:3001/
       - JWT_SECRET=dfff9d0f5f5c9745b90b8d392bd2e7e0
+    depends_on:
+      - api
+    restart: unless-stopped
+
+  # Portfolio (Site público) - ADICIONE ESTE BLOCO
+  portfolio:
+    build:
+      context: ../frontend/portfolio
+      dockerfile: ../../docker/portfolio/Dockerfile
+    container_name: portfolio-site
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_API_URL=http://api:3001/
     depends_on:
       - api
     restart: unless-stopped
