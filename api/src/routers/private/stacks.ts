@@ -4,7 +4,6 @@
     
     // middlewares
     import authRequiredMiddleware from "../../middlewares/auth/authRequiredMiddleware";
-    
     import getStackByIdMiddleware from "../../middlewares/stacks/getStackByIdMiddleware";
     import searchStacksMiddleware from "../../middlewares/stacks/searchStacksMiddleware";
     import createStackMiddleware from "../../middlewares/stacks/createStackMiddleware";

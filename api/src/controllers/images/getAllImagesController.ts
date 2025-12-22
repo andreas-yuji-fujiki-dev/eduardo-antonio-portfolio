@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { prisma } from "../../config/prismaClient";
 import { PaginationQuery } from "../../types/pagination";
+import { makeErrorResponse } from "../../utils/errorResponse";
+import { rmSync } from "fs";
 
 export default async function getAllImagesController(req: Request<{}, {}, {}, PaginationQuery>, res: Response) {
     try {
@@ -40,13 +42,10 @@ export default async function getAllImagesController(req: Request<{}, {}, {}, Pa
             data: !!allImages.length ? allImages : "No images found..."
         });
 
-    } catch (error) {
+    } catch (error: unknown) {
         // server internal error case
-        return res.status(500).json({
-            status: "500 - Server internal error",
-            error: "An error occurred while trying to list all images",
-            details: error?.message || String(error)
-        });
+        const response = makeErrorResponse(error, "An error occurred while trying to list all images")
+        return res.status(500).json(response)
     }
 };
 

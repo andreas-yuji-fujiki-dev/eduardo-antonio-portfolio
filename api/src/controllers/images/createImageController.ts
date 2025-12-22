@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { prisma } from '../../config/prismaClient';
+import { makeErrorResponse } from '../../utils/errorResponse';
 import fs from 'fs';
 
 export default async function createImageController(req: Request, res: Response) {
@@ -24,17 +25,14 @@ export default async function createImageController(req: Request, res: Response)
       }
     });
     
-  } catch (error) {
+  } catch (error: unknown) {
     // in case of error, remove the uploaded image
     if (req.file) {
       fs.unlink(req.file.path, (err) => {
         if (err) console.error('Error deleting file:', err);
       });
     }
-    return res.status(500).json({
-        status: "500 - Internal server error",
-        error: "An unexpected error ocurred",
-        details: error?.message || String(error)
-    })
+    const response = makeErrorResponse(error, "An unexpected error ocurred")
+    return res.status(500).json(response);
   }
 }

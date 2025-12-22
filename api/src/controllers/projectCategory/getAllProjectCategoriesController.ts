@@ -7,7 +7,7 @@ export default async function getAllProjectCategoriesController(req: Request<{},
 
         // pagination
         const page = parseInt(req.query.page as string) || 1;
-        const limit = parseInt(req.query.limit as string) || 2;
+        const limit = parseInt(req.query.limit as string) || 5;
         const skip = (page - 1) * limit;
 
         

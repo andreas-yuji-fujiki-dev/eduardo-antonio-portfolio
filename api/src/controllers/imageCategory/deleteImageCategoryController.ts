@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { prisma } from "../../config/prismaClient";
+import { makeErrorResponse } from "../../utils/errorResponse"; 
 
 export default async function deleteImageCategoryController(req: Request, res: Response){
     const { id } = req.params;
@@ -14,12 +15,10 @@ export default async function deleteImageCategoryController(req: Request, res: R
             data: `Deleted: ${deletedImageCategory}`
         })
 
-    } catch (error) {
+    } catch (error: unknown) {
+
         // internal server error
-        return res.status(500).json({
-            status: "500 - Internal server error",
-            error: `An unexpected error ocurred while trying to delete image category with id '${id}'`,
-            details: error?.message || String(error)
-        })
+        const response = makeErrorResponse(error, `An unexpected error ocurred while trying to delete image category with id '${id}'`);
+        return res.status(500).json(response);
     }
 }

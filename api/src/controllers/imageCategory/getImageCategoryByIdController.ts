@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { prisma } from "../../config/prismaClient";
+import { makeErrorResponse } from "../../utils/errorResponse";
 
 export default async function getImageCategoryByIdController( req: Request, res: Response ){
     try {
@@ -17,18 +18,15 @@ export default async function getImageCategoryByIdController( req: Request, res:
         });
 
         // success case
-        res.status(200).json({
+        return res.status(200).json({
             status: "200 - Success",
             message: `Successfully got the image category with id '${id}'`,
             data: specificImageCategory
         })
 
-    } catch (error) {
+    } catch (error: unknown) {
         // internal server error case
-        res.status(500).json({
-            status: "500 - Internal server error",
-            error: "An unexpected error ocurred",
-            details: error?.message || String(error)
-        })
+        const response = makeErrorResponse(error, "An unexpected error ocurred");
+        return res.status(500).json(response);
     }
 };

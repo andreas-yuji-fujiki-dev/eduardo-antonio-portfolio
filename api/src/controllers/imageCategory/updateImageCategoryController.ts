@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { prisma } from "../../config/prismaClient";
+import { makeErrorResponse } from "../../utils/errorResponse";
 
 export default async function updateImageCategoryController(req: Request, res: Response) {
   // converted and validated id
@@ -24,10 +25,7 @@ export default async function updateImageCategoryController(req: Request, res: R
 
   } catch (error: any) {
     // internal server error
-    return res.status(500).json({
-      status: "500 - Internal server error",
-      error: "Something went wrong",
-      details: error?.message || String(error)
-    });
-  }
+    const response = makeErrorResponse(error, "Something went wrong")
+    return res.status(500).json(response)
+  };
 }
