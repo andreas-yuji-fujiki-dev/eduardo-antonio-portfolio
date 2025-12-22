@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { prisma } from "../../config/prismaClient";
+import { makeErrorResponse } from "../../utils/errorResponse";
 import fs from 'fs';
 import path from 'path';
 
@@ -29,12 +30,9 @@ export default async function deleteImageController(req: Request, res: Response)
             }
         });
 
-    } catch (error) {
+    } catch (error: unknown) {
         // internal server error
-        return res.status(500).json({
-            status: "500 - Internal server error",
-            error: "An unexpected error ocurred",
-            details: error?.message || String(error)
-        })
+        const response = makeErrorResponse(error, "An unexpected error ocurred")
+        return res.status(500).json(response)
     }
 }

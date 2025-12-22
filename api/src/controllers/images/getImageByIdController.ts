@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { prisma } from "../../config/prismaClient";
+import { makeErrorResponse } from "../../utils/errorResponse";
 
 export default async function getImageByIdController(req:Request, res:Response){
     const { id } = req.params;
@@ -24,12 +25,9 @@ export default async function getImageByIdController(req:Request, res:Response){
             data: specificImage
         });
 
-    } catch ( error ) {
+    } catch ( error: unknown ) {
         // internal server error case
-        return res.status(500).json({
-            status: "500 - Internal server error",
-            error: "An unexpected error ocurred",
-            details: error?.message || String(error)
-        })
+        const response = makeErrorResponse(error, "An unexpected error ocurred")
+        return res.status(500).json(response)
     };
 };

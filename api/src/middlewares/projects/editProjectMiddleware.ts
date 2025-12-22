@@ -5,7 +5,7 @@ import validateId from "../../utils/validateId";
 import validateString from "../../utils/validateString";
 import validateNumberArray from "../../utils/validateNumbersArray";
 
-export default async function editProjectMiddleware(req: Request, res: Response, next: NextFunction) {
+export default async function   editProjectMiddleware(req: Request, res: Response, next: NextFunction) {
   try {
     const { id } = req.params;
 

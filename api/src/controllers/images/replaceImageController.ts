@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { prisma } from '../../config/prismaClient';
 import fs from 'fs';
 import path from 'path';
+import { makeErrorResponse } from '../../utils/errorResponse';
 
 export default async function replaceImageController(req: Request, res: Response) {
   try {
@@ -42,7 +43,7 @@ export default async function replaceImageController(req: Request, res: Response
       }
     });
 
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error replacing image:', error);
     
     // remove the new file if there is some error
@@ -52,10 +53,7 @@ export default async function replaceImageController(req: Request, res: Response
       });
     }
     
-    return res.status(500).json({
-        status: "500 - Internal server error",
-        error: "An unexpected error ocurred",
-        details: error?.message || String(error)
-    })
+    const response = makeErrorResponse(error, "An unexpected error ocurred")
+    return res.status(500).json(response)
   }
 }

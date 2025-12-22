@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { prisma } from "../../config/prismaClient";
 import { PaginationQuery } from "../../types/pagination";
+import { makeErrorResponse } from "../../utils/errorResponse";
 
 export default async function getAllImageCategoriesController(req: Request<{}, {}, {}, PaginationQuery>, res: Response) {
     try {
@@ -41,10 +42,7 @@ export default async function getAllImageCategoriesController(req: Request<{}, {
 
     } catch ( error: unknown ) {
         // server internal error
-         return res.status(500).json({
-            status: "500 - Internal server error",
-            error: "Something went wrong while fetching image categories",
-            details: error instanceof Error ? error.message : error
-        });
+        const response = makeErrorResponse(error, "Something went wrong while fetching image categories");
+        return res.status(500).json(response);
     }
 }

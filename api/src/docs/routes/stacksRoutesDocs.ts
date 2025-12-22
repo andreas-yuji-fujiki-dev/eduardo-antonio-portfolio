@@ -767,7 +767,7 @@
  *                             example: "React"
  *                           experience:
  *                             type: string
- *                             example: "2 years"
+ *                             example: "1"
  *                           categoryId:
  *                             type: integer
  *                             example: 1
