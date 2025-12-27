@@ -224,7 +224,7 @@
 /**
  * @swagger
  * /projectCategory/{id}:
- *   patch:
+ *   put:
  *     summary: Atualizar uma categoria existente
  *     tags: [Project Categories]
  *     security:
@@ -787,7 +787,7 @@
  *                                 example: "React"
  *                               experience:
  *                                 type: string
- *                                 example: "2 years"
+ *                                 example: "2 (Intermediate)"
  *                               category:
  *                                 type: object
  *                                 description: Todos os campos da categoria da stack
