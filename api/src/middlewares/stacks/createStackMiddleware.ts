@@ -27,16 +27,19 @@ export default async function createStackMiddleware(req: Request, res: Response,
             })
         };
 
-        // logo id type validation
-        const errorValidatingLogoId = validateId('logoId', logoId, res);
-        if( errorValidatingLogoId ) return errorValidatingLogoId;
+        if (logoId !== undefined && logoId !== null && logoId !== '') {
 
-        // logo existance validation
-        const existingLogoImage = await prisma.image.findUnique({ where: { id: Number(logoId) }});
-        if( !existingLogoImage ) return res.status(404).json({
-            status: "404 - Not found",
-            message: `Logo image with id '${logoId}' does not exists`
-        });
+            // logo id type validation
+            const errorValidatingLogoId = validateId('logoId', logoId, res);
+            if( errorValidatingLogoId ) return errorValidatingLogoId;
+
+            // logo existance validation
+            const existingLogoImage = await prisma.image.findUnique({ where: { id: Number(logoId) }});
+            if( !existingLogoImage ) return res.status(404).json({
+                status: "404 - Not found",
+                message: `Logo image with id '${logoId}' does not exists`
+            });
+        }
 
         // success case
         next()
