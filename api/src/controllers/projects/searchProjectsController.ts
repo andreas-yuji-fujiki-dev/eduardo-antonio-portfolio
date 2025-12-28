@@ -13,17 +13,67 @@ export default async function searchProjectsController(req: Request, res: Respon
     const searchResult = await prisma.project.findMany({
       where: {
         OR: [
+          // project base data
           { name: { contains: formattedQuery } },
+          { name: { endsWith: formattedQuery } },
+          { name: { equals: formattedQuery } },
+          { name: { startsWith: formattedQuery } },
+
           { description: { contains: formattedQuery } },
+          { description: { endsWith: formattedQuery } },
+          { description: { equals: formattedQuery } },
+          { description: { startsWith: formattedQuery } },
+
           { more_info: { contains: formattedQuery } },
+          { more_info: { endsWith: formattedQuery } },
+          { more_info: { equals: formattedQuery } },
+          { more_info: { startsWith: formattedQuery } },
+
           { repository_link: { contains: formattedQuery } },
-          { deploy_link: { contains: formattedQuery } }
+          { repository_link: { endsWith: formattedQuery } },
+          { repository_link: { equals: formattedQuery } },
+          { repository_link: { startsWith: formattedQuery } },
+
+          { deploy_link: { contains: formattedQuery } },
+          { deploy_link: { endsWith: formattedQuery } },
+          { deploy_link: { equals: formattedQuery } },
+          { deploy_link: { startsWith: formattedQuery } },
+          
+          // search in project category
+          { category: { name: { contains: formattedQuery }}},
+          { category: { name: { endsWith: formattedQuery }}},
+          { category: { name: { equals: formattedQuery }}},
+          { category: { name: { startsWith: formattedQuery }}},
+          
+          // search in project stacks
+          { stacks: { some: { stack: { name: { contains: formattedQuery } } } } },
+          { stacks: { some: { stack: { name: { endsWith: formattedQuery } } } } },
+          { stacks: { some: { stack: { name: { equals: formattedQuery } } } } },
+          { stacks: { some: { stack: { name: { startsWith: formattedQuery } } } } },
         ]
       },
       include: { 
         category: true,
-        images: true,
-        stacks: true
+        images: {
+          select: {
+            name: true,
+            id: true,
+            category: true
+          }
+        },
+        stacks: {
+            select: {
+              stack: {
+                select: {
+                  id: true,
+                  name: true,
+                  experience: true,
+                  category: true,
+                  logo: true
+                }
+              }
+            }
+        }
       }
     });
 
