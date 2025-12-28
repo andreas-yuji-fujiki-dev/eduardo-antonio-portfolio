@@ -2,10 +2,11 @@ import { Request, Response, NextFunction } from "express";
 import { prisma } from "../../config/prismaClient";
 
 import validateId from "../../utils/validateId";
+import validateString from "../../utils/validateString";
 
 export default async function updateImageMiddleware(req: Request, res: Response, next: NextFunction) {
   const { id } = req.params;
-  const { projectId, stackId, categoryId } = req.body;
+  const { name, projectId, stackId, categoryId } = req.body;
 
   try {
     // validate image id
@@ -13,24 +14,42 @@ export default async function updateImageMiddleware(req: Request, res: Response,
     if( errorValidatingImageId ) return errorValidatingImageId;
 
     // verify if category exists
-    const existingImageCategory = await prisma.imageCategory.findUnique({ where: { id: Number(id) }});
+    const existingImage = await prisma.image.findUnique({ where: { id: Number(id) }});
 
-    if(!existingImageCategory) return res.status(404).json({
+    if(!existingImage) return res.status(404).json({
       status: "404 - Not found",
-      message: `Image category with id '${id}' does not exists`
+      message: `Image with id '${id}' does not exists`
     });
 
+    // at least one field must be provided for PUT
+    if(!name && !projectId && !stackId && !categoryId) return res.status(400).json({
+      status: "400 - Bad request",
+      message: "You must provide at least one field for edit (name, projectId, stackId, or categoryId)"
+    })
+
+    // validate name
+    if( name ){
+      const errorValidatingName = validateString('name', name, res);
+      if( errorValidatingName ) return errorValidatingName;
+    }
+
     // projectId validation
-    const errorValidatingProjectId = validateId('projectId', projectId, res);
-    if( errorValidatingProjectId ) return errorValidatingProjectId;
+    if( projectId ) {
+      const errorValidatingProjectId = validateId('projectId', projectId, res);
+      if( errorValidatingProjectId ) return errorValidatingProjectId;
+    }
 
     // stackId validation
-    const errorValidatingStackId = validateId('stackId', stackId, res);
-    if( errorValidatingStackId ) return errorValidatingStackId;
+    if( stackId ) {
+      const errorValidatingStackId = validateId('stackId', stackId, res);
+      if( errorValidatingStackId ) return errorValidatingStackId;
+    }
 
     // categoryId validation
-    const errorValidatingCategoryId = validateId('categoryId', categoryId, res);
-    if ( errorValidatingCategoryId ) return errorValidatingCategoryId;
+    if( categoryId ) {
+      const errorValidatingCategoryId = validateId('categoryId', categoryId, res);
+      if ( errorValidatingCategoryId ) return errorValidatingCategoryId;
+    }
 
     // check if image exists
     const imageExists = await prisma.image.findUnique({
@@ -77,8 +96,8 @@ export default async function updateImageMiddleware(req: Request, res: Response,
     };
 
     (req as any).existingImage = imageExists;
-    return next();
 
+    return next();
   } catch (error: any) {
     return res.status(500).json({
       status: "500 - Internal Server Error",
