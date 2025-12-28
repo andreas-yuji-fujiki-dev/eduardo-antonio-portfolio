@@ -6,12 +6,28 @@ export default async function searchImageCategoryController(req: Request, res: R
   try {
     const { q } = req.query;
     
-    const formattedQuery = String(q).toLowerCase();
+    const formattedQuery = 
+      String(q)
+      .toLowerCase()
+      .replace(/"/g, ``);
+
+    console.log("------------------")
+    console.log(formattedQuery)
 
     const searchResult = await prisma.imageCategory.findMany({
-      where: { name: { contains: formattedQuery } },
+      where: {
+        OR: [
+          { name: { contains: formattedQuery } },
+          { name: { startsWith: formattedQuery } },
+          { name: { endsWith: formattedQuery } },
+          { name: { equals: formattedQuery } }
+        ]
+      },
       include: { images: true }
     });
+
+    console.log('------------------')
+    console.log(searchResult)
 
     return res.status(200).json({
         status: "200 - Success",

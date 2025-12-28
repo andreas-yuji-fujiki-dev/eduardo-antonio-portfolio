@@ -6,13 +6,16 @@ export default async function deleteImageCategoryController(req: Request, res: R
     const { id } = req.params;
     
     try {
+        // category to display into success response
+        const imageCategoryToDelete = await prisma.imageCategory.findUnique({ where: { id: Number(id) }});
+        
         // deleting & success return message
         const deletedImageCategory = await prisma.imageCategory.delete({ where: { id: Number(id) } });
         
         return res.status(200).json({
             status: "200 - Success",
             message: `Successfully deleted the image category with id '${id}'`,
-            data: `Deleted: ${deletedImageCategory}`
+            data: imageCategoryToDelete
         })
 
     } catch (error: unknown) {

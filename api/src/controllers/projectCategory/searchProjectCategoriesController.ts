@@ -5,10 +5,20 @@ export default async function searchProjectCategoriesController(req: Request, re
   try {
     const { q } = req.query;
     
-    const formattedQuery = String(q).toLowerCase();
+    const formattedQuery = 
+      String(q)
+      .toLowerCase()
+      .replace(/"/g, ``);
 
     const searchResult = await prisma.projectCategory.findMany({
-      where: { name: { contains: formattedQuery } },
+      where: {
+        OR: [
+          { name: { contains: formattedQuery } },
+          { name: { startsWith: formattedQuery } },
+          { name: { endsWith: formattedQuery } },
+          { name: { equals: formattedQuery } }
+        ]
+      },
       include: { projects: true }
     });
 

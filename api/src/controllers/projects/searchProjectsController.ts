@@ -5,7 +5,10 @@ export default async function searchProjectsController(req: Request, res: Respon
   try {
     const { q } = req.query;
     
-    const formattedQuery = String(q).toLowerCase();
+    const formattedQuery = 
+      String(q)
+      .toLowerCase()
+      .replace(/"/g, ``);
 
     const searchResult = await prisma.project.findMany({
       where: {
