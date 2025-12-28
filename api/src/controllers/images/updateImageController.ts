@@ -39,7 +39,15 @@ export default async function updateImageController(req: Request, res: Response)
       const oldExt = path.extname(existingImage.name);
       const newExt = path.extname(name);
       const finalExt = newExt || oldExt;
-      newFilename = path.basename(name, newExt) + finalExt;
+
+      // replace " " with "-"
+      const baseName = path
+        .basename(name, newExt)
+        .trim()
+        .replace(/\s+/g, '-')
+        .toLowerCase();
+
+      newFilename = baseName + finalExt;
  
       // fisicaly rename
       const oldPath = path.join('uploads', existingImage.name);
