@@ -6,7 +6,10 @@ export default async function createStackCategoryController(req: Request, res: R
         // creating
         const { name } = req.body;
 
-        const createdStackCategory = await prisma.stackCategory.create({ data: { name } });
+        const createdStackCategory = await prisma.stackCategory.create({ 
+            data: { name },
+            include: { stacks: true }
+        });
 
         // success
         return res.status(201).json({

@@ -6,7 +6,11 @@ export default async function updateStackCategoryController(req: Request, res: R
         const { id } = req.params;
         const { name } = req.body;
 
-        const updatedStackCategory = await prisma.stackCategory.update({ where: { id: Number(id) }, data: { name } });
+        const updatedStackCategory = await prisma.stackCategory.update({ 
+            where: { id: Number(id) }, 
+            data: { name },
+            include: { stacks: true } 
+        });
 
         // success
         return res.status(200).json({

@@ -6,13 +6,16 @@ export default async function deleteStackCategoryController(req: Request, res: R
         // deleting
         const { id } = req.params;
         
-        const deletedStackCategory = await prisma.stackCategory.delete({ where: { id: Number(id) }});
+        const deletedStackCategory = await prisma.stackCategory.delete({ 
+            where: { id: Number(id) },
+            include: { stacks: true }
+        });
 
         // success
         return res.status(200).json({
             status: "200 - Success",
             message: `Successfully deleted the stack category with id '${id}'`,
-            data: `Deleted: ${deletedStackCategory}`
+            data: deletedStackCategory
         })
 
     } catch (error) {

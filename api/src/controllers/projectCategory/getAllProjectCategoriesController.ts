@@ -10,10 +10,10 @@ export default async function getAllProjectCategoriesController(req: Request<{},
         const limit = parseInt(req.query.limit as string) || 5;
         const skip = (page - 1) * limit;
 
-        
         const allProjectCategories = await prisma.projectCategory.findMany({
             skip,
-            take: limit 
+            take: limit,
+            include: { projects: true }
         })
 
         // total number of existing categories projects
