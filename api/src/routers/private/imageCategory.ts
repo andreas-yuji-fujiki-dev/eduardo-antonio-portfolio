@@ -58,7 +58,7 @@
         );
 
         // delete
-        imageCategoriesRouter.delete('/',
+        imageCategoriesRouter.delete('/:id',
             authRequiredMiddleware,
             deleteImageCategoryMiddleware,
             deleteImageCategoryController
