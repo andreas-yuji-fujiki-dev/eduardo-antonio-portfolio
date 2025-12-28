@@ -3,12 +3,13 @@ import { prisma } from "../../config/prismaClient";
 
 import validateId from "../../utils/validateId";
 import validateString from "../../utils/validateString";
+import validateNumber from "../../utils/validateNumber";
 
 export default async function createStackMiddleware(req: Request, res: Response, next: NextFunction) {
     try {
         const { name, experience, logoId } = req.body;
 
-        // name validation
+        // name validation (required)
         const errorValidatingName = validateString('name', name, res);
         if( errorValidatingName ) return errorValidatingName;
 
@@ -18,6 +19,10 @@ export default async function createStackMiddleware(req: Request, res: Response,
             status: "409 - Conflict",
             message: `A stack already exists with the name '${name}'`
         });
+        
+        // experience validation (required)
+        const errorValidatingExperience = validateNumber('experience', experience, 'integer', res);
+        if( errorValidatingExperience ) return errorValidatingExperience;
 
         // experience level content validation
         if ( experience && ![1, 2, 3].includes(experience) ) {
